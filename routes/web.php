@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Route;
  use App\Http\Controllers\frontend\DashboardController; 
  use App\Http\Controllers\frontend\LoginController; 
  use App\Http\Controllers\frontend\SignupController; 
+ use App\Http\Controllers\frontend\CheckoutController; 
+ use App\Http\Controllers\frontend\ProfileController; 
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +48,14 @@ Route::middleware("AdminLogin")->group(function(){
 
 Route::middleware("UserAuth")->group(function(){
     Route::get('/user-dashboard',[DashboardController::class ,'index']);
+    Route::get('/checkout',[CheckoutController::class ,'index']);
+    Route::get('/user_profile',[ProfileController::class ,'index']);
+    Route::get('/user_kyc',[ProfileController::class ,'kyc_index']);
+    Route::get('/user_setting',[ProfileController::class ,'setting_index']);
+    Route::post('/update_profile',[ProfileController::class ,'UpdateProfile']);
+    Route::get('/change_password',[ProfileController::class ,'ChangePasswordForm']);
+    Route::post('/update_password',[ProfileController::class ,'UpdatePassword']);
+    Route::post('/update_profile_img',[ProfileController::class ,'UpdateProfileimg']);
 });
 
 

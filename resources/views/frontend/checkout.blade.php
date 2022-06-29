@@ -5,7 +5,7 @@
     		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     		<meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="description" content="Buy & Sell Crypto Currencies With Your Local Currency" >
-        <title>NoriaPay > Dashboard</title>
+        <title>NoriaPay > Checkout</title>
         <title>Material Design Bootstrap</title>
         
         <!-- Bootstrap-4 CSS -->
@@ -24,7 +24,7 @@
           <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-        <!--SELECT2_CSS-->
+        <link href="lib/select2/dist/css/select2.min.css" rel="stylesheet" />
         <!--Chartist_CSS-->
         <!--Calendar_CSS-->
         <!--Datatable_CSS-->
@@ -35,7 +35,11 @@
 .disabled {
     pointer-events: auto;
  }
-#card-button-skip {
+#card-button-skip-buy {
+  border: solid 2px #9ba2ad;
+  background-color:  #9ba2ad;
+}
+#card-button-skip-sell {
   border: solid 2px #9ba2ad;
   background-color:  #9ba2ad;
 }
@@ -117,7 +121,7 @@
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
-                    <a class="navbar-brand" href="/">
+                    <a class="navbar-brand" href="">
                         <!-- Logo icon -->
                         <b class="logo-icon">
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
@@ -191,10 +195,10 @@
                         <li class="nav-item ">
                             <a class="nav-link dropdown dropdown-toggle waves-effect waves-dark oval" href="" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                                <span class="oval-inner">{{@$fname.@$lname}}</span>&nbsp <i class="fa fa-caret-down"></i>
+                                <span class="oval-inner "> AS</span>&nbsp <i class="fa fa-caret-down"></i>
                             </a>
                             <div class="dropdown-menu mailbox dropdown-menu-right scale-up">
-                                <ul class="dropdown-user list-style-none">                                    <li class="user-list"><a class="px-3 py-2" href="{{url('user_profile')}}?tab=1"><i class="ti-user"></i> User Profile</a></li>
+                                <ul class="dropdown-user list-style-none">                                    <li class="user-list"><a class="px-3 py-2" href="profile?tab=1"><i class="ti-user"></i> User Profile</a></li>
                                     <li role="separator" class="dropdown-divider"></li>                                   
                                     <li class="user-list"><a class="px-3 py-2" href="logout"><i class="fa fa-power-off"></i> Logout</a></li>
                                 </ul>
@@ -380,258 +384,278 @@
 
 
       <div class="page-wrapper">      <div class="container-fluid">
-   <div class="welcome-section-dashboard">
-     <p ><span class="day-message"></span>, {{@$name}}</p>
+  <div class="welcome-section">
+     <h1>Checkout</h1>
   </div>
-  <div class="main-container">
-    <div class="row">
-       <div class="col-lg-7 col-md-7 mb-3">                              <div class="card message-card">
-                                <div class="card-body">
-                                  <div class="no-block">
-                                     <h3 class="card-title">Please verify your account</h3>
-                                     <div class="row">
-                                        <div class="col-md-6 col-12">
-                                           <h6 class="card-paragraph">In order to execute transactions we need to verify your identity. The procedure is simple and will take less than 5 minutes.</h6>
-                                         </div>
-                                        <div class="col-md-3 col-6 pt-xs-3 text-right">
-                                             <a class="card-button" href="profile?tab=1">Verify Account</a>
-                                         </div>
-                                        <div class="col-md-3 col-6 pt-xs-3 text-right">
-                                             <a class="card-button" id="card-button-skip" >Verify Later</a>
-                                         </div>
-                                      </div>
-                                   
-                                  </div>
-                                </div>
-                              </div>                            
-                             <div class="d-md-flex no-block">
-                                 <h4 class="card-title Recent-Transactions">Recent Transactions</h4>
-                              </div>
-                              <div class="card">
-                              
-                                <div class="card-body">
-                                  <!--<div class="col-lg-7 pt-3 pb-3 px-0">
-                                        <div class="input-group footable-filtering-search mt-2"><label class="sr-only">Search</label>
-                                            <div class="input-group">
-                                                   <input type="text" class="form-control" value="" placeholder="Search By Reference No.">
-                                                   <div class="input-group-append">
-                                                      <button type="button" class="btn btn-primary" value="submit" name="get" id="submit"><span class="fas fa-search"></span></button>
-                                                   </div>
-                                                     <a class="btn btn-primary footable-show ml-3" href="#" type="reset"> <i class="fa fa-undo"></i>
-                                                     </a>
-                                              </div>
-                                          </div>
-                                    </div>-->
-        
-                             <div class="slimScrollDiv" >
-                                <div class="month-table dashboard-table" >
-                                    <div class="table-responsive " style="">      <div class="table-responsive">
-
-        <table class="table table-hover table-striped table-bordered" id="dashboard">
-          <thead class="">
-            <tr>        <th>TYPE</th>        <th>DATE</th>        <th>RATE</th>        <th>INR</th>        <th>TETHER</th>        <th>STATUS</th>        <th> </th>        </tr>
-      </thead>        <tbody >        <tr>            <td class="text-left"><img src="images/icons/oval_sell.png" /> &nbsp<b>Sell</b></td>            <td class="text-left">2022-06-27</td>            <td class="text-left">78.38</td>            <td class="text-left">7838.00</td>            <td class="text-left">100.00</td>            <td class="text-left"><span class="grey status_label">EXPIRED</span></td>            <td class="text-right"><a data-toggle="tooltip"  class="custom-tooltip" href="transaction/view%3Fid=1040&ttype=SELL" data-placement="bottom" data-id="" data-original-title="Details"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>			             </tr>        <tr>            <td class="text-left"><img src="images/icons/oval_sell.png" /> &nbsp<b>Sell</b></td>            <td class="text-left">2022-06-27</td>            <td class="text-left">78.37</td>            <td class="text-left">39185.00</td>            <td class="text-left">500.00</td>            <td class="text-left"><span class="grey status_label">EXPIRED</span></td>            <td class="text-right"><a data-toggle="tooltip"  class="custom-tooltip" href="transaction/view%3Fid=1039&ttype=SELL" data-placement="bottom" data-id="" data-original-title="Details"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>			             </tr>        <tr>            <td class="text-left"><img src="images/icons/oval_sell.png" /> &nbsp<b>Sell</b></td>            <td class="text-left">2022-06-27</td>            <td class="text-left">78.37</td>            <td class="text-left">39175.00</td>            <td class="text-left">500.00</td>            <td class="text-left"><span class="grey status_label">EXPIRED</span></td>            <td class="text-right"><a data-toggle="tooltip"  class="custom-tooltip" href="transaction/view%3Fid=1038&ttype=SELL" data-placement="bottom" data-id="" data-original-title="Details"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>			             </tr>   </tbody>
-  </table>
- </div>    
-                                        <!--<nav aria-label="Page navigation example">
-                                            <br><br>
-                                            <ul class="pagination float-right">
-                                                <li class="page-item disabled">
-                                                    <a class="page-link" href="#" tabindex="-1">Previous</a>
-                                                </li>
-                                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#">Next</a>
-                                                </li>
-                                            </ul>
-                                        </nav>-->
-                                    </div>
-                                </div>
-                                <div class="slimScrollBar" style="background: rgb(220, 220, 220); width: 5px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 411.209px;"></div><div class="slimScrollRail" style="width: 5px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;">
-                                </div>
-                              </div>
-                            </div>
-                          </div>                            
-            
-   </div>
-                    <div class="col-md-5 col-lg-5  xchange-box">
-                        <div class="card tabs-nav">
-        
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-tabs customtab buy-sell-tab" role="tablist">
-                                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#home2" role="tab"><div class="tabsParent">
-                                    <div class="tabsIcon">
-                                        <img src="images/noriapay_extracted_logos/sell_new.svg" alt="">
-                                    </div>
-                                    <div c8lass="tabsContent">
-                                        <h3>Buy</h3>
-                                        <p>USDT</p>
-                                    </div>
-                                </div></a> </li>
-                                 <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile2" role="tab"><div class="tabsParent">
-                                    <div class="tabsIcon">
-                                        <img src="images/noriapay_extracted_logos/buy_new.svg" alt="">
-                                    </div>
-                                    <div class="tabsContent">
-                                        <h3>Sell</h3>
-                                        <p>USDT</p>
-                                    </div>
-                                  </div></a>
-                                 </li>
-                               </ul>
-                            <!-- Tab panes -->
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="home2" role="tabpanel">
-                                    <div class="p-3">
-                                        <form class="pl-3 pr-3" method="POST">
-                                                <h3 class="price"><span>1 USDT is Roughly</span><b id="usdt-price">83.92</b> <i>INR</i></h3>
-                                                <div class="inputParent">
-                                                    <div class="inputBox">
-                                                        <div class="input_label">
-                                                            <p class="xs-text mb-0" for="input1">You Pay</p>
-                                                            <input onblur="divide()" class="error" name="form_inr_amount" value="8392" type="text" id="form_inr_amount_buy">
-                                                        </div>
-                                                        <div class="iconBox">
-                                                            <img src="images/noriapay_extracted_logos/rupee.svg" alt="">
-                                                            <p>INR</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="joinedArrow">
-                                                        <img src="images/noriapay_extracted_logos/converter.svg" alt="">
-                                                    </div>
-                                                    <input name="form_transaction_type" value="BUY" type="hidden" >
-                                                    <div class="inputBox">
-                                                        <div class="input_label">
-                                                            <p class="xs-text mb-0" for="input2">You will receive Roughly</p>
-                                                            <input onblur="multiply()" class="error" name="form_crypto_amount" value="100" type="text" id="form_crypto_amount_buy">
-                                                                                               
-                                                        </div>
-                                                        <div class="iconBox">
-                                                            <img src="images/noriapay_extracted_logos/usdt.svg" alt="">
-                                                            <p>USDT</p>
-                                                        </div>
-                                                    </div>
-                                                    <p class="xs-text py-1 buyError" style="display:none;"></p>
-                                                </div>
-                                                <div class="exChange mb-3">
-                                                    <!-- <button type="submit"  id="BuyExchange">Exchange</button> -->
-                                                    <a href="{{url('checkout')}}">Exchange</a>
-                                                </div>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="tab-pane" id="profile2" role="tabpanel">
-                                    <div class="p-3">
-                                         <form class="pl-3 pr-3" method="POST">
-                                             <h3>Payment Methods</h3>
-                                                    <div class="form-radio select-payment">
-                                                     <label class="form-group-payment col-lg-3 col-md-3 mb-3" for="radio_b1">
-                                                           <input name="form_payment_method" type="radio" id="radio_b1" value="UPI" class="with-gap radio-col-orange" >
-                                                            <label class="label-small" for="radio_b1">UPI</label>
-                                                    </label>                                                    <label class="form-group-payment col-lg-5 col-md-5 mb-3 disabled custom-tooltip" for="radio_b3" data-placement="right" data-toggle="tooltip" title="To choose this option, Update your bank details in profile section">
-                                                           <input name="form_payment_method" type="radio" id="radio_b3" class="with-gap radio-col-orange" disabled>
-                                                            <label class="label-small" for="radio_b3">Bank Account</label>
-                                                    </label>                                              </div>
-                                                <h3 class="price"><span>1 USDT is Roughly</span> 78.43 <i>INR</i></h3>
-                                                <div class="inputParent">
-        
-                                                    <div class="inputBox">
-                                                        <div class="input_label">
-                                                            <p class="xs-text mb-0" for="input1">You Pay</p>
-                                                            <input class="error" name="form_crypto_amount" value="100" type="text" id="form_crypto_amount_sell">
-                                                        </div>
-                                                        <div class="iconBox">
-                                                            <img src="images/noriapay_extracted_logos/usdt.svg" alt="">
-                                                            <p>USDT</p>
-                                                        </div>
-                                                    </div>
-                                                    <p class="xs-text py-1 sellError" style="display:none;"></p>
-                                                    <div class="joinedArrow">
-                                                        <img src="images/noriapay_extracted_logos/converter.svg" alt="">
-                                                    </div>
-                                                    <input name="form_transaction_type" value="SELL" type="hidden" >
-                                                    <div class="inputBox">
-                                                        <div class="input_label">
-                                                            <p class="xs-text mb-0" for="input2">You will receive Roughly</p>
-                                                            <input class="error" name="form_inr_amount" type="text" value="7843" id="form_inr_amount_sell">
-                                                        </div>
-                                                        <div class="iconBox">
-                                                            <img src="images/noriapay_extracted_logos/rupee.svg" alt="">
-                                                            <p>INR</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="exChange mb-3">
-                                                    <button type="submit">Exchange</button>
-                                                    <!--<a href="checkout">Exchange</a>-->
-                                                </div>
-                                        </form>
-                                    </div>
-                                </div>
-        
-                            </div>
-                        </div>
+   <div class="main-container">
+   
+      <div class="row xchange-box">
+        <!-- Column -->
+        <div class="col-lg-5 col-md-5 px-4 px-xs-15">
+           <div class="card tabs-nav">
+           
+                <!-- Nav tabs -->
+             <ul class="nav nav-tabs customtab buy-sell-tab " role="tablist">
+                <li class="nav-item"  id="buy_tab" > <a class="nav-link  active " data-toggle="tab" href="#buy" role="tab" 1>
+                  <div class="tabsParent">
+                    <div class="tabsIcon">
+                        <img src="images/noriapay_extracted_logos/sell_new.svg" alt="">
                     </div>
+                    <div class="tabsContent">
+                        <h3>Buy</h3>
+                        <p>usdt</p>
+                    </div>
+                  </div></a> 
+                </li>
+                <li class="nav-item" id="sell_tab" > <a class="nav-link " data-toggle="tab" href="#sell" role="tab" >
+                  <div class="tabsParent">
+                    <div class="tabsIcon">
+                        <img src="images/noriapay_extracted_logos/buy_new.svg" alt="">
+                    </div>
+                    <div class="tabsContent">
+                        <h3>Sell</h3>
+                        <p>usdt</p>
+                    </div>
+                  </div></a>
+               </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane  active " id="buy" role="tabpanel">
+                    <div class="p-3">
+                        <form class="pl-3 pr-3" method="POST" id="form_buy_transaction" action="">
+                        
+                             <h3 class="price"><span>1 USDT is Roughly</span> 83.94 <i>INR</i></h3>
+                             <div class="inputParent">
+                             
+                                <div class="inputBox">
+                                    <div class="input_label">
+                                        <p class="xs-text mb-0" for="input1">You Pay</p>
+                                        <input class="error" name="form_inr_amount" type="text" value="8394" id="form_inr_amount_buy">
+                                    </div>
+                                    <div class="iconBox">
+                                        <img src="images/noriapay_extracted_logos/rupee.svg" alt="">
+                                        <p>INR</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="joinedArrow">
+                                    <img src="images/noriapay_extracted_logos/converter.svg" alt="">
+                                    <input name="form_transaction_type" value="BUY" type="hidden" >
+                                </div>
+                                <div class="inputBox">
+                                    <div class="input_label">
+                                        <p class="xs-text mb-0" for="input2">You will receive Roughly</p>
+                                        <input class="error" type="text" name="form_crypto_amount" value="100" id="form_crypto_amount_buy">
+                                    </div>
+                                    <div class="iconBox">
+                                        <img src="images/noriapay_extracted_logos/usdt.svg" alt="">
+                                        <p>USDT</p>
+                                    </div>
+                                </div>
+                                <p class="xs-text py-1 buyError" style="display:none;"></p>
+                            </div>
+                            
+                            
+                            <div class="form-group tab-pane pt-4">
+                                <h3>Payment Methods</h3>
+                            </div>
+                            <div class="form-group form-radio select-payment">                                <label class="form-group-payment col-lg-3 col-md-6 col-xs-6 col-sm-4 mb-2" for="radio_b1">
+                                       <input name="form_payment_method" type="radio" id="radio_b1" value="UPI" class="with-gap radio-col-orange" checked>
+                                        <label class="label-small" for="radio_b1">UPI</label>
+                                </label>                                <label class="form-group-payment col-lg-5 col-md-6 col-xs-6 col-sm-4 mb-3" for="radio_b3">
+                                       <input name="form_payment_method" type="radio" id="radio_b3" value="BANK" class="with-gap radio-col-orange" >
+                                        <label class="label-small" for="radio_b3">Bank Account</label>
+                                </label>                            </div>                           <div class="form-group select2-selection">
+                                <p class="xs-text">Where should we transfer your Tether?</p>
+                                <div class="input-box">
+                                    <select id="crypto_wallet_select" class="browser-default form-control">
+                                    <option value=""></option>
+                                    <option value=" ">Other</option>
+                                </select>
+                              </div>
+                            </div>                            <div id="checkout_wallet_type" class="form-group" style="display:none;">
+                                <p class="xs-text">Select Tether Wallet Type</p>
+                                <div class="form-radio">
+                                  <div class="row select-payment ">
+                                    <div class="col-md-4 mb-2">
+                                      <label class="form-group-payment col-lg-12 col-xs-6  mr-1" for="radio_omni">
+                                        <input name="form_crypto_wallet_type" type="radio" id="radio_omni" value="OMNI" class="with-gap radio-col-orange" >
+                                        <label class="label-small" for="radio_omni">BEP20</label>
+                                      </label>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                      <label class="form-group-payment col-lg-12 col-xs-6 " for="radio_ecr">
+                                        <input name="form_crypto_wallet_type" type="radio" id="radio_ecr" value="ERC20" class="with-gap radio-col-orange" >
+                                        <label class="label-small" for="radio_ecr">ERC20</label>
+                                      </label>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                      <label class="form-group-payment col-lg-12 col-xs-6 " for="radio_trc">
+                                        <input name="form_crypto_wallet_type" type="radio" id="radio_trc" value="TRC20" class="with-gap radio-col-orange" >
+                                        <label class="label-small" for="radio_trc">TRC20</label>
+                                      </label>
+                                    </div>
+                                  </div> 
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <p class="xs-text">Tether Wallet Address</p>
+                                <div class="input-box">
+                                    <input class="form-control" type="text" name="form_wallet_address" value="" required="" id="form_wallet_address" placeholder="">
+                                </div>
+                            </div>
+
+                            
+                            <label class="custom-control custom-checkbox">
+                            <input type="checkbox" name="form_is_wallet_acknowledged" class="custom-control-input" >
+                            <span class="custom-control-label small-text">I verify that this wallet address belongs to me. And understand that sending it to someone else's wallet may result in a loss of funds.</span>
+                        </label>
+                        <br>
+                        <article class="card row">
+                          <!--<button class="subscribe btn btn-primary btn-block" type="button"> Confirm  </button>-->
+                        </article>
+                    </form>
                 </div>
-             </div>
-          </div>
-        
-        
-<!-- ***************modal for User Details********** -->
-        
-<div id="user-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        
-            <div class="modal-body">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-                <div class="text-center mt-2 mb-4">
-                     <a href="index.html" class="text-success">
-                        <span class="header-text">User Details</span>
-                    </a>
-        
-                </div>
-        
-                <form class="pl-3 pr-3" action="#">
-        
-                 <hr>
-               <div class="row">
-                    <div class="payment-detail col-lg-12 mb-3">
-                        <div class="checkout-item mt-2">
-                            <div class="checkout-item-1"> Date of transaction</div>
-                            <div class="checkout-item-2"> 12-12-2010</div>
-                        </div>
-                  </div>
-                 <div class="payment-detail col-lg-12 mb-3">
-                        <div class="checkout-item mt-2">
-                            <div class="checkout-item-1"> Transaction ID</div>
-                            <div class="checkout-item-2"> T1234</div>
-                        </div>
-                  </div>
-        
-                   <div class="payment-detail col-lg-12 mb-3">
-                        <div class="checkout-item mt-2">
-                            <div class="checkout-item-1"> Transaction Amount</div>
-                            <div class="checkout-item-2"> 132435 INR</div>
-                        </div>
-                  </div>
-                   <div class="payment-detail col-lg-12 mb-3">
-                        <div class="checkout-item mt-2">
-                            <div class="checkout-item-1"> Tether Amount</div>
-                            <div class="checkout-item-2"> 43.5478 </div>
-                        </div>
-                  </div>
-                </div>
-                </form>
-        
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+            <div class="tab-pane " id="sell" role="tabpanel">
+                <div class="p-3">
+                     <form class="pl-3 pr-3"  method="POST" id="form_sell_transaction" action="">
+                     
+                         <!-- <div class="row">
+                             <div class="form-group col-lg-12">
+                                <label for="">Payment Method</label>
+                             </div>
+                            <div class="form-group col-lg-6">
+                                <input class="form-control" type="email" required="" id="password" placeholder="">
+                            </div>
+                             <div class="form-group col-lg-6">
+                                <input class="form-control" type="email" required="" id="password" placeholder="">
+                            </div>
+                         </div> -->
+                         
+                         <h3 class="price"><span>1 USDT is Roughly</span> 78.45 <i>INR</i></h3>
+                         <div class="inputParent">
+                         
+                            <div class="inputBox">
+                                <div class="input_label">
+                                    <p class="xs-text mb-0" for="input1">You Pay</p>
+                                    <input class="error" type="text" name="form_crypto_amount" value="100"  id="form_crypto_amount_sell">
+                                </div>
+                                <div class="iconBox">
+                                      <img src="images/noriapay_extracted_logos/usdt.svg" alt="">
+                                    <p>USDT</p>
+                                </div>
+                            </div>
+                            <p class="xs-text py-1 sellError" style="display:none;"></p>
+                            <div class="joinedArrow">
+                                <img src="images/noriapay_extracted_logos/converter.svg" alt="">
+                                <input name="form_transaction_type" value="SELL" type="hidden" >
+                            </div>
+                            <div class="inputBox">
+                                <div class="input_label">
+                                    <p class="xs-text mb-0" for="input2">You will receive Roughly</p>
+                                    <input class="error" name="form_inr_amount" type="text" value="7845"  id="form_inr_amount_sell">
+                                </div>
+                               <div class="iconBox">
+                                    <img src="images/noriapay_extracted_logos/rupee.svg" alt="">
+                                    <p>INR</p>
+                                </div>
+                             </div>
+                        </div>
+                        
+                        
+                        <div class="form-group tab-pane pt-4">
+                            <h3>Payment Methods</h3>
+                        </div>
+                        <div class="form-group form-radio select-payment" id="radio_sell">
+                             <label class="form-group-payment col-lg-3 mb-3" for="radio_s1">
+                                   <input name="form_payment_method" type="radio" id="radio_s1" value="UPI" class="with-gap radio-col-orange" checked>
+                                    <label class="label-small" for="radio_s1">UPI</label>
+                            </label>
+                                                               
+                                                                                           <label class="form-group-payment col-lg-5 mb-3 disabled custom-tooltip" for="radio_s3" data-placement="right" data-toggle="tooltip" title="To choose this option, Update your bank details in profile section">
+                                   <input name="form_payment_method" type="radio" id="radio_s3" class="with-gap radio-col-orange" disabled>
+                                    <label class="label-small" for="radio_s3">Bank Account</label>
+                            </label>    
+                        </div>
+                        <div class="form-group" id="payment_details">                            <div class="form-group " id="upi_payment_details">
+                                 <p class="title-space">Your UPI Address</p>
+                                 <div class="input-box">
+                                    <input name="form_upi_address" value = "" class="form-control" type="text" required id="form_upi_address" placeholder="">
+                                 </div>
+                            </div>      
+                        </div>
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" name="form_is_payment_details_acknowledged" class="custom-control-input" >
+                            <span class="custom-control-label xs-text">I verify that the above payment details belongs to me. And understand that sending it to someone else's payment details may result in a loss of funds.</span>
+                        </label>
+                        <br>
+                        <div class="form-group">
+                          <!--<button class="subscribe btn btn-primary btn-block" type="button"> Confirm  </button>-->
+                        </div>
+                                    
+                    </form>
+                </div>
+              </div>
+           </div>
+        </div>
+    </div>
+                                                        
+                                                        
+    <div class="col-lg-7 col-md-7  px-0 px-xs-15">
+     <div class="card">
+      <h3 class="card-box-title px-4">Exchange Information</h3>
+                                                        
+      <p id="Page_MsgBox"></p>
+      <div class="card-body px-4" id="transaction_details">
+                        <!-- Tab panes -->            <div class="row" id="buy_transaction_details">
+            
+              <div class="col-lg-8 col-md-8 checkout-exchange">
+                <div class="pt-2"><img src="images/icons/oval_buy.png"></div>
+                <div class="checkout-item">
+                  <div class="checkout-item-1 "><span class="card-icon-buy"> Buy </span></div>
+                  <div class="checkout-item-2"><span class="card-tether">100 USDT</span> 1 Tether = INR 83.94</div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4 mt-3 text-right">
+                 <p><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15"><path fill="#8A8FC0" fill-rule="nonzero" d="M7.5 1.875a5.6 5.6 0 0 1 3.979 1.648A5.6 5.6 0 0 1 13.126 7.5a5.6 5.6 0 0 1-1.648 3.979A5.6 5.6 0 0 1 7.5 13.128a5.6 5.6 0 0 1-3.979-1.648 5.6 5.6 0 0 1-1.647-3.979 5.6 5.6 0 0 1 1.648-3.979A5.6 5.6 0 0 1 7.5 1.876zm0-.938a6.563 6.563 0 1 0 0 13.126A6.563 6.563 0 0 0 7.5.937zm1.875 7.149H7.192a.586.586 0 0 1-.586-.586V4.219a.586.586 0 1 1 1.172 0v2.695h1.597a.586.586 0 1 1 0 1.172z"></path></svg>
+                      Processing Time </p>
+                  <p class="text-time"> 30 min - 1hr</p>
+               </div>
+              <div class="col-lg-12 col-md-12">
+              <hr>
+                <div class="checkout-price row mb-1">
+                  <div class="checkout-price-1 text-left col-lg-6 col-md-6 col-6"> Tether to Receive </div>
+                  <div class="checkout-price-2 text-right col-lg-6 col-md-6 col-6"> 100 USDT</div>
+                </div>
+                <div class="checkout-price row mb-4">
+                   <div class="checkout-price-1 text-left col-lg-6 col-md-6 col-6">Network Fee </div>
+                   <div class="checkout-price-2 text-right col-lg-6 col-md-6 col-6"> 0 USDT</div>
+                </div>
+                 <div class="hr-dotted">  </div>
+                <div class="checkout-price row mb-4">
+                   <div class="checkout-price-1 text-left col-lg-6 col-md-6 col-6"> Identification Amount </div>
+                   <div class="checkout-price-2 text-right col-lg-6 col-md-6 col-6"> 1.73 INR </div>
+                </div>
+                <div class="checkout-price row mb-4">
+                   <div class="checkout-price-2 col-lg-12 col-md-12 col-12">  <p class="small-text">Note : Identification Amount is added to identify the transaction on our end.</p></div>
+                </div>
+                <div class="checkout-total col-md-12 col-12">
+                  <div class="row">
+                    <div class="checkout-price-1 text-left col-lg-6 col-md-6 col-6"> Total Payable </div>
+                    <div class="checkout-price-2 text-right col-lg-6 col-md-6 col-6"> 8395.73 INR</div>
+                  </div>
+                </div>
+                <div class="row">                      <div class="form-group col-lg-12 text-center mt-3">
+                        <button class="btn btn-success float-right" id="buy_button">Confirm </button>
+                      </div>                </div>
+              </div>
+            </div>         </div>
+       </div>
+    </div>
 </div>
-        
-<!-- ***************modal for User Details end********** -->
 		        </div> <!-- Container Fluid close -->
  </div>
 </div> <!-- Main Wrapper Close -->
@@ -654,7 +678,8 @@
       <script src="js/component/Material/sparkline.js"></script>
       <script src="js/component/Material/waves.js"></script>
       <script src="js/component/Material/sidebarmenu.js"></script>
-      <script src="js/component/Material/custom.js"></script>       <!--SELECT2_JS-->
+      <script src="js/component/Material/custom.js"></script>       <script src="lib/select2/dist/js/select2.full.min.js"></script>
+				<script src="lib/select2/dist/js/select2.min.js"></script>
       <!--Chartist_JS-->
       <!--Calendar_JS-->
       <!--Datatable_JS-->
@@ -662,21 +687,29 @@
        <script src="lib/widget/js/widget-data.js"> </script>
       <script type="text/javascript">
         var require = {
-          baseUrl: '/',        urlArgs: 'a40e5a35',          deps: [    "js/component/Dashboard",
+          baseUrl: '/',        urlArgs: 'a40e5a35',          deps: [    "js/component/Checkout",
     "js/component/PageMsg",
     "js/component/UserProfile",
 ],
           config: {
-              'js/component/Application':{"Level":{"Level":"Live"},"User":{"u_name":"mailtoashusingh1@gmail.com","f_name":"Ashu","u_id":1127},"StaticDomain":"http:\/\/static.noriapay.com","Page_MsgErrors":[],"Page_MsgInfo":[],"Page_MsgWarning":[],"Page_MsgSuccess":[]},    'js/component/Dashboard':{"exchange_rate_buy":83.92,"exchange_rate_sell":78.43},
+              'js/component/Application':{"Level":{"Level":"Live"},"User":{"u_name":"mailtoashusingh1@gmail.com","f_name":"Ashu","u_id":1127},"StaticDomain":"http:\/\/static.noriapay.com","Page_MsgErrors":[],"Page_MsgInfo":[],"Page_MsgWarning":[],"Page_MsgSuccess":[]},    'js/component/Checkout':{"KYC_comment":null,"is_kyc_approved":false,"exchange_rate_buy":83.94,"exchange_rate_sell":78.45,"kyc_approval_status":null,"upi_address":"","crypto_amount":"100","inr_amount":"8392","wallet_type":null,"inr_amount_buy":8394,"inr_amount_sell":7845,"crypto_amount_buy":100,"crypto_amount_sell":100,"transaction_type":"BUY","identification_amount":1.72933466,"buy_network_fee":0,"sell_network_fee":0,"transaction_fees_buy":0,"buy_network_fee_omni":"1.00","buy_network_fee_erc20":"40.00","buy_network_fee_trc20":"1.00","transaction_fees_sell":0,"sell_network_fee_omni":"0.00","sell_network_fee_erc20":"0.00","sell_network_fee_trc20":"0.00","total_amount_payable":8395.73,"total_amount_receivable":7845},
           }
-        };          //   $('#dashboard').DataTable({
-//       "searching": false
+        };          // $(document).ready(function() {
+//  $('.mdb-select').material_select();
 // });
+    
+$(document).ready(function() {
+  $('select[class*="browser-default"]').select2({
+    placeholder: "Select tether wallet",
+    width: '100%'
+  });
+});
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
+
+
         </script>
         <script src='js/require.js'></script>
-         <script src="{{url('assets/frontend/js/frontend_js/payment.js')}}"></script>
     </body>
-</html>
+  </html>
