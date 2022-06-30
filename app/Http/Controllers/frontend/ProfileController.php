@@ -84,6 +84,7 @@ class ProfileController extends Controller
     //change profile image
      public function UpdateProfileimg(Request $request)
     {
+        dd($_FILES);
           $validated = Validator::make($request->all());
           if($validated->passes()){
              $file = $request->file('profile_img'); 

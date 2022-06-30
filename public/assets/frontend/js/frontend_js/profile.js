@@ -55,14 +55,30 @@ var loadFile = function(event) {
     URL.revokeObjectURL(output.src) // free memory
   }
 
-  $.ajax({
-  	type:"post",
+
+
+//Update Profile
+$("#profileimgForm").on("submit",function(e){
+  e.preventDefault(); 
+	$.ajax({ 
+		type:"post",
 		url:siteUrl + "update_profile_img",  
-		data:new FormData('#profileimgForm'),
+		data:new FormData(this),
 		processData: false, 
     contentType: false, 
 		success:function(res){
-			return true;
+			if(res.status_code == 200){
+				toastr.success(res.message);
+				$("#profileimgForm").trigger("reset");
+			}else if(res.status_code == 301){
+				$.each(res.message,function(key , value){
+					toastr.error(value);
+				});
+			}else if(res.status_code == 201){
+				toastr.error(res.message);
+			}
+		},error:function(e){
+			console.log(e);		 
 		}
-  });
-};
+	});
+});

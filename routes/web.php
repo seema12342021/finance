@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
  use App\Http\Controllers\frontend\SignupController; 
  use App\Http\Controllers\frontend\CheckoutController; 
  use App\Http\Controllers\frontend\ProfileController; 
+ use App\Http\Controllers\frontend\TransactionController; 
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +57,7 @@ Route::middleware("UserAuth")->group(function(){
     Route::get('/change_password',[ProfileController::class ,'ChangePasswordForm']);
     Route::post('/update_password',[ProfileController::class ,'UpdatePassword']);
     Route::post('/update_profile_img',[ProfileController::class ,'UpdateProfileimg']);
+    Route::get('/transaction',[TransactionController::class ,'index']);
 });
 
 
