@@ -67,11 +67,18 @@ Route::middleware("AdminLogin")->group(function(){
     Route::get('/transactionBuy',[TransactionController::class ,'transactionBuy']);
     Route::get('/show_transactionBuy',[TransactionController::class ,'show_transactionBuy']);
     // Route::post('/save_network',[TransactionController::class , 'save']);
+    // Route::post('/save_network',[TransactionController::class , 'save']);
     // Route::get('/delete_network',[TransactionController::class , 'delete']);
     // Route::get('/edit_network',[TransactionController::class , 'edit']);
     // Route::get('/status_network',[TransactionController::class , 'status']);
 
  });
+
+ Route::get('/sa',[HomepageController::class ,'index']);
+ Route::post('/ass',[SignupController::class , 'saveSignUp']);
+ Route::post('ssd',[LoginController::class,'user_login']);
+
+
  Route::get('/',[HomepageController::class ,'index']);
  Route::post('/save_singnup',[SignupController::class , 'saveSignUp']);
  Route::post('user_login',[LoginController::class,'user_login']);
