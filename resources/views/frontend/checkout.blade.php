@@ -1,8 +1,10 @@
+                                
 <!DOCTYPE html>
     <html>
       <head>
         <meta charset="UTF-8">
     		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+            <meta name="_token" content="{{ csrf_token() }}">
     		<meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="description" content="Buy & Sell Crypto Currencies With Your Local Currency" >
         <title>NoriaPay > Checkout</title>
@@ -195,7 +197,7 @@
                         <li class="nav-item ">
                             <a class="nav-link dropdown dropdown-toggle waves-effect waves-dark oval" href="" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                                <span class="oval-inner ">{{@$fname.$lname}}</span>&nbsp <i class="fa fa-caret-down"></i>
+                                <span class="oval-inner ">{{@$fname.@$lname}}</span>&nbsp <i class="fa fa-caret-down"></i>
                             </a>
                             <div class="dropdown-menu mailbox dropdown-menu-right scale-up">
                                 <ul class="dropdown-user list-style-none">                                    <li class="user-list"><a class="px-3 py-2" href="profile?tab=1"><i class="ti-user"></i> User Profile</a></li>
@@ -393,7 +395,6 @@
         <!-- Column -->
         <div class="col-lg-5 col-md-5 px-4 px-xs-15">
            <div class="card tabs-nav">
-           
                 <!-- Nav tabs -->
              <ul class="nav nav-tabs customtab buy-sell-tab " role="tablist">
                 <li class="nav-item"  id="buy_tab" > <a class="nav-link  active " data-toggle="tab" href="#buy" role="tab" 1>
@@ -425,13 +426,13 @@
                     <div class="p-3">
                         <form class="pl-3 pr-3" method="POST" id="form_buy_transaction" action="">
                         
-                             <h3 class="price"><span>1 USDT is Roughly</span> 83.94 <i>INR</i></h3>
+                             <h3 class="price"><span>1 USDT is Roughly</span> <strong id="usdt-price">{{((@$commision_buy->fees / 100) * 83.92)+83.92}} </strong> <i>INR</i></h3>
                              <div class="inputParent">
                              
                                 <div class="inputBox">
                                     <div class="input_label">
                                         <p class="xs-text mb-0" for="input1">You Pay</p>
-                                        <input class="error" name="form_inr_amount" type="text" value="8394" id="form_inr_amount_buy">
+                                        <input class="error" onblur="divide()" name="form_inr_amount" type="text" value="{{@$data->inr}}" id="form_inr_amount_buy">
                                     </div>
                                     <div class="iconBox">
                                         <img src="images/noriapay_extracted_logos/rupee.svg" alt="">
@@ -441,12 +442,12 @@
                                 
                                 <div class="joinedArrow">
                                     <img src="images/noriapay_extracted_logos/converter.svg" alt="">
-                                    <input name="form_transaction_type" value="BUY" type="hidden" >
+                                    <input name="form_transactiusdt-priceon_type" value="BUY" type="hidden" >
                                 </div>
                                 <div class="inputBox">
                                     <div class="input_label">
                                         <p class="xs-text mb-0" for="input2">You will receive Roughly</p>
-                                        <input class="error" type="text" name="form_crypto_amount" value="100" id="form_crypto_amount_buy">
+                                        <input class="error" type="text" onblur="multiply()" name="form_crypto_amount" value="{{@$data->crypto}}" id="form_crypto_amount_buy">
                                     </div>
                                     <div class="iconBox">
                                         <img src="images/noriapay_extracted_logos/usdt.svg" alt="">
@@ -456,17 +457,20 @@
                                 <p class="xs-text py-1 buyError" style="display:none;"></p>
                             </div>
                             
-                            
+                            {{-- 
                             <div class="form-group tab-pane pt-4">
                                 <h3>Payment Methods</h3>
                             </div>
                             <div class="form-group form-radio select-payment">                                <label class="form-group-payment col-lg-3 col-md-6 col-xs-6 col-sm-4 mb-2" for="radio_b1">
                                        <input name="form_payment_method" type="radio" id="radio_b1" value="UPI" class="with-gap radio-col-orange" checked>
                                         <label class="label-small" for="radio_b1">UPI</label>
-                                </label>                                <label class="form-group-payment col-lg-5 col-md-6 col-xs-6 col-sm-4 mb-3" for="radio_b3">
+                                </label>  
+                              <label class="form-group-payment col-lg-5 col-md-6 col-xs-6 col-sm-4 mb-3" for="radio_b3">
                                        <input name="form_payment_method" type="radio" id="radio_b3" value="BANK" class="with-gap radio-col-orange" >
                                         <label class="label-small" for="radio_b3">Bank Account</label>
-                                </label>                            </div>                           <div class="form-group select2-selection">
+                                </label>                            
+                            </div>  --}}
+                          {{-- <div class="form-group select2-selection">
                                 <p class="xs-text">Where should we transfer your Tether?</p>
                                 <div class="input-box">
                                     <select id="crypto_wallet_select" class="browser-default form-control">
@@ -474,29 +478,22 @@
                                     <option value=" ">Other</option>
                                 </select>
                               </div>
-                            </div>                            <div id="checkout_wallet_type" class="form-group" style="display:none;">
-                                <p class="xs-text">Select Tether Wallet Type</p>
+                            </div> --}} 
+                               <div id="checkout_wallet_type" class="form-group">
+                                <p class="xs-text mt-2">Select Tether Wallet Type</p>
                                 <div class="form-radio">
                                   <div class="row select-payment ">
+                                @if(!empty($wallet))
+                                @foreach($wallet as $key=>$value)
                                     <div class="col-md-4 mb-2">
                                       <label class="form-group-payment col-lg-12 col-xs-6  mr-1" for="radio_omni">
-                                        <input name="form_crypto_wallet_type" type="radio" id="radio_omni" value="OMNI" class="with-gap radio-col-orange" >
-                                        <label class="label-small" for="radio_omni">BEP20</label>
+                                        <input name="form_crypto_wallet_type" type="radio" id="radio_omni{{@$value->id}}" value="{{@$value->id}}" class="with-gap radio-col-orange" >
+                                        <label class="label-small" for="radio_omni">{{@$value->name}}</label>
                                       </label>
                                     </div>
-                                    <div class="col-md-4 mb-2">
-                                      <label class="form-group-payment col-lg-12 col-xs-6 " for="radio_ecr">
-                                        <input name="form_crypto_wallet_type" type="radio" id="radio_ecr" value="ERC20" class="with-gap radio-col-orange" >
-                                        <label class="label-small" for="radio_ecr">ERC20</label>
-                                      </label>
-                                    </div>
-                                    <div class="col-md-4 mb-2">
-                                      <label class="form-group-payment col-lg-12 col-xs-6 " for="radio_trc">
-                                        <input name="form_crypto_wallet_type" type="radio" id="radio_trc" value="TRC20" class="with-gap radio-col-orange" >
-                                        <label class="label-small" for="radio_trc">TRC20</label>
-                                      </label>
-                                    </div>
-                                  </div> 
+                                @endforeach
+                                @endif
+                                 </div> 
                                 </div>
                             </div>
 
@@ -509,7 +506,7 @@
 
                             
                             <label class="custom-control custom-checkbox">
-                            <input type="checkbox" name="form_is_wallet_acknowledged" class="custom-control-input" >
+                            <input type="checkbox" id="tc" name="form_is_wallet_acknowledged" class="custom-control-input" >
                             <span class="custom-control-label small-text">I verify that this wallet address belongs to me. And understand that sending it to someone else's wallet may result in a loss of funds.</span>
                         </label>
                         <br>
@@ -616,7 +613,7 @@
                 <div class="pt-2"><img src="images/icons/oval_buy.png"></div>
                 <div class="checkout-item">
                   <div class="checkout-item-1 "><span class="card-icon-buy"> Buy </span></div>
-                  <div class="checkout-item-2"><span class="card-tether">100 USDT</span> 1 Tether = INR 83.94</div>
+                  <div class="checkout-item-2"><span class="card-tether" id="final_crypto">{{@$data->crypto}} USDT</span> 1 Tether = INR {{((@$commision_buy->fees / 100) * 83.92)+83.92}}</div>
                 </div>
               </div>
               <div class="col-lg-4 col-md-4 mt-3 text-right">
@@ -628,11 +625,11 @@
               <hr>
                 <div class="checkout-price row mb-1">
                   <div class="checkout-price-1 text-left col-lg-6 col-md-6 col-6"> Tether to Receive </div>
-                  <div class="checkout-price-2 text-right col-lg-6 col-md-6 col-6"> 100 USDT</div>
+                  <div class="checkout-price-2 text-right col-lg-6 col-md-6 col-6" id="tether_receive"> {{@$data->crypto}} USDT</div>
                 </div>
                 <div class="checkout-price row mb-4">
                    <div class="checkout-price-1 text-left col-lg-6 col-md-6 col-6">Network Fee </div>
-                   <div class="checkout-price-2 text-right col-lg-6 col-md-6 col-6"> 0 USDT</div>
+                   <div class="checkout-price-2 text-right col-lg-6 col-md-6 col-6"> {{@$network_buy->fees}} USDT</div>
                 </div>
                  <div class="hr-dotted">  </div>
                 <div class="checkout-price row mb-4">
@@ -645,11 +642,11 @@
                 <div class="checkout-total col-md-12 col-12">
                   <div class="row">
                     <div class="checkout-price-1 text-left col-lg-6 col-md-6 col-6"> Total Payable </div>
-                    <div class="checkout-price-2 text-right col-lg-6 col-md-6 col-6"> 8395.73 INR</div>
+                    <div class="checkout-price-2 text-right col-lg-6 col-md-6 col-6" id="total_payble"> {{@$data->inr+@$network_buy->fees+1.73}} INR</div>
                   </div>
                 </div>
                 <div class="row">                      <div class="form-group col-lg-12 text-center mt-3">
-                        <button class="btn btn-success float-right" id="buy_button">Confirm </button>
+                        <button class="btn btn-success float-right" onclick="save_transactions()">Confirm </button>
                       </div>                </div>
               </div>
             </div>         </div>
@@ -686,30 +683,21 @@
       <script src="lib/toastr/toastr.min.js"></script>
        <script src="lib/widget/js/widget-data.js"> </script>
       <script type="text/javascript">
-        var require = {
-          baseUrl: '/',        urlArgs: 'a40e5a35',          deps: [    "js/component/Checkout",
-    "js/component/PageMsg",
-    "js/component/UserProfile",
-],
-          config: {
-              'js/component/Application':{"Level":{"Level":"Live"},"User":{"u_name":"mailtoashusingh1@gmail.com","f_name":"Ashu","u_id":1127},"StaticDomain":"http:\/\/static.noriapay.com","Page_MsgErrors":[],"Page_MsgInfo":[],"Page_MsgWarning":[],"Page_MsgSuccess":[]},    'js/component/Checkout':{"KYC_comment":null,"is_kyc_approved":false,"exchange_rate_buy":83.94,"exchange_rate_sell":78.45,"kyc_approval_status":null,"upi_address":"","crypto_amount":"100","inr_amount":"8392","wallet_type":null,"inr_amount_buy":8394,"inr_amount_sell":7845,"crypto_amount_buy":100,"crypto_amount_sell":100,"transaction_type":"BUY","identification_amount":1.72933466,"buy_network_fee":0,"sell_network_fee":0,"transaction_fees_buy":0,"buy_network_fee_omni":"1.00","buy_network_fee_erc20":"40.00","buy_network_fee_trc20":"1.00","transaction_fees_sell":0,"sell_network_fee_omni":"0.00","sell_network_fee_erc20":"0.00","sell_network_fee_trc20":"0.00","total_amount_payable":8395.73,"total_amount_receivable":7845},
-          }
-        };          // $(document).ready(function() {
-//  $('.mdb-select').material_select();
-// });
-    
-$(document).ready(function() {
-  $('select[class*="browser-default"]').select2({
-    placeholder: "Select tether wallet",
-    width: '100%'
-  });
-});
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
-
+       
+        $(document).ready(function() {
+          $('select[class*="browser-default"]').select2({
+            placeholder: "Select tether wallet",
+            width: '100%'
+          });
+        });
+        $(function () {
+          $('[data-toggle="tooltip"]').tooltip()
+        })
+        network_fees = "{{@$network_buy->fees}}";
+        id_fees = "1.73";
 
         </script>
         <script src='js/require.js'></script>
+        <script src="{{url('assets/frontend/js/frontend_js/payment.js')}}"></script>
     </body>
   </html>
