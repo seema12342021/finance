@@ -26,4 +26,9 @@ class LoginController extends Controller
             return response()->json(['status'=>'error','status_code'=>202,'error' => $validated->errors()->all() ]);
         }
     }//end of method
+
+    public function user_logout(){
+        session()->flush();
+        return redirect("/");
+    }
 }

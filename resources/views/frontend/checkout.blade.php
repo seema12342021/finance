@@ -172,8 +172,8 @@
                     <div class="btn-list">
                         <!-- Custom width modal -->                     <!--  <button type="button" class="btn nav-btn" onclick="location.href='/dashboard'">Dashboard</button>
                         <button type="button" class="btn nav-btn" onclick="location.href='/transaction/index?ttype=BUY'">Transactions</button> -->
-                        <li><a class="btn nav-btn user-url" href="dashboard">Dashboard</a></li>
-                        <li><a class="btn nav-btn user-url" href="transaction/index?ttype=BUY">Transactions</a></li>                      </div>
+                        <li><a class="btn nav-btn user-url" href="{{url('user-dashboard')}}">Dashboard</a></li>
+                        <li><a class="btn nav-btn user-url" href="{{url('transaction')}}">Transactions</a></li>                      </div>
                         <li class="nav-item dropdown"> 
                          
                         </li>
@@ -195,7 +195,7 @@
                         <li class="nav-item ">
                             <a class="nav-link dropdown dropdown-toggle waves-effect waves-dark oval" href="" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                                <span class="oval-inner "> AS</span>&nbsp <i class="fa fa-caret-down"></i>
+                                <span class="oval-inner ">{{@$fname.$lname}}</span>&nbsp <i class="fa fa-caret-down"></i>
                             </a>
                             <div class="dropdown-menu mailbox dropdown-menu-right scale-up">
                                 <ul class="dropdown-user list-style-none">                                    <li class="user-list"><a class="px-3 py-2" href="profile?tab=1"><i class="ti-user"></i> User Profile</a></li>

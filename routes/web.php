@@ -81,6 +81,7 @@ Route::middleware("AdminLogin")->group(function(){
  Route::get('/',[HomepageController::class ,'index']);
  Route::post('/save_singnup',[SignupController::class , 'saveSignUp']);
  Route::post('user_login',[LoginController::class,'user_login']);
+ Route::get('user_logout',[LoginController::class,'user_logout']);
 
 Route::middleware("UserAuth")->group(function(){
     Route::get('/user-dashboard',[DashboardController::class ,'index']);

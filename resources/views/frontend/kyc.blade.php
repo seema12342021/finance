@@ -6,7 +6,7 @@
     		<meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="description" content="Buy & Sell Crypto Currencies With Your Local Currency" >
         <title>NoriaPay > User Profile</title>
-        <title>Material Design Bootstrap</title>
+        <title>Material Design Bootstrap</title> 
         
         <!-- Bootstrap-4 CSS --> 
         <link href="css/bootstrap4/bootstrap.min.css?a40e5a35" rel="stylesheet">
@@ -101,8 +101,8 @@
                     <div class="btn-list">
                         <!-- Custom width modal -->                     <!--  <button type="button" class="btn nav-btn" onclick="location.href='/dashboard'">Dashboard</button>
                         <button type="button" class="btn nav-btn" onclick="location.href='/transaction/index?ttype=BUY'">Transactions</button> -->
-                        <li><a class="btn nav-btn user-url" href="dashboard">Dashboard</a></li>
-                        <li><a class="btn nav-btn user-url" href="transaction/index?ttype=BUY">Transactions</a></li>                      </div>
+                        <li><a class="btn nav-btn user-url" href="{{url('user-dashboard')}}">Dashboard</a></li>
+                        <li><a class="btn nav-btn user-url" href="{{url('transaction')}}">Transactions</a></li>                      </div>
                         <li class="nav-item dropdown"> 
                          
                         </li>
@@ -127,9 +127,9 @@
                                 <span class="oval-inner ">{{substr(@$fname,0,1).substr(@$lname,0,1)}}</span>&nbsp <i class="fa fa-caret-down"></i>
                             </a>
                             <div class="dropdown-menu mailbox dropdown-menu-right scale-up">
-                                <ul class="dropdown-user list-style-none">                                    <li class="user-list"><a class="px-3 py-2" href="profile?tab=1"><i class="ti-user"></i> User Profile</a></li>
+                                <ul class="dropdown-user list-style-none">                                    <li class="user-list"><a class="px-3 py-2" href="{{url('user_profile')}}"><i class="ti-user"></i> User Profile</a></li>
                                     <li role="separator" class="dropdown-divider"></li>                                   
-                                    <li class="user-list"><a class="px-3 py-2" href="logout"><i class="fa fa-power-off"></i> Logout</a></li>
+                                    <li class="user-list"><a class="px-3 py-2" href="{{url('logout')}}"><i class="fa fa-power-off"></i> Logout</a></li>
                                 </ul>
                             </div>
                         </li>                    </ul>
@@ -326,12 +326,12 @@
       <!-- Column -->
       <div class="card " style="box-shadow: 17px 23px 63px 0 rgba(178, 128, 0, 0.22);">
           <div class="card-body little-profile text-center">
-            <div class="pro-img"><img src="images/icons/profile.png" alt="profile image" class="">
+            <div class="pro-img"><img src="{{Auth::user()->img?url(Auth::user()->img):url('images/icons/profile.png')}}" alt="profile image" class=""  height="150px" width="150px">
             </div>
           <h3 class="pb-2 profile-name">{{@$fname}} {{@$lname}}</h3>
           <hr>
             <div class="row">
-              <div class="col-md-6 col-sm-12 col-6 border-right"><small><b>Mobile Number: </b></small><br><p style="display: inline-block;"> <span class="pending status_label">No mobile number</span><p></div>
+              <div class="col-md-6 col-sm-12 col-6 border-right"><small><b>Mobile Number: </b></small><br><p style="display: inline-block;"> <span class="pending status_label">{{!empty(Auth::user()->mobile_number)?Auth::user()->mobile_number:'No mobile number'}}</span><p></div>
               <div class="col-md-6 col-sm-12 col-6"><small><b>KYC Status: </b></small><br> <p style="display: inline-block;"><span class="pending status_label">No Document</span></p></div>
             </div>
         </div>
@@ -348,7 +348,10 @@
           <li class="nav-item"> <a class="nav-link " href="{{url('user_profile')}}?tab=2" role="tab">Profile</a>
           </li>
           <li class="nav-item"> <a class="nav-link " href="{{url('user_setting')}}?tab=3" role="tab">Settings</a>
-          </li>        </ul>
+          </li>
+          <li class="nav-item"> <a class="nav-link "  href="{{url('change_password')}}?tab=4" role="tab">Change Password</a>
+          </li>       
+      </ul>
         <!-- Tab panes -->
         <div class="tab-content">        <!-- ***************************** KYC section ******************************* -->
           <div class="tab-pane active" id="kyc" role="tabpanel">
