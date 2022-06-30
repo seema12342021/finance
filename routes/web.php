@@ -58,8 +58,5 @@ Route::middleware("UserAuth")->group(function(){
     Route::get('/transaction',[TransactionController::class ,'index']);
 });
 
- Route::get('/sa',[HomepageController::class ,'index']);
- Route::post('/ass',[SignupController::class , 'saveSignUp']);
- Route::post('ssd',[LoginController::class,'user_login']);
 
     
