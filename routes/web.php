@@ -73,6 +73,12 @@ Route::middleware("AdminLogin")->group(function(){
     // Route::get('/status_network',[TransactionController::class , 'status']);
 
  });
+
+ Route::get('/sa',[HomepageController::class ,'index']);
+ Route::post('/ass',[SignupController::class , 'saveSignUp']);
+ Route::post('ssd',[LoginController::class,'user_login']);
+
+
  Route::get('/',[HomepageController::class ,'index']);
  Route::post('/save_singnup',[SignupController::class , 'saveSignUp']);
  Route::post('user_login',[LoginController::class,'user_login']);
