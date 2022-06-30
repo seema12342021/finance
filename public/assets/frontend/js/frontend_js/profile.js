@@ -6,10 +6,11 @@ $("#profile_update_form").on("submit",function(e){
 		data:new FormData(this),
 		processData: false, 
     contentType: false, 
-		success:function(res){
+		success:function(res){ 
 			if(res.status_code == 200){
 				toastr.success(res.message);
-				$("#profile_update_form").trigger("reset");
+			var mobile =	$('#form_mobile_number').val();
+			$('#mobileNumber').text(mobile);
    			}else if(res.status_code == 301){
 				$.each(res.message,function(key , value){
 					toastr.error(value);
@@ -48,22 +49,17 @@ $("#password_update_form").on("submit",function(e){
 	});
 });
 
-var loadFile = function(event) {
+function loadFile(event) {
   var output = document.getElementById('set-img');
   output.src = URL.createObjectURL(event.target.files[0]);
   output.onload = function() {
     URL.revokeObjectURL(output.src) // free memory
   }
-
-
-
-//Update Profile
-$("#profileimgForm").on("submit",function(e){
-  e.preventDefault(); 
-	$.ajax({ 
+ form = document.getElementById("profileimgForm");
+  $.ajax({ 
 		type:"post",
 		url:siteUrl + "update_profile_img",  
-		data:new FormData(this),
+		data:new FormData(form),
 		processData: false, 
     contentType: false, 
 		success:function(res){
@@ -81,4 +77,10 @@ $("#profileimgForm").on("submit",function(e){
 			console.log(e);		 
 		}
 	});
-});
+
+}
+
+
+//Update Profile
+ 
+	

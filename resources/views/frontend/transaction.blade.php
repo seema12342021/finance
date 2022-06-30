@@ -99,8 +99,8 @@
                         <!-- Comment -->
                         <!-- ============================================================== -->
                     <div class="btn-list">
-                        <li><a class="btn nav-btn user-url" href="dashboard">Dashboard</a></li>
-                        <li><a class="btn nav-btn user-url" href="transaction/index?ttype=BUY">Transactions</a></li>                      </div>
+                        <li><a class="btn nav-btn user-url" href="{{url('user-dashboard')}}">Dashboard</a></li>
+                        <li><a class="btn nav-btn user-url" href="{{url('transaction')}}">Transactions</a></li>                      </div>
                         <li class="nav-item dropdown"> 
                          
                         </li>

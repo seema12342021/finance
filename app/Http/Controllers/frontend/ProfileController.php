@@ -10,7 +10,7 @@ use Validator;
 
 class ProfileController extends Controller
 {
-    public function index()
+    public function index() 
     {
         $users['fname'] = Auth::user()->first_name;
         $users['lname'] = Auth::user()->last_name;
@@ -26,14 +26,14 @@ class ProfileController extends Controller
     {
          $users['fname'] = Auth::user()->first_name;
         $users['lname'] = Auth::user()->last_name;
-        $users['setting'] = User::where(['id'=>Auth::user()->id])->first(['first_name','last_name','email']);
+        $users['setting'] = User::where(['id'=>Auth::user()->id])->first(['first_name','last_name','email','mobile_number']);
         return view('frontend.setting', $users);
     }
      public function UpdateProfile(Request $request){
         $validated = Validator::make($request->all(),[
             'form_first_name'=>'required',
             'form_last_name'=>'required',
-            'form_mobile_number'=>'required'
+            'form_mobile_number'=>'required|digits:10'
 
         ]);
          if($validated->passes()){
@@ -83,9 +83,8 @@ class ProfileController extends Controller
     }
     //change profile image
      public function UpdateProfileimg(Request $request)
-    {
-        dd($_FILES);
-          $validated = Validator::make($request->all());
+    { 
+         $validated = Validator::make($request->all(),['profile_img'=>'required']);
           if($validated->passes()){
              $file = $request->file('profile_img'); 
              $fileName = url('uploads/profileimg').'/'.time().'.'.$file->getClientOriginalName();  

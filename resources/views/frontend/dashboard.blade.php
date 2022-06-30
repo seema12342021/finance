@@ -168,8 +168,8 @@
                     <div class="btn-list">
                         <!-- Custom width modal -->                     <!--  <button type="button" class="btn nav-btn" onclick="location.href='/dashboard'">Dashboard</button>
                         <button type="button" class="btn nav-btn" onclick="location.href='/transaction/index?ttype=BUY'">Transactions</button> -->
-                        <li><a class="btn nav-btn user-url" href="dashboard">Dashboard</a></li>
-                        <li><a class="btn nav-btn user-url" href="transaction/index?ttype=BUY">Transactions</a></li>                      </div>
+                        <li><a class="btn nav-btn user-url" href="{{url('user-dashboard')}}">Dashboard</a></li>
+                        <li><a class="btn nav-btn user-url" href="{{url('transaction')}}">Transactions</a></li>                      </div>
                         <li class="nav-item dropdown"> 
                          
                         </li>
@@ -194,9 +194,9 @@
                                 <span class="oval-inner">{{@$fname.@$lname}}</span>&nbsp <i class="fa fa-caret-down"></i>
                             </a>
                             <div class="dropdown-menu mailbox dropdown-menu-right scale-up">
-                                <ul class="dropdown-user list-style-none">                                    <li class="user-list"><a class="px-3 py-2" href="profile?tab=1"><i class="ti-user"></i> User Profile</a></li>
+                                <ul class="dropdown-user list-style-none">                                     <li class="user-list"><a class="px-3 py-2" href="{{url('user_profile')}}?tab=1"><i class="ti-user"></i> User Profile</a></li>
                                     <li role="separator" class="dropdown-divider"></li>                                   
-                                    <li class="user-list"><a class="px-3 py-2" href="logout"><i class="fa fa-power-off"></i> Logout</a></li>
+                                    <li class="user-list"><a class="px-3 py-2" href="{{url('user_logout')}}"><i class="fa fa-power-off"></i> Logout</a></li>
                                 </ul>
                             </div>
                         </li>                    </ul>
@@ -492,6 +492,7 @@
                             <div class="tab-content">
                                 <div class="tab-pane active" id="home2" role="tabpanel">
                                     <div class="p-3">
+
                                         <form class="pl-3 pr-3" id="buySubmit">
 
                                              <h3>Payment Methods</h3>
@@ -549,14 +550,6 @@
                                     <div class="p-3">
                                          <form class="pl-3 pr-3" method="POST">
                                              <h3>Payment Methods</h3>
-                                                    <div class="form-radio select-payment">
-                                                     <label class="form-group-payment col-lg-3 col-md-3 mb-3" for="radio_b1">
-                                                           <input name="form_payment_method" type="radio" id="radio_b1" value="UPI" class="with-gap radio-col-orange" >
-                                                            <label class="label-small" for="radio_b1">UPI</label>
-                                                    </label>                                                    <label class="form-group-payment col-lg-5 col-md-5 mb-3 disabled custom-tooltip" for="radio_b3" data-placement="right" data-toggle="tooltip" title="To choose this option, Update your bank details in profile section">
-                                                           <input name="form_payment_method" type="radio" id="radio_b3" class="with-gap radio-col-orange" disabled>
-                                                            <label class="label-small" for="radio_b3">Bank Account</label>
-                                                    </label>                                              </div>
                                                 <h3 class="price"><span>1 USDT is Roughly</span> 78.43 <i>INR</i></h3>
                                                 <div class="inputParent">
         

@@ -4,8 +4,6 @@ function divide(){
 	var total =0;
 
 	total=Number(price)/Number(usdt);
-	
-
 	//total=Number(usdt)/Number(price);
 
 	$('#form_crypto_amount_buy').val(total.toFixed(2));
@@ -15,6 +13,8 @@ function divide(){
 	 $("#tether_receive").html(total.toFixed(2));
 	 $("#total_payble").html((Number(total.toFixed(2))+Number(network_fees)+Number(id_fees)).toFixed(2));
 	}
+
+	$('#form_crypto_amount_buy').val(total);
 }
 
 function multiply(){
