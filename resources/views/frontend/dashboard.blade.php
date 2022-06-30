@@ -387,7 +387,8 @@
   </div>
   <div class="main-container">
     <div class="row">
-       <div class="col-lg-7 col-md-7 mb-3">                              <div class="card message-card">
+       <div class="col-lg-7 col-md-7 mb-3">
+                             <div class="card message-card">
                                 <div class="card-body">
                                   <div class="no-block">
                                      <h3 class="card-title">Please verify your account</h3>
@@ -491,7 +492,7 @@
                             <div class="tab-content">
                                 <div class="tab-pane active" id="home2" role="tabpanel">
                                     <div class="p-3">
-                                        <form class="pl-3 pr-3" method="POST">
+                                        <form class="pl-3 pr-3" id="buySubmit">
 
                                              <h3>Payment Methods</h3>
                                                 <div class="form-radio select-payment">                                                      <label class="form-group-payment col-lg-3 col-md-6 col-xs-6 col-sm-4 mb-3" for="radio_s1">
@@ -503,7 +504,7 @@
                                                            <label class="label-small" for="radio_s3">Bank Account</label>
                                                       </label>                                                </div>
 
-                                                <h3 class="price"><span>1 USDT is Roughly</span><b id="usdt-price">83.92</b> <i>INR</i></h3>
+                                                <h3 class="price"><span>1 USDT is Roughly</span><b id="usdt-price">{{((@$commision_buy->fees / 100) * 83.92)+83.92}}</b> <i>INR</i></h3>
                                                 <div class="inputParent">
                                                     <div class="inputBox">
                                                         <div class="input_label">
@@ -535,7 +536,7 @@
                                                 <div class="exChange mb-3">
 
                                                     <!-- <button type="submit"  id="BuyExchange">Exchange</button> -->
-                                                    <a href="{{url('checkout')}}">Exchange</a>
+                                                    <button type="button" onclick="pageredirect()">Exchange</button>
 
                                                     {{-- <button type="submit" onblur="divide()" id="BuyExchange">Exchange</button> --}}
                                                     <!--<a href="checkout">Exchange</a>-->
@@ -683,20 +684,16 @@
       <script src="lib/toastr/toastr.min.js"></script>
        <script src="lib/widget/js/widget-data.js"> </script>
       <script type="text/javascript">
-        var require = {
-          baseUrl: '/',        urlArgs: 'a40e5a35',          deps: [    "js/component/Dashboard",
-    "js/component/PageMsg",
-    "js/component/UserProfile",
-],
-          config: {
-              'js/component/Application':{"Level":{"Level":"Live"},"User":{"u_name":"mailtoashusingh1@gmail.com","f_name":"Ashu","u_id":1127},"StaticDomain":"http:\/\/static.noriapay.com","Page_MsgErrors":[],"Page_MsgInfo":[],"Page_MsgWarning":[],"Page_MsgSuccess":[]},    'js/component/Dashboard':{"exchange_rate_buy":83.92,"exchange_rate_sell":78.43},
-          }
-        };          //   $('#dashboard').DataTable({
+        
+                  //   $('#dashboard').DataTable({
 //       "searching": false
 // });
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
+user_email = "{{Auth::user()->email}}";
+user_name = "{{Auth::user()->first_name}}";
+user_id = "{{Auth::user()->id}}";
         </script>
         <script src='js/require.js'></script>
          <script src="{{url('assets/frontend/js/frontend_js/payment.js')}}"></script>

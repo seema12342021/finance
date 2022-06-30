@@ -93,6 +93,7 @@ Route::middleware("UserAuth")->group(function(){
     Route::post('/update_password',[ProfileController::class ,'UpdatePassword']);
     Route::post('/update_profile_img',[ProfileController::class ,'UpdateProfileimg']);
     Route::get('/transaction',[TxnController::class ,'index']);
+    Route::post('/saveTransaction',[CheckoutController::class ,'saveTransaction']);
 });
 
 
