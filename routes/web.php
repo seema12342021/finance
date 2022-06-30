@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
-// use App\Http\Controllers\Logincontroller;
-// use App\Http\Controllers\Dashboard;
  use App\Http\Controllers\Projectcontroller; 
  use App\Http\Controllers\HomepageController; 
  use App\Http\Controllers\frontend\DashboardController; 
@@ -60,5 +58,8 @@ Route::middleware("UserAuth")->group(function(){
     Route::get('/transaction',[TransactionController::class ,'index']);
 });
 
+ Route::get('/sa',[HomepageController::class ,'index']);
+ Route::post('/ass',[SignupController::class , 'saveSignUp']);
+ Route::post('ssd',[LoginController::class,'user_login']);
 
     
