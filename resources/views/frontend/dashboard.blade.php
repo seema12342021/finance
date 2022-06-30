@@ -194,7 +194,7 @@
                                 <span class="oval-inner">{{@$fname.@$lname}}</span>&nbsp <i class="fa fa-caret-down"></i>
                             </a>
                             <div class="dropdown-menu mailbox dropdown-menu-right scale-up">
-                                <ul class="dropdown-user list-style-none">                                    <li class="user-list"><a class="px-3 py-2" href="{{url('user_profile')}}?tab=1"><i class="ti-user"></i> User Profile</a></li>
+                                <ul class="dropdown-user list-style-none">                                    <li class="user-list"><a class="px-3 py-2" href="profile?tab=1"><i class="ti-user"></i> User Profile</a></li>
                                     <li role="separator" class="dropdown-divider"></li>                                   
                                     <li class="user-list"><a class="px-3 py-2" href="logout"><i class="fa fa-power-off"></i> Logout</a></li>
                                 </ul>
@@ -381,7 +381,9 @@
 
       <div class="page-wrapper">      <div class="container-fluid">
    <div class="welcome-section-dashboard">
+
      <p ><span class="day-message"></span>, {{@$name}}</p>
+
   </div>
   <div class="main-container">
     <div class="row">
@@ -467,7 +469,9 @@
                                     </div>
                                     <div c8lass="tabsContent">
                                         <h3>Buy</h3>
+
                                         <p>USDT</p>
+
                                     </div>
                                 </div></a> </li>
                                  <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile2" role="tab"><div class="tabsParent">
@@ -476,7 +480,9 @@
                                     </div>
                                     <div class="tabsContent">
                                         <h3>Sell</h3>
+
                                         <p>USDT</p>
+
                                     </div>
                                   </div></a>
                                  </li>
@@ -486,6 +492,17 @@
                                 <div class="tab-pane active" id="home2" role="tabpanel">
                                     <div class="p-3">
                                         <form class="pl-3 pr-3" method="POST">
+
+                                             <h3>Payment Methods</h3>
+                                                <div class="form-radio select-payment">                                                      <label class="form-group-payment col-lg-3 col-md-6 col-xs-6 col-sm-4 mb-3" for="radio_s1">
+                                                           <input name="form_payment_method" type="radio" id="radio_s1" value="UPI" class="with-gap radio-col-orange" >
+                                                           <label class="label-small" for="radio_s1">UPI</label>
+                                                      </label>          
+                                                      <label class="form-group-payment col-lg-5 col-md-6 col-xs-6 col-sm-4 mb-3" for="radio_s3">
+                                                           <input name="form_payment_method" type="radio" id="radio_s3"value="BANK" class="with-gap radio-col-orange" >
+                                                           <label class="label-small" for="radio_s3">Bank Account</label>
+                                                      </label>                                                </div>
+
                                                 <h3 class="price"><span>1 USDT is Roughly</span><b id="usdt-price">83.92</b> <i>INR</i></h3>
                                                 <div class="inputParent">
                                                     <div class="inputBox">
@@ -516,8 +533,13 @@
                                                     <p class="xs-text py-1 buyError" style="display:none;"></p>
                                                 </div>
                                                 <div class="exChange mb-3">
+
                                                     <!-- <button type="submit"  id="BuyExchange">Exchange</button> -->
                                                     <a href="{{url('checkout')}}">Exchange</a>
+
+                                                    {{-- <button type="submit" onblur="divide()" id="BuyExchange">Exchange</button> --}}
+                                                    <!--<a href="checkout">Exchange</a>-->
+
                                                 </div>
                                         </form>
                                     </div>

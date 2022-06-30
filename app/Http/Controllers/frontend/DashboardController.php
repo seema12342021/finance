@@ -14,6 +14,6 @@ class DashboardController extends Controller
         $users['fname'] = substr(Auth::user()->first_name,0,1);
         $users['lname'] = substr(Auth::user()->last_name,0,1);
         $users['name'] = Auth::user()->first_name;
-    return view('frontend.dashboard',$users);
+        return view('frontend.dashboard',$users);
     }
 }

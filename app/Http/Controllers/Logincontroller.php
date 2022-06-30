@@ -9,6 +9,7 @@ use Validator;
 class Logincontroller extends Controller
 {
     public function login(Request $request){
+
     	$validated = Validator::make($request->all(),[
             'email'=>'required',
             'password'=>'required',

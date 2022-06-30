@@ -126,6 +126,7 @@
               </p>
             </a>
           </li>
+<<<<<<< HEAD
           <li class="nav-item">
             <a href="{{url('project')}}" class="nav-link {{ Request::is('project') ? 'active' : '' }}">
               <i class="nav-icon fas fa-th"></i>
@@ -135,6 +136,62 @@
               </p>
             </a>
           </li>
+=======
+
+          
+          <li class="nav-item {{ Request::is('commision')||Request::is('network') ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link {{ Request::is('commision')||Request::is('network') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-table"></i>
+                <p>
+            Fees
+              <i class="fas fa-angle-left right"></i>
+                </p>
+            </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="pages/tables/simple.html" class="nav-link"><a href="{{url('commision')}}" class="nav-link {{ Request::is('commision') ? 'active' : '' }}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Commision</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{url('network')}}" class="nav-link {{ Request::is('network') ? 'active' : '' }}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Network</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+            </li>
+
+
+            <li class="nav-item {{ Request::is('transactionSell')||Request::is('transactionBuy') ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link {{ Request::is('transactionSell')||Request::is('transactionBuy') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-table"></i>
+                <p>
+            Transaction
+              <i class="fas fa-angle-left right"></i>
+                </p>
+            </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="pages/tables/simple.html" class="nav-link"><a href="{{url('transactionBuy')}}" class="nav-link {{ Request::is('transactionBuy') ? 'active' : '' }}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Buy</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{url('transactionSell')}}" class="nav-link {{ Request::is('transactionSell') ? 'active' : '' }}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Sell</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+            </li>
+
+
+>>>>>>> origin/harsh
           <li class="nav-item">
             <a href="{{url('logout')}}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
