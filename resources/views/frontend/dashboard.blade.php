@@ -387,7 +387,8 @@
   </div>
   <div class="main-container">
     <div class="row">
-       <div class="col-lg-7 col-md-7 mb-3">                              <div class="card message-card">
+       <div class="col-lg-7 col-md-7 mb-3">
+                             <div class="card message-card">
                                 <div class="card-body">
                                   <div class="no-block">
                                      <h3 class="card-title">Please verify your account</h3>
@@ -425,16 +426,40 @@
                                           </div>
                                     </div>-->
         
-                             <div class="slimScrollDiv" >
-                                <div class="month-table dashboard-table" >
-                                    <div class="table-responsive " style="">      <div class="table-responsive">
+ <div class="slimScrollDiv" >
+    <div class="month-table dashboard-table" >
+        <div class="table-responsive " style="">     
+         <div class="table-responsive">
 
-        <table class="table table-hover table-striped table-bordered" id="dashboard">
-          <thead class="">
-            <tr>        <th>TYPE</th>        <th>DATE</th>        <th>RATE</th>        <th>INR</th>        <th>TETHER</th>        <th>STATUS</th>        <th> </th>        </tr>
-      </thead>        <tbody >        <tr>            <td class="text-left"><img src="images/icons/oval_sell.png" /> &nbsp<b>Sell</b></td>            <td class="text-left">2022-06-27</td>            <td class="text-left">78.38</td>            <td class="text-left">7838.00</td>            <td class="text-left">100.00</td>            <td class="text-left"><span class="grey status_label">EXPIRED</span></td>            <td class="text-right"><a data-toggle="tooltip"  class="custom-tooltip" href="transaction/view%3Fid=1040&ttype=SELL" data-placement="bottom" data-id="" data-original-title="Details"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>			             </tr>        <tr>            <td class="text-left"><img src="images/icons/oval_sell.png" /> &nbsp<b>Sell</b></td>            <td class="text-left">2022-06-27</td>            <td class="text-left">78.37</td>            <td class="text-left">39185.00</td>            <td class="text-left">500.00</td>            <td class="text-left"><span class="grey status_label">EXPIRED</span></td>            <td class="text-right"><a data-toggle="tooltip"  class="custom-tooltip" href="transaction/view%3Fid=1039&ttype=SELL" data-placement="bottom" data-id="" data-original-title="Details"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>			             </tr>        <tr>            <td class="text-left"><img src="images/icons/oval_sell.png" /> &nbsp<b>Sell</b></td>            <td class="text-left">2022-06-27</td>            <td class="text-left">78.37</td>            <td class="text-left">39175.00</td>            <td class="text-left">500.00</td>            <td class="text-left"><span class="grey status_label">EXPIRED</span></td>            <td class="text-right"><a data-toggle="tooltip"  class="custom-tooltip" href="transaction/view%3Fid=1038&ttype=SELL" data-placement="bottom" data-id="" data-original-title="Details"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>			             </tr>   </tbody>
-  </table>
- </div>    
+                <table class="table table-hover table-striped table-bordered" id="dashboard">
+                  <thead class="">
+                    <tr>       
+                     <th>TYPE</th>        
+                     <th>DATE</th>       
+                     <th>RATE</th>        
+                     <th>INR</th>        
+                     <th>TETHER</th>        
+                     <th>STATUS</th>        
+                     <th> </th>        
+                 </tr>
+              </thead>        
+              <tbody >
+              @if(!empty($transaction))   
+              @foreach($transaction as $Key=>$value)     
+                <tr>            
+                    <td class="text-left"><img src="{{$value->payment_type == 1?'images/icons/oval_sell.png':'images/icons/oval_buy.png'}}" /> &nbsp<b>{{$value->payment_type == 1?'Sell':'Buy'}}</b></td> 
+                    <td class="text-left">{{date('d/m/Y',strtotime($value->created_at))}}</td>            
+                    <td class="text-left">{{$value->crypto_price}}</td>            
+                    <td class="text-left">{{$value->total_inr_price}}</td>            
+                    <td class="text-left">{{$value->crypto_price}}</td>           
+                    <td class="text-left"><span class="grey status_label">{{$value->status}}</span></td>            
+                    <td class="text-right"><a data-toggle="tooltip"  class="custom-tooltip" href="transaction/view%3Fid=1040&ttype=SELL" data-placement="bottom" data-id="" data-original-title="Details"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>			             
+                </tr>
+             @endforeach
+             @endif        
+            </tbody>
+          </table>
+         </div>    
                                         <!--<nav aria-label="Page navigation example">
                                             <br><br>
                                             <ul class="pagination float-right">
@@ -491,8 +516,20 @@
                             <div class="tab-content">
                                 <div class="tab-pane active" id="home2" role="tabpanel">
                                     <div class="p-3">
-                                        <form class="pl-3 pr-3" method="POST">
-                                                <h3 class="price"><span>1 USDT is Roughly</span><b id="usdt-price">83.92</b> <i>INR</i></h3>
+
+                                        <form class="pl-3 pr-3" id="buySubmit">
+
+                                             <h3>Payment Methods</h3>
+                                                <div class="form-radio select-payment">                                                      <label class="form-group-payment col-lg-3 col-md-6 col-xs-6 col-sm-4 mb-3" for="radio_s1">
+                                                           <input name="form_payment_method" type="radio" id="radio_s1" value="UPI" class="with-gap radio-col-orange" >
+                                                           <label class="label-small" for="radio_s1">UPI</label>
+                                                      </label>          
+                                                      <label class="form-group-payment col-lg-5 col-md-6 col-xs-6 col-sm-4 mb-3" for="radio_s3">
+                                                           <input name="form_payment_method" type="radio" id="radio_s3"value="BANK" class="with-gap radio-col-orange" >
+                                                           <label class="label-small" for="radio_s3">Bank Account</label>
+                                                      </label>                                                </div>
+
+                                                <h3 class="price"><span>1 USDT is Roughly</span><b id="usdt-price">{{((@$commision_buy->fees / 100) * 83.92)+83.92}}</b> <i>INR</i></h3>
                                                 <div class="inputParent">
                                                     <div class="inputBox">
                                                         <div class="input_label">
@@ -524,7 +561,7 @@
                                                 <div class="exChange mb-3">
 
                                                     <!-- <button type="submit"  id="BuyExchange">Exchange</button> -->
-                                                    <a href="{{url('checkout')}}">Exchange</a>
+                                                    <button type="button" onclick="pageredirect()">Exchange</button>
 
                                                     {{-- <button type="submit" onblur="divide()" id="BuyExchange">Exchange</button> --}}
                                                     <!--<a href="checkout">Exchange</a>-->
@@ -664,20 +701,16 @@
       <script src="lib/toastr/toastr.min.js"></script>
        <script src="lib/widget/js/widget-data.js"> </script>
       <script type="text/javascript">
-        var require = {
-          baseUrl: '/',        urlArgs: 'a40e5a35',          deps: [    "js/component/Dashboard",
-    "js/component/PageMsg",
-    "js/component/UserProfile",
-],
-          config: {
-              'js/component/Application':{"Level":{"Level":"Live"},"User":{"u_name":"mailtoashusingh1@gmail.com","f_name":"Ashu","u_id":1127},"StaticDomain":"http:\/\/static.noriapay.com","Page_MsgErrors":[],"Page_MsgInfo":[],"Page_MsgWarning":[],"Page_MsgSuccess":[]},    'js/component/Dashboard':{"exchange_rate_buy":83.92,"exchange_rate_sell":78.43},
-          }
-        };          //   $('#dashboard').DataTable({
+        
+                  //   $('#dashboard').DataTable({
 //       "searching": false
 // });
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
+user_email = "{{Auth::user()->email}}";
+user_name = "{{Auth::user()->first_name}}";
+user_id = "{{Auth::user()->id}}";
         </script>
         <script src='js/require.js'></script>
          <script src="{{url('assets/frontend/js/frontend_js/payment.js')}}"></script>

@@ -7,7 +7,6 @@ use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\CommisionFeesController;
 use App\Http\Controllers\NetworkFeesController;
 use App\Http\Controllers\TransactionController;
-// use App\Http\Controllers\Dashboard;
  use App\Http\Controllers\Projectcontroller; 
  use App\Http\Controllers\HomepageController; 
  use App\Http\Controllers\frontend\DashboardController; 
@@ -34,8 +33,8 @@ Route::get('/', function () {
 });
 
 Route::view('admin','admin.login')->name("admin");
-Route::post('admin_login',[Logincontroller::class,'login']);
-Route::get('logout',[Logincontroller::class,'logout']);
+Route::post('admin_login',[AdminLoginController::class,'Adminlogin']);
+Route::get('logout',[AdminLoginController::class,'logout']);
 Route::middleware("AdminLogin")->group(function(){
     Route::get('dashboard',[Dashboard::class,'index']);
     //testimonial
@@ -95,6 +94,11 @@ Route::middleware("UserAuth")->group(function(){
     Route::post('/update_password',[ProfileController::class ,'UpdatePassword']);
     Route::post('/update_profile_img',[ProfileController::class ,'UpdateProfileimg']);
     Route::get('/transaction',[TxnController::class ,'index']);
+    Route::post('/saveTransaction',[CheckoutController::class ,'saveTransaction']);
+    Route::get('/show_transaction',[TxnController::class ,'show_transaction']);
+    Route::get('/show_detail_transaction',[TxnController::class , 'show_detail_transaction'])->name('show_detail_transaction');
+    Route::get('/payment_page',[TxnController::class , 'payment_page']);
+    Route::post('/payment_gateway',[TxnController::class ,'payment_gateway']);
 });
     Route::post('/reset_password',[ResetPasswordController::class ,'ResetPassword']);
     Route::post('/check_otp',[ResetPasswordController::class ,'CheckOtp']);
