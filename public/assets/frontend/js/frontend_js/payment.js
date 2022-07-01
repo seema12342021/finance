@@ -51,6 +51,32 @@ function save_transactions(){
 		success:function(res){
 			if(res.status_code == 200){
 				toastr.success(res.message);
+				window.location.href = "payment_page?id="+res.id;
+			}else if(res.status_code == 301){
+				$.each(res.message,function(key , value){
+					toastr.error(value);
+				});
+			}else if(res.status_code == 201){
+				toastr.error(res.message);
+			}
+		},error:function(e){
+			console.log(e);		 
+		}
+	});
+
+}
+
+function payment(){
+	$.ajaxSetup({
+                  headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+              });
+	$.ajax({ 
+		type:"post",
+		url:"payment_gateway",  
+		data:{'id':id},
+		success:function(res){
+			if(res.status_code == 200){
+				toastr.success(res.message);
 			}else if(res.status_code == 301){
 				$.each(res.message,function(key , value){
 					toastr.error(value);

@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Models\Wallet;
 use App\Models\CommisionFees;
 use App\Models\NetworkFees;
-use App\Models\TransactionBuy;
+use App\Models\Transaction;
 use Validator;
 
 class CheckoutController extends Controller
@@ -39,18 +39,22 @@ class CheckoutController extends Controller
             $row = NetworkFees::where(['is_deleted'=>1,'is_active'=>1,'type'=>1])->first();
            
            
-            $formdata['user_id'] = $request->fees;
-            $formdata['crypto'] = $request->type;
-            $formdata['pay_amount'] = $request->inr+$row->fees+$request->fee;
-            $formdata['receive_amount'] = $request->crypto;
+            $formdata['user_id'] = Auth::user()->id;
+            $formdata['transaction_id'] = 'ET'.md5(Auth::user()->email.time());
+            $formdata['crypto'] = 1;
+            $formdata['total_inr_price'] = $request->inr+$row->fees+$request->fee;
+            $formdata['total_crypto'] = $request->crypto;
+            $formdata['commision'] = $row->fees;
+            $formdata['actual_crypto_price'] = 82.92;
+            $formdata['crypto_price'] = (($row->fees / 100) * 83.92)+83.92;
             $formdata['payment_mode'] = 'upi';
             $formdata['wallet_address'] = $request->w_address;
             $formdata['wallet_id'] = $request->wallet;
             $formdata['payment_status'] = 1;
              
-            $res = TransactionBuy::insertGetId($formdata);
+            $res = Transaction::insertGetId($formdata);
             if($res){
-                return response()->json(['status'=>'sucess','status_code'=>200,'message'=>' Save Successfully !']);
+                return response()->json(['status'=>'sucess','status_code'=>200,'message'=>' Save Successfully !','id'=>$res]);
              }else{
                 return response()->json(['status'=>'error','status_code'=>201,'message'=>"Can't Save !"]);
             }

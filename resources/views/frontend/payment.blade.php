@@ -4,14 +4,13 @@
         <meta charset="UTF-8">
     		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     		<meta http-equiv="x-ua-compatible" content="ie=edge">
+            <meta name="_token" content="{{ csrf_token() }}">
         <meta name="description" content="Buy & Sell Crypto Currencies With Your Local Currency" >
-        <title>NoriaPay > Transactions</title>
+        <title>NoriaPay > Payment</title>
         <title>Material Design Bootstrap</title>
         
         <!-- Bootstrap-4 CSS -->
         <link href="css/bootstrap4/bootstrap.min.css?a40e5a35" rel="stylesheet">
-        <link rel="stylesheet" href="/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-        <link rel="stylesheet" href="/assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 
         <!-- Material Pro Style CSS -->
         <link href="css/Material/style.css?a40e5a35" rel="stylesheet">
@@ -34,8 +33,76 @@
         <!--WIDGET_CSS-->    
       <style type="text/css">
         
+.timer {
+  display: inline;
+  font-size: 13px;
+  margin-top: 0px;
+  font-weight: 600;
+  border-bottom:1px solid #000;
+  color: #000;
+}
+
       </style>
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-6N796RHFE2"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
       
+        gtag('config', 'G-6N796RHFE2');
+      </script>
+      <!-- End Google Analytics pixel code  -->
+
+
+      <!-- Facebook Pixel Code -->
+      <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '184604236524312');
+        fbq('track', 'PageView');
+      </script>
+      <noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=184604236524312&ev=PageView&noscript=1"
+      /></noscript>
+      <!-- End Facebook Pixel Code -->
+
+
+      <!-- Adroll Remarketing Pixel Code -->
+      <script type="text/javascript">
+        adroll_adv_id = "ICZ724TBRBCIFLC6ZBTW4K";
+        adroll_pix_id = "7MFME5DYJZHTHKFGPC3PDN";
+        adroll_version = "2.0";
+    
+        (function(w, d, e, o, a) {
+            w.__adroll_loaded = true;
+            w.adroll = w.adroll || [];
+            w.adroll.f = [ 'setProperties', 'identify', 'track' ];
+            var roundtripUrl = "https://s.adroll.com/j/" + adroll_adv_id
+                    + "/roundtrip.js";
+            for (a = 0; a < w.adroll.f.length; a++) {
+                w.adroll[w.adroll.f[a]] = w.adroll[w.adroll.f[a]] || (function(n) {
+                    return function() {
+                        w.adroll.push([ n, arguments ])
+                    }
+                })(w.adroll.f[a])
+            }
+    
+            e = d.createElement('script');
+            o = d.getElementsByTagName('script')[0];
+            e.async = 1;
+            e.src = roundtripUrl;
+            o.parentNode.insertBefore(e, o);
+        })(window, document);
+        adroll.track("pageView");
+      </script>
+      <!-- End Adroll Remarketing Pixel Code -->
       </head>
       <body>
         <div class="preloader">
@@ -101,8 +168,10 @@
                         <!-- Comment -->
                         <!-- ============================================================== -->
                     <div class="btn-list">
-                        <li><a class="btn nav-btn user-url" href="{{url('user-dashboard')}}">Dashboard</a></li>
-                        <li><a class="btn nav-btn user-url" href="{{url('transaction')}}">Transactions</a></li>                      </div>
+                        <!-- Custom width modal -->                     <!--  <button type="button" class="btn nav-btn" onclick="location.href='/dashboard'">Dashboard</button>
+                        <button type="button" class="btn nav-btn" onclick="location.href='/transaction/index?ttype=BUY'">Transactions</button> -->
+                        <li><a class="btn nav-btn user-url" href="dashboard">Dashboard</a></li>
+                        <li><a class="btn nav-btn user-url" href="transaction/index?ttype=BUY">Transactions</a></li>                      </div>
                         <li class="nav-item dropdown"> 
                          
                         </li>
@@ -121,7 +190,7 @@
                         <!-- ============================================================== -->
                         <!-- Profile -->
                         <!-- ============================================================== -->    
-                       <li class="nav-item ">
+                        <li class="nav-item ">
                             <a class="nav-link dropdown dropdown-toggle waves-effect waves-dark oval" href="" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
                                 <span class="oval-inner">{{@$fname.@$lname}}</span>&nbsp <i class="fa fa-caret-down"></i>
@@ -143,104 +212,118 @@
 
 
 
-      <div class="page-wrapper">      <div class="container-fluid">    <!-- Row -->
-<div class="welcome-section">
-     <h1>Transactions History</h1>
-  </div>
+      <div class="page-wrapper">      <div class="container-fluid">
+        <div class="welcome-section">           <h1>Payment (UPI)</h1>
+       </div>
 <div class="main-container">
-
-  <p id="Page_MsgBox"></p>
-  <div class="card margin-box">
-   <div class="row ">
-      <div class="nav-tabs table-tab col-md-12 ">
-        <ul class="nav profile-tab" role="tablist">
-          <li class="nav-item"> <a class="nav-link {{@$_GET['ttype'] == 1?'active':''}}"  href="?ttype=1" role="tab">Buy</a>
-          </li>
-          <li class="nav-item"> <a class="nav-link {{@$_GET['ttype'] == 2?'active':''}}" href="?ttype=2" role="tab">Sell</a>
-          </li>                      
-        </ul>
-      </div>       
-    </div>
-    <div class="card-body pt-0">
-      <div class="row">
-        <div class="col-lg-12 col-12">
-                      
-          <div class="form-body">                  
+    <div class="row xchange-box">
+      <!-- Column -->
+      <div class="col-lg-1 col-md-1">
             
-          
-            <div class="tab-content">
-
-              <div class="tab-pane active" id="all_buy" role="tabpanel">
- 
-            {{--     <div class="col-lg-12 col-12 px-0">
-                  <div class="input-group footable-filtering-search mt-2"><label class="sr-only">Search</label>
-                    <form method="GET" action="">
-                       <div class="row col-md-12">
-                          <input type="hidden" name="ttype" value="BUY">
-                           <input type="text" class="form-control input-bg col-md-2 col-12 mt-2" name="form_reference_number" value="" placeholder="Search By Ref No.">
-                           <div class="col-md-3 col-12 d-flex  ml-2 mt-2 pm-xs-0">
-                             <p class="small-box"> <span>From</span> <input type="date" name="form_start_date" class="form-control " value="" placeholder="Search">
-                             </p>
-                           </div>
-                           <div class="col-md-3 col-12 d-flex ml-4 mt-2 pm-xs-0">
-                              <p class="small-box"> <span>To</span> 
-                                 <input type="date" name="form_end_date" class="form-control" value="" placeholder="Search">
-                              </p>
-                           </div> 
-                           <div class="col-md-3 col-12 d-flex ml-3 mt-2 pm-xs-0">
-                            <button type="submit" class="btn btn-search" value="submit" id="submit">Search </button>              
-                            <a class="btn btn-refresh footable-show ml-3" href="?ttype=BUY" type="reset"> <i class="fas fa-sync" aria-hidden="true"></i>
-                            </a>
-                          </div>
-                        </div>
-                    </form>
-                  </div>
-                </div>
-                <hr class="p-0">                            
-                <div class="row">
-                  <div class="col-lg-12 col-12">                    <p>Nocxczx transaction to show</p>                  </div>
-                  
-                </div>
-              
-              </div>            
-          </div>
-          </div>
-        </div> --}}
-
-        <div class="col-md-12 mt-4">
-              <div class="card mb-25">
-                    <div class="card-header">
-                        <h6>Commision Table</h6>
-                    </div>
-                    <div class="card-body pt-0 pb-0">
-                        <div class="drag-drop-wrap">
-                            <div class="table-responsive table-revenue w-100 mb-30">
-                                <table class="table mb-0 table-basic" id="transaction_datatable" width="100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Id</th>
-                                            <th>Date</th>
-                                            <th>UserName</th>
-                                            <th>Email</th>
-                                            <th>Tether</th>
-                                            <th>INR</th>
-                                            <th>Wallet Address</th>
-                                            <th>Mode</th>
-                                            <th>Status</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
       </div>
-     
+      <div class="col-lg-10 col-md-12  col-12 px-6 px-xs-15">
+        <div class="card px-2">
+          <div class="card-body pt-0" id="transaction_details">
+            <!-- Tab panes -->
+            <div id="buy_transaction_details">
+
+              <div class="row checkout-exchange payment-heading ">
+                <div class="col-md-2 col-4 pr-0"><p class="box-icon-buy "><i class="fa fa-arrow-up"></i> Buy</p></div>
+                <div class="rounded-title col-md-10 col-12 pt-2">Transaction Reference Number :
+                    <span id="ref_num"> {{@$transaction_detail->transaction_id}}</span> &nbsp <a  class="copy" data-placement="right" onclick="copy_data(ref_num)"><img src="images/icons/copy.png"></a>
+                </div>
+              </div>
+
+              <div class="mt-3"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15"><path fill="#8A8FC0" fill-rule="nonzero" d="M7.5 1.875a5.6 5.6 0 0 1 3.979 1.648A5.6 5.6 0 0 1 13.126 7.5a5.6 5.6 0 0 1-1.648 3.979A5.6 5.6 0 0 1 7.5 13.128a5.6 5.6 0 0 1-3.979-1.648 5.6 5.6 0 0 1-1.647-3.979 5.6 5.6 0 0 1 1.648-3.979A5.6 5.6 0 0 1 7.5 1.876zm0-.938a6.563 6.563 0 1 0 0 13.126A6.563 6.563 0 0 0 7.5.937zm1.875 7.149H7.192a.586.586 0 0 1-.586-.586V4.219a.586.586 0 1 1 1.172 0v2.695h1.597a.586.586 0 1 1 0 1.172z"></path></svg>
+                <span id="transaction_expiry_message"> This transaction window will expire in <p class="timer" id="minutes"></p> <p class="timer" id="seconds"></p></span>
+              </div>
+              <div class="pt-4">
+                <div class="checkout-total col-md-12 col-12">
+                    <div class="row">
+                      <div class="checkout-price-1 text-left col-lg-6 col-md-6 col-6"> Total Payable </div>
+                      <div class="checkout-price-2 text-right col-lg-6 col-md-6 col-6"> {{@$transaction_detail->total_inr_price}} INR</div>
+                    </div>
+                 </div>
+              </div>
+            </div>
+          </div>
+          {{-- <form  enctype="multipart/form-data">    --}}
+                   <div class="card-body">
+              <h4><strong class="title-space"><span class="text-orange">STEP 1 : </span>Transfer Fund to below bank account </strong></h4>
+              
+              <article class=" pt-4">
+                <div class="row">
+                    <div class="form-group col-md-4 col-12 border-right">
+                       <div class="row">
+                         <div class="col-md-9">
+                           <p class="small-text">Bank Name</p>
+                           <p class="text-muted" id="noria_bank_name">ICICI BANK</p>
+                         </div>
+                         <div class="col-md-3 pt-3">
+                           <a class="copy" data-placement="right" onclick="copy_data(noria_bank_name)"><img src="images/icons/copy.png"></a>
+                         </div>
+                       </div>
+                    </div> <!-- form-group.// -->
+    
+                    <div class="form-group col-md-5 col-12 border-right">
+                       <div class="row">
+                           <div class="col-md-10">
+                              <p class="small-text">Account Name</p>
+                              <p class="text-muted" id="noria_bank_account_name">WEBNORIA E-COMMERCE PVT LTD</p>
+                           </div>
+                            <div class="col-md-2 pt-3">
+                                <a  class="copy" data-placement="right" onclick="copy_data(noria_bank_account_name)"><img src="images/icons/copy.png"></a>
+                            </div>
+                       </div>
+                      
+                    </div> <!-- form-group.// -->
+                    
+                    <div class="form-group col-md-3 col-12">
+                        <div class="row">
+                           <div class="col-md-9">
+                               <p class="small-text">A/C Number</p>
+                               <p class="text-muted" id="noria_bank_account_number">777705057770</p>
+                           </div>
+                            <div class="col-md-2 pt-3">
+                                <a  class="copy" data-placement="right" onclick="copy_data(noria_bank_account_number)"><img src="images/icons/copy.png"></a>
+                            </div>
+                       </div>
+                     
+                    </div> <!-- form-group.// -->
+                    
+                    
+                    
+                    
+                  </div>         
+                <hr>
+
+                
+                <div class="row">
+                  <div class="payment-detail col-lg-6 text-left">
+                    <label class="custom-control custom-checkbox mt-1">
+                      <input type="checkbox"  name="form_is_payment_acknowledged" class="custom-control-input" >
+                      <span class="custom-control-label">I HAVE PAID</span>
+                    </label>
+                  </div>
+                  <div class="col-lg-6 text-right">
+        {{-- </form> --}}
+                    <button class="btn btn-success " onclick="payment()">Confirm</button>
+                  </div>   
+                </div> 
+              </article>
+            </div>          
+</div>
+        <div class="pb-5">
+            <p class="checkout-price-1 pb-3"><b>IMPORTANT NOTES :</b></p>
+            <p class="p-text">1. We only accept transfers by IMPS , NEFT & RTGS. CASH DEPOSITS ARE NOT ALLOWED.
+            <p class="p-text"> 2. If you transfer a different amount or deposit funds to different account by mistake , we will not be responsible.</p>
+            <p class="p-text">3. Adding the Transaction Reference Number in your transfer comments is mandatory.</p>
+            <p class="p-text">4. In case of any errors , please write to support@noriapay.com</p>
+        </div>      
+        </div>
+      </div>
     </div>
-   <div class="col-md-12"></div>
+    <div class="col-lg-2 col-md-2"> </div>
   </div>
 </div>		        </div> <!-- Container Fluid close -->
  </div>
@@ -270,12 +353,10 @@
       <!--Datatable_JS-->
       <script src="lib/toastr/toastr.min.js"></script>
        <script src="lib/widget/js/widget-data.js"> </script>
-       <script type="text/javascript" src="/assets\plugins/datatables/jquery.dataTables.min.js"></script>
-          <script type="text/javascript" src="/assets\plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-          <script type="text/javascript" src="/assets\plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-          <script type="text/javascript" src="/assets\plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-      
-        <script src='js/require.js'></script>
-        <script src="{{url('assets/frontend/js/frontend_js/transaction.js')}}"></script>
+       <script src='js/require.js'></script>
+       <script type="text/javascript">
+           id = '{{@$transaction_detail->id}}';
+       </script>
+       <script src="{{url('assets/frontend/js/frontend_js/payment.js')}}"></script>
     </body>
   </html>
