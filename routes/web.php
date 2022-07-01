@@ -101,5 +101,4 @@ Route::middleware("UserAuth")->group(function(){
     Route::get('/reset_password/{hash}',[ResetPasswordController::class ,'PasswordIndex']);
     Route::post('/user_reset_password',[ResetPasswordController::class ,'UpdatePassword']);
 
-
-    
+//added by nandan
