@@ -247,8 +247,10 @@
               </div>
             </div>
           </div>
-          {{-- <form  enctype="multipart/form-data">    --}}
-                   <div class="card-body">
+          <form  enctype="multipart/form-data" action="{{url('payment_gateway')}}" method="post">
+            <div class="card-body">
+              @csrf
+              <input type="hidden" value="{{Request::get('id')}}" name="id">
               <h4><strong class="title-space"><span class="text-orange">STEP 1 : </span>Transfer Fund to below bank account </strong></h4>
               
               <article class=" pt-4">
@@ -306,8 +308,8 @@
                     </label>
                   </div>
                   <div class="col-lg-6 text-right">
-        {{-- </form> --}}
-                    <button class="btn btn-success " onclick="payment()">Confirm</button>
+                    <button class="btn btn-success " type="submit">Confirm</button>
+                </form>
                   </div>   
                 </div> 
               </article>

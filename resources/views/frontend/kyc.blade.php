@@ -17,23 +17,12 @@
         <!-- Favicon Icon -->
         <link rel="icon" href="images/noriapay_extracted_logos/favicon.png" type="image/gif">
 
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
-        <!--SELECT2_CSS-->
-        <!--Chartist_CSS-->
-        <!--Calendar_CSS-->
-        <!--Datatable_CSS-->
+        
         <link href="lib/toastr/toastr.min.css" rel="stylesheet" />
         <!--WIDGET_CSS-->    
-      <style type="text/css">
-        
-
-      </style>
+      <script type="text/javascript">
+          siteUrl = '{{ asset('') }}'
+      </script>
       </head>
       <body>
         <div class="preloader">
@@ -354,29 +343,43 @@
         <div class="tab-content">        <!-- ***************************** KYC section ******************************* -->
           <div class="tab-pane active" id="kyc" role="tabpanel">
             <div class="card-body">
-              <form class="form-horizontal form-material"  method="POST" id="form_profile" action="" enctype="multipart/form-data">
+              <form class="form-horizontal form-material"  id="form_profile">
+                @csrf
                 <div class="form-group">
                   <label class="col-md-12"><span class="title-space">Upload ID Proof</span></label>
                   
                   <p class="col-md-12 small-text pt-2">Please upload any one of the document from the list below</p>
                   <div class="col-md-12 mt-3" id = "kycdetails">
                     <div class="form-group form-radio upload-doc">
-                      <label class="form-group-payment  col-lg-4 col-md-4 mb-3 " for="radio_k1">
-                        <input name="form_kyc_document_type" type="radio" id="radio_k1" value="DRIVING_LICENSE" class="with-gap radio-col-orange" >
+                      <label class="form-group-payment  col-lg-4 col-md-4 mb-3 {{ (@$docs->proof_type == 1) ? 'selected-radio':'disable-radio' }}" for="radio_k1">
+                        <input name="form_kyc_document_type" type="radio" id="radio_k1" value="DRIVING_LICENSE" class="with-gap radio-col-orange" data-id="1">
                         <label class="label-small pt-1" for="radio_k1"><img src="images/icons/contact_2.png" alt="Driving License" class="main-logo" /> Driving License</label>
                       </label>
                       
-                      <label class="form-group-payment col-lg-3 col-md-3 mb-3 " for="radio_k2">
-                        <input name="form_kyc_document_type" type="radio" id="radio_k2" value="PASSPORT" class="with-gap radio-col-orange" >
+                      <label class="form-group-payment col-lg-3 col-md-3 mb-3 {{ (@$docs->proof_type == 2) ? 'selected-radio':'disable-radio' }}" for="radio_k2">
+                        <input name="form_kyc_document_type" type="radio" id="radio_k2" value="PASSPORT" class="with-gap radio-col-orange" data-id="2">
                         <label class="label-small" for="radio_k2"><img src="images/icons/contact_1.png" alt="Passport " class="main-logo" /> Passport</label>
                       </label>
                       
-                      <label class="form-group-payment col-lg-4 col-md-4 mb-3 " for="radio_k3">
-                        <input name="form_kyc_document_type"  type="radio" id="radio_k3" value="AADHAAR_CARD" class="with-gap radio-col-orange" >
+                      <label class="form-group-payment col-lg-4 col-md-4 mb-3 {{ (@$docs->proof_type == 3) ? 'selected-radio':'disable-radio' }}" for="radio_k3">
+                        <input name="form_kyc_document_type"  type="radio" id="radio_k3" value="AADHAAR_CARD" class="with-gap radio-col-orange" data-id="3">
                         <label class="label-small" for="radio_k3"><img src="images/icons/contact.png" alt="AADHAAR_CARD" class="main-logo" /> Aadhaar Card</label>
                       </label>
                     </div>
-                                    
+                    @if($docs)
+                    <div id='document_labels'>
+                          <div class="form-group" id="D-labels">
+                            <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                              <p class="small-text mb-2">Your KYC document-1 : <br><a target="_blank" href="{{ url('uploads/kyc',[@$docs->front_img]) }}">{{ @$docs->front_img }}</a> </p>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                              <p class="small-text mb-2">Your KYC document-2 : <br><a target="_blank" href="{{ url('uploads/kyc',[@$docs->back_img]) }}">{{ @$docs->back_img }}</a> </p>
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+                    @else                
                     <div id="kyc_upload" style='display:none'>
                       <div id="file_format_note">
                         <p style="color:red;font-size: 14px;padding-bottom: 10px;">NOTE : Only (JPEG/PNG/PDF) file types are allowed and MAX size : 10mb</p>
@@ -398,7 +401,7 @@
                        <div class="form-group" id='document_uploads'>
                           <div class="row" >
                             <div class="col-lg-6 col-md-6">
-                              <input style="z-index: 9; opacity: 0; width: 100%; height: 90px; position: absolute; right: 0px; left: 0px; top:0px; margin-right: auto; margin-left: auto;" name="file[]" id="filer_input2" type="file" onchange="showFront(this)">
+                              <input style="z-index: 9; opacity: 0; width: 100%; height: 90px; position: absolute; right: 0px; left: 0px; top:0px; margin-right: auto; margin-left: auto;" name="front_image" id="filer_input2" type="file" onchange="showFront(this)">
                               <div class="upload-input-dragDrop ">
                                 <div class="upload-input-inner row">
                                   <div class="upload-input-icon col-md-3 col-3 pt-3 text-right"><img src="images/icons/camera.png">
@@ -412,7 +415,7 @@
                 		      <label class="file-name-front pb-3"></label>
                             </div>
                             <div class="col-lg-6 col-md-6">
-                              <input style="z-index: 9; opacity: 0; width: 100%; height: 90px; position: absolute; right: 0px; left: 0px; top:0px; margin-right: auto; margin-left: auto;" name="file[]" id="filer_input2" type="file" onchange="showBack(this)">
+                              <input style="z-index: 9; opacity: 0; width: 100%; height: 90px; position: absolute; right: 0px; left: 0px; top:0px; margin-right: auto; margin-left: auto;" name="back_image" id="filer_input2" type="file" onchange="showBack(this)">
                               <div class="upload-input-dragDrop ">
                                 <div class="upload-input-inner row">
                                   <div class="upload-input-icon col-md-3 col-3 pt-3 text-right"><img src="images/icons/camera.png">
@@ -430,44 +433,19 @@
 
                                                
                     </div>
+                    @endif
                   </div>
                 
                   <div class="form-group">
                     <div class="col-lg-12">
                       <div class="row">
-                        <div class="col-lg-6 col-md-7 col-12  pb-xs-3">
-                          <p class="small-text">Phone Number</p>
-                          <div class="input-box ">
-                            <select id="country-code" name="category" class="phone_country">
-                              <option value="+91" selected>IND</option>
-                            </select>
-                            <p id="country-code-value"></p>
-                            <input type="hidden" name="form_county_code" value="">
-                            <input type="text" id='txtPhone'  name="form_mobile_number" value="" class="form-control input-phone col-5" >                            <span id="mobile_number_get_otp" class="button-box mobile_number_vefification">
-                              <a class="btn btn-border" id="send_otp">Send OTP</a>
-                            </span>
+                        
             
-                            <span class="button-box mobile_number_vefification"  id="mobile_number_resend_otp" style="display:none;">
-                              <a class="btn btn-border" id="resend_otp">Resend OTP</a>
-                            </span>
-                          </div>
-                          <p id="spnPhoneStatus" class="small-text"></p>
-                        </div>
-            
-                        <div class="col-md-6 col-12" id="mobile_otp" style="display:none;">
-                          <p class="small-text">Enter OTP</p>
-                          <div class="input-box">
-                            <input type="text" id="form_mobile_otp" name="form_mobile_otp" value="" class="form-control form-control-line">
-            
-                            <span class="button-box">
-                              <a class="btn btn-border" id="verify_otp">Verify OTP</a>
-                            </span>
-                          </div>
-                          <p class="small-text" id="otp_timer" style="color:red;"> </p>
-                        </div>
-                            <div class="form-group col-lg-12 pt-4">
+                        
+                <div class="form-group col-lg-12 pt-4">
                   <button type="submit" class="btn btn-success float-right">Send Details</button>
-                </div>              </form>
+                </div>
+            </form>
             </div>
           </div>
         </div>

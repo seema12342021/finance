@@ -15,9 +15,10 @@ class CreateKycDatasTable extends Migration
     {
         Schema::create('kyc_datas', function (Blueprint $table) {
             $table->id();
-            $table->string('proof_type')->nullable();
-            $table->string('back_img')->nullable();
+            $table->tinyInteger('proof_type')->nullable();
             $table->string('front_img')->nullable();
+            $table->string('back_img')->nullable();
+            $table->integer('user_id')->nullable();
             $table->timestamps();
         });
     }

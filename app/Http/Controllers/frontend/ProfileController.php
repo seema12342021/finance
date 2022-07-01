@@ -5,21 +5,23 @@ namespace App\Http\Controllers\frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
+use App\Models\{User,KycData};
 use Validator;
 
 class ProfileController extends Controller
 {
-    // public function index() 
-    // {
-    //     $users['fname'] = Auth::user()->first_name;
-    //     $users['lname'] = Auth::user()->last_name;
-    //     return view('frontend.user_profile',$users);
-    // }
+    public function index() 
+    {
+        $users['fname'] = Auth::user()->first_name;
+        $users['lname'] = Auth::user()->last_name;
+        return view('frontend.user_profile',$users);
+    }
      public function kyc_index()
     {
         $users['fname'] = Auth::user()->first_name;
         $users['lname'] = Auth::user()->last_name;
+        $kyc_data = KycData::where('user_id',Auth::user()->id)->orderBY('id','DESC')->first();
+        $users['docs'] = $kyc_data;
         return view('frontend.kyc',$users);
     }
      public function setting_index()
@@ -82,12 +84,12 @@ class ProfileController extends Controller
         }
     }
     //change profile image
-     public function UpdateProfileimg(Request $request)
+    public function UpdateProfileimg(Request $request)
     { 
-         $validated = Validator::make($request->all(),['profile_img'=>'required']);
+        $validated = Validator::make($request->all(),['profile_img'=>'required']);
           if($validated->passes()){
              $file = $request->file('profile_img'); 
-             $fileName = url('uploads/profileimg').'/'.time().'.'.$file->getClientOriginalName();  
+             $fileName = 'uploads/profileimg/'.uniqid(time()).'.'.$file->getClientOriginalExtension();  
             $file->move(public_path('uploads/profileimg'), $fileName);
             $formdata['img'] = $fileName;
             $res = User::where('id',Auth::user()->id)->update($formdata);
@@ -100,5 +102,41 @@ class ProfileController extends Controller
           }else{
                 return response()->json(['status'=>'error','status_code'=>301,'message' => $validated->errors()->all() ]);
           }
+    }//end of method
+
+    public function updateKycDeytails(Request $request){
+        $validated = Validator::make($request->all(),[
+                'kyc_type'=>'required',
+                'front_image'=>'required_if:kyc_type,1,2,3|mimes:jpeg,png,pdf',
+                'back_image'=>'required_if:kyc_type,1,2,3|mimes:jpeg,png,pdf'
+            ],
+            [
+                'kyc_type.required' => 'Please Choose on of them !',
+                'front_image.required_if' => 'The front image field is required !',
+                'back_image.required_if' => 'The back image field is required !'
+        ]);
+        if($validated->passes()){
+            $front_image = $request->file('front_image'); 
+            $front_image_name = uniqid(time()).'.'.$front_image->getClientOriginalExtension();;
+            $front_image->move(public_path('uploads/kyc'), $front_image_name);
+            $formdata['front_img'] = $front_image_name;
+            $back_image = $request->file('back_image'); 
+            $back_image_name = uniqid(time()).'.'.$back_image->getClientOriginalExtension();;
+            $back_image->move(public_path('uploads/kyc'), $back_image_name);
+            $formdata['back_img'] = $back_image_name;
+            $formdata['proof_type'] = $request->kyc_type;
+            $formdata['user_id'] = Auth::user()->id;
+            $formdata['created_by'] = Auth::user()->id;
+            $res = KycData::insertGetId($formdata);
+            if($res){
+              return response()->json(['status'=>'sucess','status_code'=>200,'message'=>'Profile Updated !']);
+            }else{
+                return response()->json(['status'=>'error','status_code'=>201,'message'=>"Can't Updated Profile !"]);
+            }
+          }else{
+                return response()->json(['status'=>'error','status_code'=>301,'message' => $validated->errors()->all() ]);
+          }
     }
-}
+
+
+}//end of class

@@ -86,13 +86,14 @@ Route::middleware("AdminLogin")->group(function(){
 Route::middleware("UserAuth")->group(function(){
     Route::get('/user-dashboard',[DashboardController::class ,'index']);
     Route::get('/checkout',[CheckoutController::class ,'index']);
-    //Route::get('/user_profile',[ProfileController::class ,'index']);
+    Route::get('/user_profile',[ProfileController::class ,'index']);
     Route::get('/user_kyc',[ProfileController::class ,'kyc_index']);
     Route::get('/user_setting',[ProfileController::class ,'setting_index']);
     Route::post('/update_profile',[ProfileController::class ,'UpdateProfile']);
     Route::get('/change_password',[ProfileController::class ,'ChangePasswordForm']);
     Route::post('/update_password',[ProfileController::class ,'UpdatePassword']);
     Route::post('/update_profile_img',[ProfileController::class ,'UpdateProfileimg']);
+    Route::post('/update_kyc_details',[ProfileController::class ,'updateKycDeytails']);//added by Nandan bind
     Route::get('/transaction',[TxnController::class ,'index']);
     Route::post('/saveTransaction',[CheckoutController::class ,'saveTransaction']);
     Route::get('/show_transaction',[TxnController::class ,'show_transaction']);

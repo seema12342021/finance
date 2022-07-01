@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Transaction;
+use GuzzleHttp\Client;
 use DataTables; 
 
 class TransactionController extends Controller
@@ -40,7 +41,6 @@ class TransactionController extends Controller
     public function show_transaction(Request $request){
         
         if ($request->ajax()) {
-           //$data = Project::select('*');
             $data=Transaction::query();
             if (@$request->type == 2) {
                 $data = $data->where(['transactions.payment_type'=>2]);
@@ -71,47 +71,90 @@ class TransactionController extends Controller
 
 
      public function payment_gateway(Request $request){
-        // dd($request->id);
-        $users['transaction_detail'] = Transaction::join('wallets','wallets.id','=','transactions.wallet_id')->join('users','users.id','=','transactions.user_id')->join('cryptos','cryptos.id','=','transactions.crypto')->join('statuses','statuses.id','=','transactions.payment_status')->where(['transactions.id'=>$request->id,'transactions.is_deleted'=>1,'transactions.is_active'=>1,'transactions.user_id'=>Auth::user()->id])->orderBy('transactions.id','DESC')->first(['transactions.id','transactions.transaction_id','transactions.total_inr_price','transactions.created_at','transactions.total_crypto','transactions.crypto_price','transactions.payment_mode','transactions.wallet_address','transactions.payment_type','wallets.name as wallet','cryptos.name as crypto','statuses.name as status','users.first_name','users.email']);
-
-        header("Pragma: no-cache");
-header("Cache-Control: no-cache");
-header("Expires: 0");
-//Fetch Value from Form Submitted
-$custname='harsh';
-$custemail='harsh@gmail.com';
-$custmobile='6393228471';
-$custaddressline1='fsfsdf';
-$custaddressline2='fsdfsdfdsf';
-$custaddresscity='fsdfsdfsdf';
-$custaddressstate='fsdfsdfdsfsd';
-$custaddresscountry='sdfdsfdsfsd';
-$custaddresspostalcode='sdfsdfdsfsdf';
-$orderid='fsdfdsfdsfdsfdsf';
-$ordervalue='fsdfsdfdsf';
-//Fetch Value From KP Environment file
-$paramList = array();
-$paramList["KP_ENVIRONMENT"] = 'TEST';
-$paramList["KPMID"] = 'midKey_18977426e35958a';
-$paramList["KPMIDKEY"] = 'midsalt_20dd4f95ce7e370';
-$paramList["TXN_CURRENCY"] = 'INR';
-///Create Customer From API Pass Customer Parameters to https://pispp.kwikpaisa.com/API/v1/CreateCustomer
-$curl = curl_init();
-curl_setopt_array($curl, array(
-  CURLOPT_URL => 'https://pispp.kwikpaisa.com/API/v1/CreateCustomer',
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => '',
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 0,
-  CURLOPT_FOLLOWLOCATION => true,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => array('KP_ENVIRONMENT' => $paramList["KP_ENVIRONMENT"],'KPMID' => $paramList["KPMID"],'KPMIDKEY' => $paramList["KPMIDKEY"],'CUST_NAME' => $custname,'CUST_EMAIL' => $custemail,'CUST_MOBILE' => $custmobile,'CUST_ADDRESS_LINE1' => $custaddressline1,'CUST_ADDRESS_LINE2' => $custaddressline2,'CUST_ADDRESS_CITY' => $custaddresscity,'CUST_ADDRESS_STATE' => $custaddressstate,'CUST_ADDRESS_COUNTRY' => $custaddresscountry,'CUST_ADDRESS_POSTAL_CODE' => $custaddresspostalcode),
-));
-$response = curl_exec($curl);
-curl_close($curl);
-dd($response);
-
-        
+        $users = Transaction::join('wallets','wallets.id','=','transactions.wallet_id')->join('users','users.id','=','transactions.user_id')->join('cryptos','cryptos.id','=','transactions.crypto')->join('statuses','statuses.id','=','transactions.payment_status')->where(['transactions.id'=>$request->id,'transactions.is_deleted'=>1,'transactions.is_active'=>1,'transactions.user_id'=>Auth::user()->id])->orderBy('transactions.id','DESC')->first(['transactions.id','transactions.transaction_id','transactions.total_inr_price','transactions.created_at','transactions.total_crypto','transactions.crypto_price','transactions.payment_mode','transactions.wallet_address','transactions.payment_type','wallets.name as wallet','cryptos.name as crypto','statuses.name as status','users.first_name','users.email','users.mobile_number','users.address_line1','users.address_line2','users.city','users.state','users.country','users.pincode']);
+        if($users){
+            $custname = $users->first_name;
+            $custemail = $users->email;
+            $custmobile = $users->mobile_number;
+            $custaddressline1 = $users->address_line1;
+            $custaddressline2 = $users->address_line2;
+            $custaddresscity = $users->city;
+            $custaddressstate = $users->state;
+            $custaddresscountry = $users->country;
+            $custaddresspostalcode = $users->pincode;
+            $orderid = uniqid();
+            $ordervalue = $users->total_inr_price;
+            $customerIdvalue = false;
+            ///Create Customer From API Pass Customer Parameters toenv('PAYMENT_BASE_URL'). API/v1/CreateCustomer
+            $body = array(
+                'KP_ENVIRONMENT' => env('KP_ENVIRONMENT'),
+                'KPMID' => env('KPMID'),
+                'KPMIDKEY' => env('KPMIDKEY'),
+                'CUST_NAME' => $custname,
+                'CUST_EMAIL' => $custemail,
+                'CUST_MOBILE' => $custmobile,
+                'CUST_ADDRESS_LINE1' => $custaddressline1,
+                'CUST_ADDRESS_LINE2' => $custaddressline2,
+                'CUST_ADDRESS_CITY' => $custaddresscity,
+                'CUST_ADDRESS_STATE' => $custaddressstate,
+                'CUST_ADDRESS_COUNTRY' => $custaddresscountry,
+                'CUST_ADDRESS_POSTAL_CODE' => $custaddresspostalcode
+            );
+            $client = new Client();
+            $res = $client->request('POST', env('PAYMENT_BASE_URL').'API/v1/CreateCustomer',['form_params' => $body]);
+             if($res->getStatusCode() == 200){
+                    $data = $res->getBody();
+                    //Make Variable of Customer ID Received From API Call
+                    $response = json_decode(($data),true);
+                    $CustomerAPIStatus = $response["status"];
+                    if ($CustomerAPIStatus == 'success') {
+                        $customerIdvalue = $response["CUST_KP_ID"];
+                    } else {
+                        return $response;
+                    }
+                }else{
+                    return ['status' =>'error' , 'status_code' => 201 , 'message' => 'Something Went Wrong !'];
+                }
+            if($customerIdvalue){
+                $order_body = array(
+                    'KP_ENVIRONMENT' => env('KP_ENVIRONMENT'),
+                    'KPMID' => env('KPMID'),
+                    'KPMIDKEY' => env('KPMIDKEY'),
+                    'CUST_KP_ID' => $customerIdvalue,
+                    'TXN_CURRENCY' => env('TXN_CURRENCY'),
+                    'TXN_AMOUNT' => $ordervalue,
+                    'ORDER_ID' => $orderid
+                );
+                $client = new Client();
+                $res = $client->request('POST', env('PAYMENT_BASE_URL').'API/v1/Order',['form_params' => $order_body]);
+                 if($res->getStatusCode() == 200){
+                        $data = $res->getBody();
+                        //Make Variable of Customer ID Received From API Call
+                        $OrderDetails = json_decode(($data),true);
+                        $OrderAPIStatus = $OrderDetails["status"];
+                        if ($OrderAPIStatus == 'success') {
+                            $OrderDetails['customerIdvalue'] = $customerIdvalue;
+                            return view('frontend.txn',$OrderDetails);
+                        } else {
+                            return $response;
+                        }
+                    }else{
+                        return ['status' =>'error' , 'status_code' => 201 , 'message' => 'Something Went Wrong !'];
+                    }
+            }
+        }else{
+            return redirect('/');
+        }
+            
     }//end of method
+
+    public function redirectPage(Request $request){
+        if($request->txn_status == 'SUCCESS'){
+            //midorderid
+            //save orderid in database and update status here from order id
+        }
+    }
+
+
+
 }

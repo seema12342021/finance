@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\frontend\TransactionController; 
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('auth:sanctum')->get('/ghjhuser', function (Request $request) {
     return $request->user();
 });
+Route::post('/redirect_page',[TransactionController::class ,'redirectPage']);

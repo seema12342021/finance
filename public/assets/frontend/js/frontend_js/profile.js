@@ -48,6 +48,31 @@ $("#password_update_form").on("submit",function(e){
 		}
 	});
 });
+//update kyc details
+$("#form_profile").on("submit",function(e){
+  e.preventDefault(); 
+	$.ajax({ 
+		type:"post",
+		url:siteUrl + "update_kyc_details",  
+		data:new FormData(this),
+		processData: false, 
+    contentType: false, 
+		success:function(res){
+			if(res.status_code == 200){
+				toastr.success(res.message);
+				location.reload();
+			}else if(res.status_code == 301){
+				$.each(res.message,function(key , value){
+					toastr.error(value);
+				});
+			}else if(res.status_code == 201){
+				toastr.error(res.message);
+			}
+		},error:function(e){
+			console.log(e);		 
+		}
+	});
+});
 
 function loadFile(event) {
   var output = document.getElementById('set-img');
@@ -108,10 +133,10 @@ function loadFile(event) {
       '</div>'+
       '<div>'+
       '<div class="form-group" id="document_uploads">'+
-        '<div class="row" >'+
+        '<input type="hidden" name="kyc_type" value="'+$(this).attr("data-id")+'"><div class="row" >'+
           '<div class="col-lg-6 col-md-6">'+
             '<div class="upload upload-theme-dragdropbox">'+
-              '<input style="cursor:pointer;z-index: 9; opacity: 0; width: 100%; height: 90px; position: absolute; right: 0px; left: 0px; top:0px; margin-right: auto; margin-left: auto;" name="file[]" id="filer_input2" type="file" onchange="showFront(this)">'+
+              '<input style="cursor:pointer;z-index: 9; opacity: 0; width: 100%; height: 90px; position: absolute; right: 0px; left: 0px; top:0px; margin-right: auto; margin-left: auto;" name="front_image" id="filer_input2" type="file" onchange="showFront(this)">'+
               '<div class="upload-input-dragDrop ">'+
                 '<div class="upload-input-inner row">'+
                   '<div class="upload-input-icon col-md-3 col-3 pt-3 text-right"><img src="/images/icons/camera.png">'+
@@ -130,7 +155,7 @@ function loadFile(event) {
           '<div class="col-lg-6 col-md-6">'+
             '<div class="upload upload-theme-dragdropbox">'+
               //'<input style="z-index: 999; opacity: 0; width: 320px; height: 200px; position: absolute; right: 0px; left: 0px; margin-right: auto; margin-left: auto;" name="file[]" id="filer_input2" multiple="multiple" type="file">'+
-              '<input style="cursor:pointer; z-index: 9; opacity: 0; width: 100%; height: 90px; position: absolute; right: 0px; left: 0px; top:0px; margin-right: auto; margin-left: auto;" name="file[]" id="filer_input2" type="file" onchange="showBack(this)">'+
+              '<input style="cursor:pointer; z-index: 9; opacity: 0; width: 100%; height: 90px; position: absolute; right: 0px; left: 0px; top:0px; margin-right: auto; margin-left: auto;" name="back_image" id="filer_input2" type="file" onchange="showBack(this)">'+
               '<div class="upload-input-dragDrop ">'+
                 '<div class="upload-input-inner row">'+
                   '<div class="upload-input-icon col-md-3 col-3 pt-3 text-right"><img src="/images/icons/camera.png">'+
