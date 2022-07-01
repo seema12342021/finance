@@ -281,7 +281,7 @@ $('.nav-btn').filter(function() {
 }).addClass('active-nav');
 */
 
-$(document).ready(function() {
+/*$(document).ready(function() {
     var CurrentUrl= document.URL;
     var CurrentUrlEnd = CurrentUrl.split('/');
 	var FinalUrl = CurrentUrlEnd[4].split('?');
@@ -292,7 +292,7 @@ $(document).ready(function() {
           $(this).addClass('active-nav')
           }
     });
-   });
+   });*/
 
 // ==============================================================
     // This is for User navbar active menu 

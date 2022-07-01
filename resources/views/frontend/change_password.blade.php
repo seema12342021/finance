@@ -131,7 +131,7 @@
                                 <span class="oval-inner ">{{substr(@$fname,0,1).substr(@$lname,0,1)}}</span>&nbsp <i class="fa fa-caret-down"></i>
                             </a>
                             <div class="dropdown-menu mailbox dropdown-menu-right scale-up">
-                                <ul class="dropdown-user list-style-none">                                    <li class="user-list"><a class="px-3 py-2" href="{{url('user_profile')}}"><i class="ti-user"></i> User Profile</a></li>
+                                <ul class="dropdown-user list-style-none">                                    <li class="user-list"><a class="px-3 py-2" href="{{url('user_setting')}}"><i class="ti-user"></i> User Profile</a></li>
                                     <li role="separator" class="dropdown-divider"></li>                                   
                                     <li class="user-list"><a class="px-3 py-2" href="{{url('logout')}}"><i class="fa fa-power-off"></i> Logout</a></li>
                                 </ul>
@@ -349,8 +349,8 @@
         <ul class="nav nav-tabs profile-tab" role="tablist">
           <li class="nav-item"> <a class="nav-link "  href="{{url('user_kyc')}}?tab=1" role="tab">KYC</a>
           </li>
-          <li class="nav-item"> <a class="nav-link " href="{{url('user_profile')}}?tab=2" role="tab">Profile</a>
-          </li>
+          <!-- <li class="nav-item"> <a class="nav-link " href="{{url('user_profile')}}?tab=2" role="tab">Profile</a>
+          </li> -->
           <li class="nav-item"> <a class="nav-link " href="{{url('user_setting')}}?tab=3" role="tab">Settings</a>
           </li>
            <li class="nav-item"> <a class="nav-link active"  href="{{url('change_password')}}?tab=4" role="tab">Change Password</a>
@@ -367,7 +367,7 @@
                                 <p class="col-md-12 small-text">Old Password</p>
                                 <div class="col-md-6">
                                      <div class="input-box">
-                                        <input type="text" name="form_old_password" placeholder="" value="" class="form-control form-control-line">
+                                        <input type="password" name="form_old_password" placeholder="" value="" class="form-control form-control-line">
                                     </div>
                                 </div>
                             </div>
@@ -375,14 +375,14 @@
                                 <p class="col-md-12 small-text">New Password</p>
                                 <div class="col-md-6">
                                      <div class="input-box">
-                                       <input type="text" name="form_new_password"  placeholder="" value="" class="form-control form-control-line">
+                                       <input type="password" name="form_new_password"  placeholder="" value="" class="form-control form-control-line">
                                     </div>
                                 </div> 
                             </div>                            <div class="form-group">
                                 <p class="col-md-12 small-text">Confirm Password</p>
                                 <div class="col-md-6">
                                     <div class="input-box">
-                                       <input type="text" name="form_confirm_password"  placeholder="" value="" class="form-control form-control-line">
+                                       <input type="password" name="form_confirm_password"  placeholder="" value="" class="form-control form-control-line">
                                     </div>
                                 </div>
                              </div>

@@ -15,6 +15,7 @@ use App\Http\Controllers\TransactionController;
  use App\Http\Controllers\frontend\SignupController; 
  use App\Http\Controllers\frontend\CheckoutController; 
  use App\Http\Controllers\frontend\ProfileController; 
+ use App\Http\Controllers\frontend\ResetPasswordController; 
  use App\Http\Controllers\frontend\TransactionController as TxnController; 
 
 /*
@@ -86,7 +87,7 @@ Route::middleware("AdminLogin")->group(function(){
 Route::middleware("UserAuth")->group(function(){
     Route::get('/user-dashboard',[DashboardController::class ,'index']);
     Route::get('/checkout',[CheckoutController::class ,'index']);
-    Route::get('/user_profile',[ProfileController::class ,'index']);
+    //Route::get('/user_profile',[ProfileController::class ,'index']);
     Route::get('/user_kyc',[ProfileController::class ,'kyc_index']);
     Route::get('/user_setting',[ProfileController::class ,'setting_index']);
     Route::post('/update_profile',[ProfileController::class ,'UpdateProfile']);
@@ -95,6 +96,10 @@ Route::middleware("UserAuth")->group(function(){
     Route::post('/update_profile_img',[ProfileController::class ,'UpdateProfileimg']);
     Route::get('/transaction',[TxnController::class ,'index']);
 });
+    Route::post('/reset_password',[ResetPasswordController::class ,'ResetPassword']);
+    Route::post('/check_otp',[ResetPasswordController::class ,'CheckOtp']);
+    Route::get('/reset_password/{hash}',[ResetPasswordController::class ,'PasswordIndex']);
+    Route::post('/user_reset_password',[ResetPasswordController::class ,'UpdatePassword']);
 
 
     

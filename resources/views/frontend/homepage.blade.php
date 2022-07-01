@@ -5,6 +5,7 @@
     		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     		<meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="description" content="Buy & Sell Crypto Currencies With Your Local Currency">
+        <meta name="_token" content="{{ csrf_token() }}">
         <title>ElitPay</title>
         
         <!-- Bootstrap-4 CSS -->
@@ -223,18 +224,22 @@
                         </div>
                         <div class="row mt-3 form-material">
                             <!-- Form -->
-                            <form class="col-lg-12 pl-3 pr-3" action="">
+                            <form class="col-lg-12 pl-3 pr-3" action="" id="forget_password">
                                 <!-- email -->
+                                @CSRF
                                 <div class="form-group row">
                                     <div class="col-12">
-                                        <input name="form_email" id="reset_password_email" class="form-control" type="email" required="" placeholder="Email">
+                                        <input name="email" id="reset_password_email" class="form-control" type="email" required="" placeholder="Email">
+                                    </div>
+                                     <div class="col-12 mt-3">
+                                        <div id="otp_field"></div>
                                     </div>
                                 </div>
                                 <!-- pwd -->
                                 <div class="form-group text-center">
                                     <div class="col-xs-12">
                                        <div class="exChange">
-                                            <a id="reset_password">Reset</a>
+                                        <button type="submit" id="submit_otp" class="btn btn-success">Reset</button>
                                         </div>
                                     </div>
                                 </div>
@@ -648,5 +653,6 @@
         <script src='js/require.js'></script>
         <script src="{{url('assets/frontend/js/frontend_js/signup.js')}}"></script>
         <script src="{{url('assets/frontend/js/frontend_js/login.js')}}"></script>
+         <script src="{{url('assets/frontend/js/frontend_js/forgetpassword.js')}}"></script>
     </body>
 </html>

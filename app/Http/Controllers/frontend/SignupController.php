@@ -7,15 +7,15 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use DB; 
 use Validator; 
-
+ 
 class SignupController extends Controller
-{
+{ 
      public function saveSignUp(Request $request){
             $validated = Validator::make($request->all(),[
             'firstname'=>'required',
             'lastname'=>'required',
             'email'=>'required|regex:/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/|unique:users',
-            'password'=>'required',
+            'password'=>'required|min:8',
             'confirm_password'=>'required|same:password'
            ]);
             if($validated->passes()){

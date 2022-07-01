@@ -10,12 +10,12 @@ use Validator;
 
 class ProfileController extends Controller
 {
-    public function index() 
-    {
-        $users['fname'] = Auth::user()->first_name;
-        $users['lname'] = Auth::user()->last_name;
-        return view('frontend.user_profile',$users);
-    }
+    // public function index() 
+    // {
+    //     $users['fname'] = Auth::user()->first_name;
+    //     $users['lname'] = Auth::user()->last_name;
+    //     return view('frontend.user_profile',$users);
+    // }
      public function kyc_index()
     {
         $users['fname'] = Auth::user()->first_name;
@@ -33,7 +33,7 @@ class ProfileController extends Controller
         $validated = Validator::make($request->all(),[
             'form_first_name'=>'required',
             'form_last_name'=>'required',
-            'form_mobile_number'=>'required|digits:10'
+            'form_mobile_number'=>'required|digits:10|regex:/[0-9]/'
 
         ]);
          if($validated->passes()){
