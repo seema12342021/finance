@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Transaction;
 use GuzzleHttp\Client;
 use DataTables; 
+use App\Models\Wallet;
+use Validator;
 
 class TransactionController extends Controller
 {
@@ -34,8 +36,15 @@ class TransactionController extends Controller
             $users['fname'] = substr(Auth::user()->first_name,0,1);
             $users['lname'] = substr(Auth::user()->last_name,0,1);
             $users['name'] = Auth::user()->first_name;
-            $users['transaction_detail'] = Transaction::join('wallets','wallets.id','=','transactions.wallet_id')->join('users','users.id','=','transactions.user_id')->join('cryptos','cryptos.id','=','transactions.crypto')->join('statuses','statuses.id','=','transactions.payment_status')->where(['transactions.id'=>$request->id,'transactions.is_deleted'=>1,'transactions.is_active'=>1,'transactions.user_id'=>Auth::user()->id])->orderBy('transactions.id','DESC')->first(['transactions.id','transactions.transaction_id','transactions.total_inr_price','transactions.created_at','transactions.total_crypto','transactions.crypto_price','transactions.payment_mode','transactions.wallet_address','transactions.payment_type','wallets.name as wallet','cryptos.name as crypto','statuses.name as status','users.first_name','users.email']);
-            return view('frontend.payment',$users);
+            $users['wallet'] = Wallet::get();
+            $users['transaction_detail'] = Transaction::join('wallets','wallets.id','=','transactions.wallet_id')->join('users','users.id','=','transactions.user_id')->join('cryptos','cryptos.id','=','transactions.crypto')->join('statuses','statuses.id','=','transactions.payment_status')->where(['transactions.id'=>$request->id,'transactions.is_deleted'=>1,'transactions.is_active'=>1,'transactions.user_id'=>Auth::user()->id])->orderBy('transactions.id','DESC')->first(['transactions.id','transactions.payment_type','transactions.transaction_id','transactions.total_inr_price','transactions.created_at','transactions.total_crypto','transactions.crypto_price','transactions.payment_mode','transactions.wallet_address','transactions.payment_type','wallets.name as wallet','cryptos.name as crypto','statuses.name as status','users.first_name','users.email']);
+            if ($users['transaction_detail']->payment_type == 1) {
+                // code...
+                return view('frontend.payment',$users);
+            }else{
+                return view('frontend.payment_sell',$users);
+            }
+
         }
 
     public function show_transaction(Request $request){
@@ -159,6 +168,42 @@ class TransactionController extends Controller
             $res = Transaction::where('transaction_id',$request->midorderid)->update($formdata);
         }
         return redirect('user-dashboard');
+    }
+
+     public function payment_sell(Request $request){
+        $id = $request->post('id');
+        $validator = Validator::make($request->all(),[
+        'wallet'=>'required',
+        'screenshot'=>'required',
+        'IhaveTransfer'=>'required',
+        ]);
+
+        if($validator->passes()) {
+            $last_id = '';
+            
+            $formdata['wallet_id'] = $request->post('wallet');
+            $formdata['updated_by'] = Auth::user()->id;
+            if(!empty($request->file('screenshot'))){
+                    $img = $request->file('screenshot');
+                    $formdata['image'] = url('uploads').'/'.uniqid().'-'.$img->getClientOriginalName(); 
+                    $request->file('screenshot')->move(public_path('uploads'), $formdata['image']);
+            } 
+            $row =Transaction::where('id',$id)->update($formdata);
+    
+                                                           
+            if($row){
+                 
+                    return response()->json(['status'=>1]); 
+            }else{
+                
+                    return response()->json(['status' => 3]);
+            }
+                        
+                        
+                 
+            
+        }    
+        return response()->json(['error'=>$validator->errors()->all(),'status'=>2]);
     }
 
 

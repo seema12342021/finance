@@ -453,7 +453,7 @@
                     <td class="text-left">{{$value->total_inr_price}}</td>            
                     <td class="text-left">{{$value->crypto_price}}</td>           
                     <td class="text-left"><span class="grey status_label">{{$value->status}}</span></td>            
-                    <td class="text-right"><a data-toggle="tooltip"  class="custom-tooltip" href="transaction/view%3Fid=1040&ttype=SELL" data-placement="bottom" data-id="" data-original-title="Details"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>			             
+                    <td class="text-right"><a data-toggle="tooltip"  class="custom-tooltip" href="{{route('show_detail_transaction',['id'=>$value->id])}}" data-placement="bottom" data-id="" data-original-title="Details"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>			             
                 </tr>
              @endforeach
              @endif        

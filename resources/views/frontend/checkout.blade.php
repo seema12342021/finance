@@ -425,7 +425,7 @@
                 <div class="tab-pane  {{!empty(@$data->type)?'':'active'}} " id="buy" role="tabpanel">
                     <div class="p-3">
                         <form class="pl-3 pr-3" method="POST" id="form_buy_transaction" action="">
-                            <input type="hidden" name="payment_type" value="1">
+                            <input type="hidden" class="payment_type" name="payment_type" value="1">
                         
                              <h3 class="price"><span>1 USDT is Roughly</span> <strong id="usdt-price">{{((@$commision_buy->fees / 100) * 83.92)+83.92}} </strong> <i>INR</i></h3>
                              <div class="inputParent">
@@ -498,7 +498,7 @@
             <div class="tab-pane {{!empty(@$data->type)?'active':''}}" id="sell" role="tabpanel">
                 <div class="p-3">
                      <form class="pl-3 pr-3"  method="POST" id="form_sell_transaction" action="">
-                        <input type="hidden" name="payment_type" value="2">
+                        <input type="hidden" class="payment_type" name="payment_type" value="2">
                      
                          <!-- <div class="row">
                              <div class="form-group col-lg-12">
@@ -626,7 +626,7 @@
                   </div>
                 </div>
                 <div class="row">                      <div class="form-group col-lg-12 text-center mt-3">
-                        <button class="btn btn-success float-right" onclick="save_transactions()">Confirm </button>
+                        <button class="btn btn-success float-right" onclick="save_transactions({{!empty(@$data->type)?'2':'1'}})">Confirm </button>
                       </div>                </div>
               </div>
             </div>         </div>

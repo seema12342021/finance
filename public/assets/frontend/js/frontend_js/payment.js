@@ -82,9 +82,9 @@ function pageredirect(type){
 
 function save_transactions(types){
 	if (types == 1) {
-		datas = {'id_fee':id_fees,'inr':$("#form_inr_amount_buy").val(),'crypto':$("#form_crypto_amount_buy").val(),'w_address':$("#form_wallet_address").val(),'tc':$("#tc").val(),'wallet':$('input:radio[name="wallet"]').val(),'payment_mode':$('input:radio[name="form_payment_method"]').val(),};						
+		datas = {'id_fee':id_fees,'inr':$("#form_inr_amount_buy").val(),'crypto':$("#form_crypto_amount_buy").val(),'w_address':$("#form_wallet_address").val(),'tc':$("#tc").val(),'wallet':$('input:radio[name="wallet"]').val(),'payment_mode':$('input:radio[name="form_payment_method"]').val(),'payment_type':$('.payment_type').val()};						
 	}else{
-		datas = {'id_fee':id_fees,'inr':$("#form_inr_amount_sell").val(),'crypto':$("#form_crypto_amount_sell").val(),'w_address':$("#form_upi_address").val(),'tc':$("#tc_sell").val(),'wallet':$('input:radio[name="wallet"]').val(),'payment_mode':$('input:radio[name="form_payment_method"]').val()};
+		datas = {'id_fee':id_fees,'inr':$("#form_inr_amount_sell").val(),'crypto':$("#form_crypto_amount_sell").val(),'w_address':$("#form_upi_address").val(),'tc':$("#tc_sell").val(),'wallet':$('input:radio[name="wallet"]').val(),'payment_mode':$('input:radio[name="form_payment_method"]').val(),'payment_type':$('.payment_type').val()};
 	}
 	$.ajaxSetup({
                   headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
@@ -135,6 +135,64 @@ function payment(){
 	});
 
 }
+
+function payment_sell(){
+	$.ajaxSetup({
+                  headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+              });
+	$.ajax({ 
+		type:"post",
+		url:"payment_gateway",  
+		data:{'id':id},
+		success:function(res){
+			if(res.status_code == 200){
+				toastr.success(res.message);
+			}else if(res.status_code == 301){
+				$.each(res.message,function(key , value){
+					toastr.error(value);
+				});
+			}else if(res.status_code == 201){
+				toastr.error(res.message);
+			}
+		},error:function(e){
+			console.log(e);		 
+		}
+	});
+
+}
+
+function radio_show(id){
+	$('.sh').hide();
+	$('#sh'+id).show();
+}
+
+$('#form_transfer').on('submit',function(e){ 
+      e.preventDefault();  
+      $.ajaxSetup({
+                  headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+              });
+      $.ajax({    
+         url:'/payment_sell',      
+         type:'post',      
+         data:new FormData(this),      
+         dataType:'json', 
+         contentType:false,
+         processData: false,     
+         success:function(response){ 
+            if(response.status == 1){
+               toastr["success"]("data inserted");
+               window.location.href = "user-dashboard";
+            }else if(response.status==2){
+               var dd = response.error ;
+               for(var i=0; i<dd.length;i++){
+                  toastr["error"](dd[i]);
+               }
+            }else if(response.status == 3){
+               toastr["error"]("Couldn't insert right now");
+            }             
+         },
+      })
+   });
 
 
 
