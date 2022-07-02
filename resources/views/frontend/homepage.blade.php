@@ -92,7 +92,7 @@
           <div class="navbar-header">
           <!-- This is for the sidebar toggle which is visible on mobile only -->
          
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="{{url('/')}}">
           <!-- Logo icon -->
           <b class="logo-icon">
           <img src="images/noriapay_extracted_logos/logo_home.png" alt="NoriaPay" class="main-logo">

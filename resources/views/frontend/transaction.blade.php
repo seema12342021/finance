@@ -5,9 +5,8 @@
     		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     		<meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="description" content="Buy & Sell Crypto Currencies With Your Local Currency" >
-        <title>NoriaPay > Transactions</title>
-        <title>Material Design Bootstrap</title>
-        
+        <title>Elite > Transactions</title>
+       
         <!-- Bootstrap-4 CSS -->
         <link href="css/bootstrap4/bootstrap.min.css?a40e5a35" rel="stylesheet">
         <link rel="stylesheet" href="/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
@@ -52,7 +51,7 @@
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
-                    <a class="navbar-brand" href="">
+                    <a class="navbar-brand" href="{{url('/')}}">
                         <!-- Logo icon -->
                         <b class="logo-icon">
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
@@ -247,7 +246,7 @@
 </div> <!-- Main Wrapper Close -->
           
           <footer class="footer">
-          <span class="footer-title-1">&copy; 2022 NoriaPay, All Rights Reserved</span> <span class="footer-title-2"><a target="_blank" href="static/Terms-of-Use-NoriaPay.pdf">Terms of Use </a>  |    <a target="_blank" href="static/Privacy-Policy-NoriaPay.pdf">Privacy Policy </a></span>
+          <span class="footer-title-1">&copy; 2022 Elite, All Rights Reserved</span> <span class="footer-title-2"><a target="_blank" href="static/Terms-of-Use-NoriaPay.pdf">Terms of Use </a>  |    <a target="_blank" href="static/Privacy-Policy-NoriaPay.pdf">Privacy Policy </a></span>
           </footer>
         <!-- Page Wrapper Close -->      
 

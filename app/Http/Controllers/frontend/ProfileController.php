@@ -126,7 +126,7 @@ class ProfileController extends Controller
             $formdata['back_img'] = $back_image_name;
             $formdata['proof_type'] = $request->kyc_type;
             $formdata['user_id'] = Auth::user()->id;
-            $formdata['created_by'] = Auth::user()->id;
+            //$formdata['created_by'] = Auth::user()->id;
             $res = KycData::insertGetId($formdata);
             if($res){
               return response()->json(['status'=>'sucess','status_code'=>200,'message'=>'Profile Updated !']);

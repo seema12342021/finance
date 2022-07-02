@@ -36,17 +36,16 @@ class CheckoutController extends Controller
         
         $validated = Validator::make($request->all(),$valid);
          if($validated->passes()){
-            $row = NetworkFees::where(['is_deleted'=>1,'is_active'=>1,'type'=>1])->first();
-           
-           
+            $row = NetworkFees::where(['is_deleted'=>1,'is_active'=>1,'type'=>1])->first(); 
+            $network_fees = @$row->fees?$row->fees:1;         
             $formdata['user_id'] = Auth::user()->id;
             $formdata['transaction_id'] = 'ET'.md5(Auth::user()->email.time());
             $formdata['crypto'] = 1;
-            $formdata['total_inr_price'] = $request->inr+$row->fees+$request->fee;
+            $formdata['total_inr_price'] = $request->inr+$network_fees+$request->fee;
             $formdata['total_crypto'] = $request->crypto;
-            $formdata['commision'] = $row->fees;
+            $formdata['commision'] = $network_fees;
             $formdata['actual_crypto_price'] = 82.92;
-            $formdata['crypto_price'] = (($row->fees / 100) * 83.92)+83.92;
+            $formdata['crypto_price'] = (($network_fees / 100) * 83.92)+83.92;
             $formdata['payment_mode'] = 'upi';
             $formdata['wallet_address'] = $request->w_address;
             $formdata['wallet_id'] = $request->wallet;

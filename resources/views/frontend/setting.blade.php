@@ -5,8 +5,7 @@
     		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     		<meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="description" content="Buy & Sell Crypto Currencies With Your Local Currency" >
-        <title>NoriaPay > User Profile</title>
-        <title>Material Design Bootstrap</title>
+        <title>Elite > Profile Setting</title>
         
         <!-- Bootstrap-4 CSS --> 
         <link href="css/bootstrap4/bootstrap.min.css?a40e5a35" rel="stylesheet">
@@ -59,12 +58,12 @@
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
-                    <a class="navbar-brand" href="">
+                    <a class="navbar-brand" href="{{url('/')}}">
                         <!-- Logo icon -->
                         <b class="logo-icon">
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
-                            <img src="images/noriapay_extracted_logos/logo_white.png" alt="NoriaPay" class="main-logo" />
+                            <img src="images/noriapay_extracted_logos/logo_white.png" alt="NoriaPay" class="main-logo"/>
                             <!-- Light Logo icon -->
                             <!--<img src="images/noriapay_extracted_logos/SVG/logo_blue_bg.svg" alt="NoriaPay" class="light-logo" />-->
                         </b>
@@ -110,7 +109,7 @@
                     <div class="btn-list">
                         <!-- Custom width modal -->                     <!--  <button type="button" class="btn nav-btn" onclick="location.href='/dashboard'">Dashboard</button>
                         <button type="button" class="btn nav-btn" onclick="location.href='/transaction/index?ttype=BUY'">Transactions</button> -->
-                        <li><a class="btn nav-btn user-url" href="{{url('dashboard')}}">Dashboard</a></li>
+                        <li><a class="btn nav-btn user-url" href="{{url('user-dashboard')}}">Dashboard</a></li>
                         <li><a class="btn nav-btn user-url" href="{{url('transaction')}}">Transactions</a></li>                      </div>
                         <li class="nav-item dropdown"> 
                          
@@ -424,7 +423,7 @@
 </div> <!-- Main Wrapper Close -->
           
           <footer class="footer">
-          <span class="footer-title-1">&copy; 2022 NoriaPay, All Rights Reserved</span> <span class="footer-title-2"><a target="_blank" href="static/Terms-of-Use-NoriaPay.pdf">Terms of Use </a>  |    <a target="_blank" href="static/Privacy-Policy-NoriaPay.pdf">Privacy Policy </a></span>
+          <span class="footer-title-1">&copy; 2022 Elite, All Rights Reserved</span> <span class="footer-title-2"><a target="_blank" href="static/Terms-of-Use-NoriaPay.pdf">Terms of Use </a>  |    <a target="_blank" href="static/Privacy-Policy-NoriaPay.pdf">Privacy Policy </a></span>
           </footer>
         <!-- Page Wrapper Close -->      
 
