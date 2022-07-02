@@ -6,8 +6,7 @@
     		<meta http-equiv="x-ua-compatible" content="ie=edge">
             <meta name="_token" content="{{ csrf_token() }}">
         <meta name="description" content="Buy & Sell Crypto Currencies With Your Local Currency" >
-        <title>NoriaPay > Payment</title>
-        <title>Material Design Bootstrap</title>
+        <title>Elite > Payment</title>
         
         <!-- Bootstrap-4 CSS -->
         <link href="css/bootstrap4/bootstrap.min.css?a40e5a35" rel="stylesheet">
@@ -119,7 +118,7 @@
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
-                    <a class="navbar-brand" href="">
+                    <a class="navbar-brand" href="{{'/'}}">
                         <!-- Logo icon -->
                         <b class="logo-icon">
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
@@ -196,7 +195,7 @@
                                 <span class="oval-inner">{{@$fname.@$lname}}</span>&nbsp <i class="fa fa-caret-down"></i>
                             </a>
                             <div class="dropdown-menu mailbox dropdown-menu-right scale-up">
-                                <ul class="dropdown-user list-style-none">                                     <li class="user-list"><a class="px-3 py-2" href="{{url('user_profile')}}?tab=1"><i class="ti-user"></i> User Profile</a></li>
+                                <ul class="dropdown-user list-style-none">                                     <li class="user-list"><a class="px-3 py-2" href="{{url('user_setting')}}"><i class="ti-user"></i> User Profile</a></li>
                                     <li role="separator" class="dropdown-divider"></li>                                   
                                     <li class="user-list"><a class="px-3 py-2" href="{{url('user_logout')}}"><i class="fa fa-power-off"></i> Logout</a></li>
                                 </ul>
@@ -320,7 +319,7 @@
             <p class="p-text">1. We only accept transfers by IMPS , NEFT & RTGS. CASH DEPOSITS ARE NOT ALLOWED.
             <p class="p-text"> 2. If you transfer a different amount or deposit funds to different account by mistake , we will not be responsible.</p>
             <p class="p-text">3. Adding the Transaction Reference Number in your transfer comments is mandatory.</p>
-            <p class="p-text">4. In case of any errors , please write to support@noriapay.com</p>
+            <p class="p-text">4. In case of any errors , please write to support@elitepay.com</p>
         </div>      
         </div>
       </div>
@@ -332,7 +331,7 @@
 </div> <!-- Main Wrapper Close -->
           
           <footer class="footer">
-          <span class="footer-title-1">&copy; 2022 NoriaPay, All Rights Reserved</span> <span class="footer-title-2"><a target="_blank" href="static/Terms-of-Use-NoriaPay.pdf">Terms of Use </a>  |    <a target="_blank" href="static/Privacy-Policy-NoriaPay.pdf">Privacy Policy </a></span>
+          <span class="footer-title-1">&copy; 2022 Elite, All Rights Reserved</span> <span class="footer-title-2"><a target="_blank" href="static/Terms-of-Use-NoriaPay.pdf">Terms of Use </a>  |    <a target="_blank" href="static/Privacy-Policy-NoriaPay.pdf">Privacy Policy </a></span>
           </footer>
         <!-- Page Wrapper Close -->      
 

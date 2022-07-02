@@ -7,8 +7,7 @@
             <meta name="_token" content="{{ csrf_token() }}">
     		<meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="description" content="Buy & Sell Crypto Currencies With Your Local Currency" >
-        <title>NoriaPay > Checkout</title>
-        <title>Material Design Bootstrap</title>
+        <title>Elite > Checkout</title>
         
         <!-- Bootstrap-4 CSS -->
         <link href="css/bootstrap4/bootstrap.min.css?a40e5a35" rel="stylesheet">
@@ -123,7 +122,7 @@
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
-                    <a class="navbar-brand" href="">
+                    <a class="navbar-brand" href="{{'/'}}">
                         <!-- Logo icon -->
                         <b class="logo-icon">
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
@@ -200,9 +199,9 @@
                                 <span class="oval-inner ">{{@$fname.@$lname}}</span>&nbsp <i class="fa fa-caret-down"></i>
                             </a>
                             <div class="dropdown-menu mailbox dropdown-menu-right scale-up">
-                                <ul class="dropdown-user list-style-none">                                    <li class="user-list"><a class="px-3 py-2" href="profile?tab=1"><i class="ti-user"></i> User Profile</a></li>
+                                <ul class="dropdown-user list-style-none">                                    <li class="user-list"><a class="px-3 py-2" href="{{url('user_setting')}}"><i class="ti-user"></i> User Profile</a></li>
                                     <li role="separator" class="dropdown-divider"></li>                                   
-                                    <li class="user-list"><a class="px-3 py-2" href="logout"><i class="fa fa-power-off"></i> Logout</a></li>
+                                    <li class="user-list"><a class="px-3 py-2" href="{{url('user_logout')}}"><i class="fa fa-power-off"></i> Logout</a></li>
                                 </ul>
                             </div>
                         </li>                    </ul>
@@ -638,7 +637,7 @@
 </div> <!-- Main Wrapper Close -->
           
           <footer class="footer">
-          <span class="footer-title-1">&copy; 2022 NoriaPay, All Rights Reserved</span> <span class="footer-title-2"><a target="_blank" href="static/Terms-of-Use-NoriaPay.pdf">Terms of Use </a>  |    <a target="_blank" href="static/Privacy-Policy-NoriaPay.pdf">Privacy Policy </a></span>
+          <span class="footer-title-1">&copy; 2022 Elite, All Rights Reserved</span> <span class="footer-title-2"><a target="_blank" href="static/Terms-of-Use-NoriaPay.pdf">Terms of Use </a>  |    <a target="_blank" href="static/Privacy-Policy-NoriaPay.pdf">Privacy Policy </a></span>
           </footer>
         <!-- Page Wrapper Close -->      
 

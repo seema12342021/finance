@@ -5,7 +5,7 @@ namespace App\Http\Controllers\frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
+use App\Models\{User,KycData};
 use App\Models\CommisionFees;
 use App\Models\Transaction;
 
@@ -16,6 +16,7 @@ class DashboardController extends Controller
         $users['fname'] = substr(Auth::user()->first_name,0,1);
         $users['lname'] = substr(Auth::user()->last_name,0,1);
         $users['name'] = Auth::user()->first_name;
+        $users['kyc'] = KycData::where('user_id',Auth::user()->id)->first();
         $users['commision_buy'] = CommisionFees::where(['is_deleted'=>1,'is_active'=>1,'type'=>1])->first();
         $users['commision_sell'] = CommisionFees::where(['is_deleted'=>1,'is_active'=>1,'type'=>2])->first();
 

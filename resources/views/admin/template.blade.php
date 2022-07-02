@@ -101,14 +101,14 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <!-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
           <img src="{{url('uploads',[Auth::user()->img])}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block">{{Auth::user()->name}}</a>
         </div>
-      </div>
+      </div> -->
 
       <!-- SidebarSearch Form -->
 
@@ -126,19 +126,16 @@
               </p>
             </a>
           </li>
-<<<<<<< HEAD
+
           <li class="nav-item">
-            <a href="{{url('project')}}" class="nav-link {{ Request::is('project') ? 'active' : '' }}">
+            <a href="{{url('user_list')}}" class="nav-link {{ Request::is('user_list') ? 'active' : '' }}">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Project
+                User
                 <span class="right badge badge-danger"></span>
               </p>
             </a>
           </li>
-=======
-
-          
           <li class="nav-item {{ Request::is('commision')||Request::is('network') ? 'menu-open' : '' }}">
             <a href="#" class="nav-link {{ Request::is('commision')||Request::is('network') ? 'active' : '' }}">
               <i class="nav-icon fas fa-table"></i>
@@ -190,8 +187,6 @@
                 </ul>
             </li>
 
-
->>>>>>> origin/harsh
           <li class="nav-item">
             <a href="{{url('logout')}}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>

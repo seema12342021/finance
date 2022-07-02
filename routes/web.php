@@ -7,7 +7,7 @@ use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\CommisionFeesController;
 use App\Http\Controllers\NetworkFeesController;
 use App\Http\Controllers\TransactionController;
- use App\Http\Controllers\Projectcontroller; 
+ use App\Http\Controllers\UserListController; 
  use App\Http\Controllers\HomepageController; 
  use App\Http\Controllers\frontend\DashboardController; 
  use App\Http\Controllers\frontend\LoginController; 
@@ -75,6 +75,11 @@ Route::middleware("AdminLogin")->group(function(){
     // Route::get('/delete_network',[TransactionController::class , 'delete']);
     // Route::get('/edit_network',[TransactionController::class , 'edit']);
     // Route::get('/status_network',[TransactionController::class , 'status']);
+     Route::get('/user_list',[UserListController::class , 'index']);
+     Route::get('/user_list_datatable',[UserListController::class , 'ShowUserList']);
+     Route::get('/user_list_status',[UserListController::class , 'UserListStatus']);
+     Route::get('/user_list_modal',[UserListController::class , 'UserListModal']);
+     Route::post('/send_approval',[UserListController::class , 'SendApproval']);
 
  });
 
