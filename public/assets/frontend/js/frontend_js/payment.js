@@ -14,7 +14,7 @@ function divide(){
 	 $("#total_payble").html((Number(total.toFixed(2))+Number(network_fees)+Number(id_fees)).toFixed(2));
 	}
 
-	$('#form_crypto_amount_buy').val(total);
+	// $('#form_crypto_amount_buy').val(total);
 }
 
 function multiply(){
@@ -23,31 +23,76 @@ function multiply(){
 	var total =0;
 	total=Number(usdt)*Number(receive);
 	$('#form_inr_amount_buy').val(total);
+	t_reeceive = $("#tether_receive").val();
+	if (t_reeceive!= undefined) {
+	 $("#final_crypto").html(total.toFixed(2));
+	 $("#tether_receive").html(total.toFixed(2));
+	 $("#total_payble").html((Number(total.toFixed(2))-(Number(network_fees)+Number(id_fees)).toFixed(2)));
+	}
+
+}
+
+function multiply_sell(){
+	var usdt = $("#usdt-price-sell").text();
+	var receive = $("#form_crypto_amount_sell").val();
+	var total =0;
+	total=Number(usdt)*Number(receive);
+	$('#form_inr_amount_sell').val(total);
+	t_reeceive = $("#tether_receive").val();
+	if (t_reeceive!= undefined) {
+	 $("#final_crypto").html(total.toFixed(2));
+	 $("#tether_receive").html(total.toFixed(2));
+	 $("#total_payble").html((Number(total.toFixed(2))-(Number(network_fees)+Number(id_fees)).toFixed(2)));
+	}
+
+}
+
+function divide_sell(){
+	var usdt = $("#usdt-price-sell").text();
+	var price = $("#form_inr_amount_sell").val();
+	var total =0;
+
+	total=Number(price)/Number(usdt);
+	//total=Number(usdt)/Number(price);
+
+	$('#form_crypto_amount_sell').val(total.toFixed(2));
+	t_reeceive = $("#tether_receive").val();
 	if (t_reeceive!= undefined) {
 	 $("#final_crypto").html(total.toFixed(2));
 	 $("#tether_receive").html(total.toFixed(2));
 	 $("#total_payble").html((Number(total.toFixed(2))+Number(network_fees)+Number(id_fees)).toFixed(2));
 	}
 
+	// $('#form_crypto_amount_buy').val(total);
 }
 
-function pageredirect(){ 
-	var data = {
+function pageredirect(type){ 
+	if (type == 1) {
+	    var data = {
              "crypto":$('#form_crypto_amount_buy').val(),"inr":document.getElementById('form_inr_amount_buy').value
-                     };
-// console.log(JSON.stringify(data));
+             };
+        }else{
+        	var data = {
+             "crypto":$('#form_crypto_amount_sell').val(),"inr":document.getElementById('form_inr_amount_sell').value,"type":$('input:radio[name="form_payment_method"]').val()
+             };
+         }
 	window.location = ('/checkout?data=' +JSON.stringify(data));
      
    };
 
-function save_transactions(){
+function save_transactions(types){
+	if (types == 1) {
+		datas = {'id_fee':id_fees,'inr':$("#form_inr_amount_buy").val(),'crypto':$("#form_crypto_amount_buy").val(),'w_address':$("#form_wallet_address").val(),'tc':$("#tc").val(),'wallet':$('input:radio[name="wallet"]').val(),'payment_mode':$('input:radio[name="form_payment_method"]').val(),};						
+	}else{
+		datas = {'id_fee':id_fees,'inr':$("#form_inr_amount_sell").val(),'crypto':$("#form_crypto_amount_sell").val(),'w_address':$("#form_upi_address").val(),'tc':$("#tc_sell").val(),'wallet':$('input:radio[name="wallet"]').val(),'payment_mode':$('input:radio[name="form_payment_method"]').val()};
+	}
 	$.ajaxSetup({
                   headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
               });
 	$.ajax({ 
 		type:"post",
 		url:"saveTransaction",  
-		data:{'id_fee':id_fees,'inr':$("#form_inr_amount_buy").val(),'crypto':$("#form_crypto_amount_buy").val(),'w_address':$("#form_wallet_address").val(),'tc':$("#tc").val(),'wallet':1,},
+		data:datas,
 		success:function(res){
 			if(res.status_code == 200){
 				toastr.success(res.message);
@@ -90,3 +135,6 @@ function payment(){
 	});
 
 }
+
+
+

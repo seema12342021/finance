@@ -71,18 +71,18 @@ class TransactionController extends Controller
 
 
      public function payment_gateway(Request $request){
-        $users = Transaction::join('wallets','wallets.id','=','transactions.wallet_id')->join('users','users.id','=','transactions.user_id')->join('cryptos','cryptos.id','=','transactions.crypto')->join('statuses','statuses.id','=','transactions.payment_status')->where(['transactions.id'=>$request->id,'transactions.is_deleted'=>1,'transactions.is_active'=>1,'transactions.user_id'=>Auth::user()->id])->orderBy('transactions.id','DESC')->first(['transactions.id','transactions.transaction_id','transactions.total_inr_price','transactions.created_at','transactions.total_crypto','transactions.crypto_price','transactions.payment_mode','transactions.wallet_address','transactions.payment_type','wallets.name as wallet','cryptos.name as crypto','statuses.name as status','users.first_name','users.email','users.mobile_number','users.address_line1','users.address_line2','users.city','users.state','users.country','users.pincode']);
+        $users = Transaction::join('wallets','wallets.id','=','transactions.wallet_id')->join('users','users.id','=','transactions.user_id')->join('cryptos','cryptos.id','=','transactions.crypto')->join('statuses','statuses.id','=','transactions.payment_status')->where(['transactions.id'=>$request->id,'transactions.is_deleted'=>1,'transactions.is_active'=>1,'transactions.user_id'=>Auth::user()->id])->orderBy('transactions.id','DESC')->first(['transactions.id','transactions.transaction_id','transactions.total_inr_price','transactions.created_at','transactions.total_crypto','transactions.crypto_price','transactions.payment_mode','transactions.wallet_address','transactions.payment_type','wallets.name as wallet','cryptos.name as crypto','statuses.name as status','users.first_name','users.email','users.mobile_number']);
         if($users){
             $custname = $users->first_name;
             $custemail = $users->email;
             $custmobile = $users->mobile_number;
-            $custaddressline1 = $users->address_line1;
-            $custaddressline2 = $users->address_line2;
-            $custaddresscity = $users->city;
-            $custaddressstate = $users->state;
-            $custaddresscountry = $users->country;
-            $custaddresspostalcode = $users->pincode;
-            $orderid = uniqid();
+            $custaddressline1 = 'charbagh';
+            $custaddressline2 ='gomtinagar';
+            $custaddresscity ='lucknow';
+            $custaddressstate = 'uttar pradesh';
+            $custaddresscountry = 'India';
+            $custaddresspostalcode = '226008';
+            $orderid = $users->transaction_id;
             $ordervalue = $users->total_inr_price;
             $customerIdvalue = false;
             ///Create Customer From API Pass Customer Parameters toenv('PAYMENT_BASE_URL'). API/v1/CreateCustomer
@@ -150,9 +150,15 @@ class TransactionController extends Controller
 
     public function redirectPage(Request $request){
         if($request->txn_status == 'SUCCESS'){
-            //midorderid
-            //save orderid in database and update status here from order id
+            $formdata['payment_status'] = 1;
+            $formdata['response_data'] = json_encode($request->all());
+            $res = Transaction::where('transaction_id',$request->midorderid)->update($formdata);
+        }else{
+            $formdata['payment_status'] = 5;
+            $formdata['response_data'] = json_encode($request->all());
+            $res = Transaction::where('transaction_id',$request->midorderid)->update($formdata);
         }
+        return redirect('user-dashboard');
     }
 
 
