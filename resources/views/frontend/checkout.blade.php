@@ -396,7 +396,7 @@
            <div class="card tabs-nav">
                 <!-- Nav tabs -->
              <ul class="nav nav-tabs customtab buy-sell-tab " role="tablist">
-                <li class="nav-item"  id="buy_tab" > <a class="nav-link  active " data-toggle="tab" href="#buy" role="tab" 1>
+                <li class="nav-item"  id="buy_tab" > <a class="nav-link  {{!empty(@$data->type)?'':'active'}} " data-toggle="tab" href="#buy" role="tab" 1>
                   <div class="tabsParent">
                     <div class="tabsIcon">
                         <img src="images/noriapay_extracted_logos/sell_new.svg" alt="">
@@ -407,7 +407,7 @@
                     </div>
                   </div></a> 
                 </li>
-                <li class="nav-item" id="sell_tab" > <a class="nav-link " data-toggle="tab" href="#sell" role="tab" >
+                <li class="nav-item" id="sell_tab" > <a class="nav-link {{!empty(@$data->type)?'active':''}}" data-toggle="tab" href="#sell" role="tab" >
                   <div class="tabsParent">
                     <div class="tabsIcon">
                         <img src="images/noriapay_extracted_logos/buy_new.svg" alt="">
@@ -421,9 +421,10 @@
             </ul>
             <!-- Tab panes -->
             <div class="tab-content">
-                <div class="tab-pane  active " id="buy" role="tabpanel">
+                <div class="tab-pane  {{!empty(@$data->type)?'':'active'}} " id="buy" role="tabpanel">
                     <div class="p-3">
                         <form class="pl-3 pr-3" method="POST" id="form_buy_transaction" action="">
+                            <input type="hidden" class="payment_type" name="payment_type" value="1">
                         
                              <h3 class="price"><span>1 USDT is Roughly</span> <strong id="usdt-price">{{((@$commision_buy->fees / 100) * 83.92)+83.92}} </strong> <i>INR</i></h3>
                              <div class="inputParent">
@@ -455,29 +456,7 @@
                                 </div>
                                 <p class="xs-text py-1 buyError" style="display:none;"></p>
                             </div>
-                            
-                            {{-- 
-                            <div class="form-group tab-pane pt-4">
-                                <h3>Payment Methods</h3>
-                            </div>
-                            <div class="form-group form-radio select-payment">                                <label class="form-group-payment col-lg-3 col-md-6 col-xs-6 col-sm-4 mb-2" for="radio_b1">
-                                       <input name="form_payment_method" type="radio" id="radio_b1" value="UPI" class="with-gap radio-col-orange" checked>
-                                        <label class="label-small" for="radio_b1">UPI</label>
-                                </label>  
-                              <label class="form-group-payment col-lg-5 col-md-6 col-xs-6 col-sm-4 mb-3" for="radio_b3">
-                                       <input name="form_payment_method" type="radio" id="radio_b3" value="BANK" class="with-gap radio-col-orange" >
-                                        <label class="label-small" for="radio_b3">Bank Account</label>
-                                </label>                            
-                            </div>  --}}
-                          {{-- <div class="form-group select2-selection">
-                                <p class="xs-text">Where should we transfer your Tether?</p>
-                                <div class="input-box">
-                                    <select id="crypto_wallet_select" class="browser-default form-control">
-                                    <option value=""></option>
-                                    <option value=" ">Other</option>
-                                </select>
-                              </div>
-                            </div> --}} 
+                      
                                <div id="checkout_wallet_type" class="form-group">
                                 <p class="xs-text mt-2">Select Tether Wallet Type</p>
                                 <div class="form-radio">
@@ -485,9 +464,9 @@
                                 @if(!empty($wallet))
                                 @foreach($wallet as $key=>$value)
                                     <div class="col-md-4 mb-2">
-                                      <label class="form-group-payment col-lg-12 col-xs-6  mr-1" for="radio_omni">
-                                        <input name="form_crypto_wallet_type" type="radio" id="radio_omni{{@$value->id}}" value="{{@$value->id}}" class="with-gap radio-col-orange" >
-                                        <label class="label-small" for="radio_omni">{{@$value->name}}</label>
+                                      <label class="form-group-payment col-lg-12 col-xs-6  mr-1" for="radio_omni{{@$value->id}}">
+                                        <input name="wallet" type="radio" id="radio_omni{{@$value->id}}" value="{{@$value->id}}" class="with-gap radio-col-orange" >
+                                        <label class="label-small" for="radio_omni{{@$value->id}}">{{@$value->name}}</label>
                                       </label>
                                     </div>
                                 @endforeach
@@ -515,9 +494,10 @@
                     </form>
                 </div>
             </div>
-            <div class="tab-pane " id="sell" role="tabpanel">
+            <div class="tab-pane {{!empty(@$data->type)?'active':''}}" id="sell" role="tabpanel">
                 <div class="p-3">
                      <form class="pl-3 pr-3"  method="POST" id="form_sell_transaction" action="">
+                        <input type="hidden" class="payment_type" name="payment_type" value="2">
                      
                          <!-- <div class="row">
                              <div class="form-group col-lg-12">
@@ -531,13 +511,13 @@
                             </div>
                          </div> -->
                          
-                         <h3 class="price"><span>1 USDT is Roughly</span> 78.45 <i>INR</i></h3>
+                         <h3 class="price"><span>1 USDT is Roughly</span> <strong id="usdt-price-sell">{{83.92-((@$commision_sell->fees / 100) * 83.92)}}</strong> <i>INR</i></h3>
                          <div class="inputParent">
                          
                             <div class="inputBox">
                                 <div class="input_label">
                                     <p class="xs-text mb-0" for="input1">You Pay</p>
-                                    <input class="error" type="text" name="form_crypto_amount" value="100"  id="form_crypto_amount_sell">
+                                    <input class="error" type="text" onblur="multiply_sell()" name="crypto" value="{{@$data->crypto}}"  id="form_crypto_amount_sell">
                                 </div>
                                 <div class="iconBox">
                                       <img src="images/noriapay_extracted_logos/usdt.svg" alt="">
@@ -552,7 +532,7 @@
                             <div class="inputBox">
                                 <div class="input_label">
                                     <p class="xs-text mb-0" for="input2">You will receive Roughly</p>
-                                    <input class="error" name="form_inr_amount" type="text" value="7845"  id="form_inr_amount_sell">
+                                    <input class="error" name="form_inr_amount" onblur="divide_sell()" type="text" value="{{@$data->inr}}"  id="form_inr_amount_sell">
                                 </div>
                                <div class="iconBox">
                                     <img src="images/noriapay_extracted_logos/rupee.svg" alt="">
@@ -571,7 +551,7 @@
                                     <label class="label-small" for="radio_s1">UPI</label>
                             </label>
                                                                
-                                                                                           <label class="form-group-payment col-lg-5 mb-3 disabled custom-tooltip" for="radio_s3" data-placement="right" data-toggle="tooltip" title="To choose this option, Update your bank details in profile section">
+                                    <label class="form-group-payment col-lg-5 mb-3 disabled custom-tooltip" for="radio_s3" data-placement="right" data-toggle="tooltip" title="To choose this option, Update your bank details in profile section">
                                    <input name="form_payment_method" type="radio" id="radio_s3" class="with-gap radio-col-orange" disabled>
                                     <label class="label-small" for="radio_s3">Bank Account</label>
                             </label>    
@@ -579,12 +559,12 @@
                         <div class="form-group" id="payment_details">                            <div class="form-group " id="upi_payment_details">
                                  <p class="title-space">Your UPI Address</p>
                                  <div class="input-box">
-                                    <input name="form_upi_address" value = "" class="form-control" type="text" required id="form_upi_address" placeholder="">
+                                    <input name="w_address" value = "" class="form-control" type="text" required id="form_upi_address" placeholder="">
                                  </div>
                             </div>      
                         </div>
                         <label class="custom-control custom-checkbox">
-                            <input type="checkbox" name="form_is_payment_details_acknowledged" class="custom-control-input" >
+                            <input type="checkbox" id="tc_sell" name="form_is_payment_details_acknowledged" class="custom-control-input" >
                             <span class="custom-control-label xs-text">I verify that the above payment details belongs to me. And understand that sending it to someone else's payment details may result in a loss of funds.</span>
                         </label>
                         <br>
@@ -609,9 +589,9 @@
                         <!-- Tab panes -->            <div class="row" id="buy_transaction_details">
             
               <div class="col-lg-8 col-md-8 checkout-exchange">
-                <div class="pt-2"><img src="images/icons/oval_buy.png"></div>
+                <div class="pt-2"><img src="{{!empty(@$data->type)?'images/icons/oval_sell.png':'images/icons/oval_buy.png'}}"></div>
                 <div class="checkout-item">
-                  <div class="checkout-item-1 "><span class="card-icon-buy"> Buy </span></div>
+                  <div class="checkout-item-1 "><span class="card-icon-buy"> {{!empty(@$data->type)?'Sell':'Buy'}} </span></div>
                   <div class="checkout-item-2"><span class="card-tether" id="final_crypto">{{@$data->crypto}} USDT</span> 1 Tether = INR {{((@$commision_buy->fees / 100) * 83.92)+83.92}}</div>
                 </div>
               </div>
@@ -623,12 +603,12 @@
               <div class="col-lg-12 col-md-12">
               <hr>
                 <div class="checkout-price row mb-1">
-                  <div class="checkout-price-1 text-left col-lg-6 col-md-6 col-6"> Tether to Receive </div>
+                  <div class="checkout-price-1 text-left col-lg-6 col-md-6 col-6"> Tether to {{!empty(@$data->type)?'Sell':'Buy'}} </div>
                   <div class="checkout-price-2 text-right col-lg-6 col-md-6 col-6" id="tether_receive"> {{@$data->crypto}} USDT</div>
                 </div>
                 <div class="checkout-price row mb-4">
                    <div class="checkout-price-1 text-left col-lg-6 col-md-6 col-6">Network Fee </div>
-                   <div class="checkout-price-2 text-right col-lg-6 col-md-6 col-6"> {{@$network_buy->fees}} USDT</div>
+                   <div class="checkout-price-2 text-right col-lg-6 col-md-6 col-6"> {{!empty(@$data->type)?@$network_sell->fees:@$network_buy->fees}} INR</div>
                 </div>
                  <div class="hr-dotted">  </div>
                 <div class="checkout-price row mb-4">
@@ -641,11 +621,11 @@
                 <div class="checkout-total col-md-12 col-12">
                   <div class="row">
                     <div class="checkout-price-1 text-left col-lg-6 col-md-6 col-6"> Total Payable </div>
-                    <div class="checkout-price-2 text-right col-lg-6 col-md-6 col-6" id="total_payble"> {{@$data->inr+@$network_buy->fees+1.73}} INR</div>
+                    <div class="checkout-price-2 text-right col-lg-6 col-md-6 col-6" id="total_payble"> {{!empty(@$data->type)?@$data->inr-(@$network_sell->fees+1.73):@$data->inr+@$network_buy->fees+1.73}} INR</div>
                   </div>
                 </div>
                 <div class="row">                      <div class="form-group col-lg-12 text-center mt-3">
-                        <button class="btn btn-success float-right" onclick="save_transactions()">Confirm </button>
+                        <button class="btn btn-success float-right" onclick="save_transactions({{!empty(@$data->type)?'2':'1'}})">Confirm </button>
                       </div>                </div>
               </div>
             </div>         </div>
@@ -692,7 +672,7 @@
         $(function () {
           $('[data-toggle="tooltip"]').tooltip()
         })
-        network_fees = "{{@$network_buy->fees}}";
+        network_fees = "{{!empty(@$data->type)?@$network_sell->fees:@$network_buy->fees}}";
         id_fees = "1.73";
 
         </script>
