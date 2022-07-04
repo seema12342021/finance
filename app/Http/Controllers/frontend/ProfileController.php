@@ -13,12 +13,14 @@ class ProfileController extends Controller
 {
     public function index() 
     {
+
         $users['fname'] = Auth::user()->first_name;
         $users['lname'] = Auth::user()->last_name;
         return view('frontend.user_profile',$users);
     }
      public function kyc_index()
     {
+         $users['title']="Kyc";
         $users['fname'] = Auth::user()->first_name;
         $users['lname'] = Auth::user()->last_name;
         $kyc_data = KycData::where('user_id',Auth::user()->id)->orderBY('id','DESC')->first();
@@ -27,7 +29,8 @@ class ProfileController extends Controller
     }
      public function setting_index()
     {
-        $users['fname'] = Auth::user()->first_name;
+         $users['title']="Profile setting";
+         $users['fname'] = Auth::user()->first_name;
         $users['lname'] = Auth::user()->last_name;
         $users['setting'] = User::where(['id'=>Auth::user()->id])->first(['first_name','last_name','email','mobile_number']);
         return view('frontend.setting', $users);
@@ -36,7 +39,7 @@ class ProfileController extends Controller
         $validated = Validator::make($request->all(),[
             'form_first_name'=>'required',
             'form_last_name'=>'required',
-            'form_mobile_number'=>'required|digits:10|regex:/[0-9]/'
+            'form_mobile_number'=>'required|numeric'
 
         ]);
          if($validated->passes()){
@@ -61,6 +64,7 @@ class ProfileController extends Controller
     //change password
      public function ChangePasswordForm()
     {
+         $users['title']="Change Password";
         $users['fname'] = Auth::user()->first_name;
         $users['lname'] = Auth::user()->last_name;
         return view('frontend.change_password',$users);

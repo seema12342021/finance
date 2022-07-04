@@ -18564,7 +18564,8 @@ form label {
     border-bottom: 2px solid #07bbd4;
     color: #fb8c00;
     font-weight: 600;
-    color: #fb8c00 !important;
+    color: #0fbbcf !important;
+
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
 }
@@ -19000,8 +19001,7 @@ form label {
 }
 
 .btn-success{
-	    background-image: linear-gradient(to right, #f2711d, #f3ac1b);
-	border:#f3ca1b;
+  background-image: linear-gradient(to right, #0d6f7f, #12e5fb);	border:#f3ca1b;
 	border-radius: 20px;
    padding: 10px 25px;
     font-weight: 500;
@@ -19203,7 +19203,7 @@ color:#f2951d;
     margin-bottom: 20px;
     background-image: linear-gradient(to right, #0d6f7f, #12e5fb);padding: 10px; border-radius: 24px; color: #ffffff; font-weight: 600; text-transform: uppercase; font-size: 17px;}
     .exChange button{display: block;
-    background-image: linear-gradient(to right, #f2711d, #f3ac1b);padding: 10px; border-radius: 24px; color: #ffffff; font-weight: 600; text-transform: uppercase; font-size: 17px;}
+    background-image: linear-gradient(to right, #0d6f7f, #12e5fb);padding: 10px; border-radius: 24px; color: #ffffff; font-weight: 600; text-transform: uppercase; font-size: 17px;}
     .joinedArrow{display: block !important;padding: 1px 0px 3px 10px;}
     .joinedArrow img{width: 16px;}
 
@@ -19430,13 +19430,13 @@ color:#f2951d;
 	width: 100%;
     margin: 0 0 24px;
     padding: 0px 120px 0px 120px;
-    background-image: linear-gradient(to right, #f2711d, #f3ac1b);
+background: linear-gradient(230deg, rgb(6 198 216), #0e5d6d);
 }
 
 .nav-btn{
 	background: none;
 	border: none;
-    border-bottom: 2px solid #f3a11c ;
+    border-bottom: 2px solid #0fbbcf;
     border-radius: inherit;
     color: #fff;
     padding: 5px 0px;
@@ -19483,7 +19483,7 @@ color:#f2951d;
     width: 100%;
     margin: 0px;
     padding: 0px 14% 0px 13%;
-   background: none;
+   /*background: none;*/
 }
 #main-wrapper .home-nav .topbar {
     position: relative !important;
@@ -19588,11 +19588,11 @@ color:#f2951d;
 
 .welcome-section-dashboard{
 	padding: 160px 165px 40px 135px;
-    background-image: linear-gradient(to right, #f2711d, #f3ac1b);
+   background: linear-gradient( 300deg, rgb(6 198 216), #0e5d6d);
 }
 .welcome-section{
 	padding: 200px 165px 40px 135px;
-    background-image: linear-gradient(to right, #f2711d, #f3ac1b);
+       background: linear-gradient( 300deg, rgb(6 198 216), #0e5d6d);
 }
 
 .welcome-section-dashboard p {
@@ -19843,9 +19843,9 @@ color:#f2951d;
   	color: red;
   }
   .pending{
-      border: solid 1px #fbc212;
+      border: solid 1px #17a2b8;
 	  color: #fff;
-	  background: #fbc212;
+	  background: #0d6f7f;
   }
   .verified{
       border: solid 1px #27ac4e;
@@ -20305,4 +20305,9 @@ color:#f2951d;
   background: #065a6c;
   color: #fff;
   border: 2px solid #fff;
+}
+
+/*custom css*/
+form label {
+    color: black!important;
 }
