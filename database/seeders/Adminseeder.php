@@ -15,6 +15,6 @@ class Adminseeder extends Seeder
      */
     public function run()
     {
-        User::create(['first_name'=>'Admin','email'=>'admin11@gmail.com','password'=>bcrypt('admin@1010'),'img'=>'http://localhost:8000/uploads/avatar.png','user_type'=>1,'created_by'=>1]);
+        User::create(['first_name'=>'Admin','email'=>'admin11@gmail.com','password'=>bcrypt('admin@1010'),'img'=>'avatar.png','user_type'=>1,'created_by'=>1]);
     }
 }

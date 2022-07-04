@@ -70,6 +70,7 @@ Route::middleware("AdminLogin")->group(function(){
     Route::get('/show_transactionSell',[TransactionController::class ,'show_transactionSell']);
     Route::get('/transactionBuy',[TransactionController::class ,'transactionBuy']);
     Route::get('/show_transactionBuy',[TransactionController::class ,'show_transactionBuy']);
+    Route::get('/get_transaction_details/{id}',[TransactionController::class ,'getTransactionDetails']);
     // Route::post('/save_network',[TransactionController::class , 'save']);
     // Route::post('/save_network',[TransactionController::class , 'save']);
     // Route::get('/delete_network',[TransactionController::class , 'delete']);

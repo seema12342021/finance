@@ -3,34 +3,6 @@ $(document).ready(function(){
 });
   
 
-// $("#commisionform").on("submit",function(e){
-//   e.preventDefault(); 
-// 	$.ajax({ 
-// 		type:"post",
-// 		url:siteUrl + "save_commision",  
-// 		data:new FormData(this),
-// 		processData: false, 
-//     contentType: false, 
-// 		success:function(res){
-// 			if(res.status_code == 200){
-// 				toastr.success(res.message);
-// 				$('#commision_datatable').DataTable().destroy();
-// 				$("#commisionform").trigger("reset");
-//                 $("#submit").text("Save");
-//                 show_commision();
-// 			}else if(res.status_code == 301){
-// 				$.each(res.message,function(key , value){
-// 					toastr.error(value);
-// 				});
-// 			}else if(res.status_code == 201){
-// 				toastr.error(res.message);
-// 			}
-// 		},error:function(e){
-// 			console.log(e);		 
-// 		}
-// 	});
-// });
-
 function transactionBuy(){
 	var table = $('#transactionBuy_datatable').DataTable({
         processing: true,
@@ -38,72 +10,32 @@ function transactionBuy(){
         ajax: siteUrl+"show_transactionBuy",
         columns: [ 
             {data: 'DT_RowIndex'},
-            // {data: 'fees', name: 'fees'},
-            // {data: 'type'},
-            { data: "status"},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
+            {data: 'user'},
+            {data: 'total_crypto'},
+            {data: 'total_inr_price'},
+            {data: "status"},
+            {data: 'action', orderable: false, searchable: false},
         ]
     });
 }
 
-// function delete_commision(id = ''){
-//     if (confirm("Are you sure!")) {
-//         $.ajax({
-//             url:siteUrl+'delete_commision',
-//             type:'GET',
-//             data:{id:id},
-//             success:function(response)
-//             {
-//                if(response.status_code==200){
-//                     toastr["success"](response.message);
-//                     $('#commision_datatable').DataTable().destroy();
-//                     show_commision();
-//                 }else if(response.status==201){
-//                     toastr["error"](response.message);
-//                     show_commision();
-//                 }
-//             }
-//         });
-//      }
-// } // End Of function
+function show(id){
+    $.get(siteUrl+'get_transaction_details/'+id).done(function(response){
+        if(response){
+            $("#user_name").text(capitalize(response.first_name+' '+response.last_name));
+            $("#user_email").text(response.email);
+            $("#user_mobile").text(response.mobile_number);
+            $("#usdt").text(response.total_crypto);
+            $("#inr").text(response.total_inr_price);
+            $("#crypto_price").text(response.crypto_price);
+            $("#wallet_address").text(response.wallet_address);
+            $("#wallet").text(response.wallet);
+            $("#status").text(response.status);
+            $("#transaction_details").modal("show");
+        }else{
+            toastr.error("No data found !");
+        }
+    })
+}
 
-
-// function edit_commision(id = '') {
-//     $.ajax({
-//         url: siteUrl + "edit_commision",
-//         data: { id: id },
-//         type: 'GET',
-//         dataType: "json",
-//         success: function (res) {
-//             $("#id").val(res.id); 
-//             $("#fees").val(res.fees);
-//             $("#type").val(res.type);
-//             $("#submit").text("Update");
-//              $('#commision_datatable').DataTable().destroy();
-//                     show_commision();
-            
-
-//         },
-//     });
-// }//end functtion
-
-// function status_commision(id = "", status = "") {
-//     $.ajax({
-//         url: siteUrl + "status_commision",
-//         data: { id: id, status: status },
-//         type: "get",
-//         dataType: "json",
-//         success: function (response) {
-//             if(response.status_code==200){
-//                 console.log(response.message);
-//                     toastr["success"](response.message);
-//                     $('#commision_datatable').DataTable().destroy();
-//                     show_commision();
-//                 }else if(response.status==201){
-//                     toastr["error"](response.message);
-//                     show_commision();
-//                 }
-//         },
-//     });
-// }
-
+function capitalize(str='') { strVal = ''; str = str.split(' '); for (var chr = 0; chr < str.length; chr++) { strVal += str[chr].substring(0, 1).toUpperCase() + str[chr].substring(1, str[chr].length) + ' ' } return strVal }

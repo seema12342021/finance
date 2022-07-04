@@ -160,8 +160,8 @@
                     <div class="btn-list">
                         <!-- Custom width modal -->                     <!--  <button type="button" class="btn nav-btn" onclick="location.href='/dashboard'">Dashboard</button>
                         <button type="button" class="btn nav-btn" onclick="location.href='/transaction/index?ttype=BUY'">Transactions</button> -->
-                        <li><a class="btn nav-btn user-url" href="dashboard">Dashboard</a></li>
-                        <li><a class="btn nav-btn user-url" href="transaction/index?ttype=BUY">Transactions</a></li>                      </div>
+                        <li><a class="btn nav-btn user-url" href="{{ url('user-dashboard') }}">Dashboard</a></li>
+                        <li><a class="btn nav-btn user-url" href="{{ url('transaction') }}">Transactions</a></li>                      </div>
                         <li class="nav-item dropdown"> 
                          
                         </li>

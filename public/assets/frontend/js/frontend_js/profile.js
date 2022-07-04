@@ -196,10 +196,10 @@ $(document).ready(function(){
 function showFront(input) {
     var fileName = input.files[0].name;
     $(".file-name-front").text(fileName + ' is the selected file.');               
- }
+}
 function showBack(input) {
     var fileName = input.files[0].name;
     $(".file-name-back").text(fileName + ' is the selected file.');               
- }
+}
  
 	

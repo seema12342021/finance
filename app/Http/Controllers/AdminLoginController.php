@@ -15,6 +15,9 @@ class AdminLoginController extends Controller
         ]);
         if($validated->passes()){
             if(Auth::attempt(['email'=>$request->email , 'password' => $request->password])){
+                if(Auth::user()->user_type != 1){
+                    return response()->json(['status_code'=>201 , 'message' => 'Wrong Username or Password']);
+                }
                 return response()->json(['status_code'=>200]);
             }else{
                 return response()->json(['status_code'=>201 , 'message' => 'Wrong Username or Password']);
@@ -23,4 +26,10 @@ class AdminLoginController extends Controller
             return response()->json(['status'=>'error','status_code'=>202,'error' => $validated->errors()->all() ]);
         }
     }//end of method
+
+     public function logout(){
+        session()->flush();
+        return redirect("/");
+    }
+
 }

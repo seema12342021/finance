@@ -126,7 +126,7 @@
                                 <span class="oval-inner">{{@$fname.@$lname}}</span>&nbsp <i class="fa fa-caret-down"></i>
                             </a>
                             <div class="dropdown-menu mailbox dropdown-menu-right scale-up">
-                                <ul class="dropdown-user list-style-none">                                     <li class="user-list"><a class="px-3 py-2" href="{{url('user_profile')}}?tab=1"><i class="ti-user"></i> User Profile</a></li>
+                                <ul class="dropdown-user list-style-none">                                     <li class="user-list"><a class="px-3 py-2" href="{{url('user_setting')}}?tab=1"><i class="ti-user"></i> User Profile</a></li>
                                     <li role="separator" class="dropdown-divider"></li>                                   
                                     <li class="user-list"><a class="px-3 py-2" href="{{url('user_logout')}}"><i class="fa fa-power-off"></i> Logout</a></li>
                                 </ul>

@@ -400,7 +400,7 @@
                                              @if(!empty($transaction))   
                                              @foreach($transaction as $Key=>$value)     
                                              <tr>
-                                                <td class="text-left"><img src="{{$value->payment_type == 1?'images/icons/oval_sell.png':'images/icons/oval_buy.png'}}" /> &nbsp<b>{{$value->payment_type == 1?'Sell':'Buy'}}</b></td>
+                                                <td class="text-left"><img src="{{$value->payment_type == 2?'images/icons/oval_sell.png':'images/icons/oval_buy.png'}}" /> &nbsp<b>{{$value->payment_type == 2?'Sell':'Buy'}}</b></td>
                                                 <td class="text-left">{{date('d/m/Y',strtotime($value->created_at))}}</td>
                                                 <td class="text-left">{{$value->crypto_price}}</td>
                                                 <td class="text-left">{{$value->total_inr_price}}</td>
@@ -432,7 +432,7 @@
                                     <h6 class="card-paragraph">In order to execute transactions we need to verify your identity. The procedure is simple and will take less than 5 minutes.</h6>
                                  </div>
                                  <div class="col-md-3 col-6 pt-xs-3 text-right">
-                                    <a class="card-button" href="profile?tab=1">Verify Account</a>
+                                    <a class="card-button" href="{{ url('user_kyc') }}">Verify Account</a>
                                  </div>
                                  <div class="col-md-3 col-6 pt-xs-3 text-right">
                                     <a class="card-button" id="card-button-skip" >Verify Later</a>
@@ -545,57 +545,57 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="profile2" role="tabpanel">
-                                    <div class="p-3">
-                                         <form class="pl-3 pr-3" method="POST">
-                                             <h3>Payment Methods</h3>
-                                                <div class="form-radio select-payment">                                                      <label class="form-group-payment col-lg-3 col-md-6 col-xs-6 col-sm-4 mb-3" for="radio_s1">
-                                                           <input name="form_payment_method" type="radio" id="radio_s1" value="UPI" class="with-gap radio-col-orange" >
-                                                           <label class="label-small" for="radio_s1">UPI</label>
-                                                      </label>          
-                                                      <label class="form-group-payment col-lg-5 col-md-6 col-xs-6 col-sm-4 mb-3" for="radio_s3">
-                                                           <input name="form_payment_method" type="radio" id="radio_s3"value="BANK" class="with-gap radio-col-orange" >
-                                                           <label class="label-small" for="radio_s3">Bank Account</label>
-                                                      </label>                                                </div>
-                                                <h3 class="price"><span>1 USDT is Roughly</span> <strong id="usdt-price-sell">{{83.92-((@$commision_sell->fees / 100) * 83.92)}}</strong> <i>INR</i></h3>
-                                                <div class="inputParent">
-        
-                                                    <div class="inputBox">
-                                                        <div class="input_label">
-                                                            <p class="xs-text mb-0" for="input1">You Pay</p>
-                                                            <input class="error" onblur="multiply_sell()" name="form_crypto_amount" value="100" type="text" id="form_crypto_amount_sell">
-                                                        </div>
-                                                        <div class="iconBox">
-                                                            <img src="images/noriapay_extracted_logos/usdt.svg" alt="">
-                                                            <p>USDT</p>
-                                                        </div>
-                                                    </div>
-                                                    <p class="xs-text py-1 sellError" style="display:none;"></p>
-                                                    <div class="joinedArrow">
-                                                        <img src="images/noriapay_extracted_logos/converter.svg" alt="">
-                                                    </div>
-                                                    <input name="form_transaction_type" value="SELL" type="hidden" >
-                                                    <div class="inputBox">
-                                                        <div class="input_label">
-                                                            <p class="xs-text mb-0" for="input2">You will receive Roughly</p>
-                                                            <input class="error" onblur="divide_sell()" name="form_inr_amount" type="text" value="7843" id="form_inr_amount_sell">
-                                                        </div>
-                                                        <div class="iconBox">
-                                                            <img src="images/noriapay_extracted_logos/rupee.svg" alt="">
-                                                            <p>INR</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="exChange mb-3">
-                                                    <button type="button" onclick="pageredirect(2)">Exchange</button>
-                                                    <!--<a href="checkout">Exchange</a>-->
-                                                </div>
-                                        </form>
-                                 </div>
+                                       <div class="p-3">
+                                            <form class="pl-3 pr-3" method="POST">
+                                                <h3>Payment Methods</h3>
+                                                   <div class="form-radio select-payment">                                                      <label class="form-group-payment col-lg-3 col-md-6 col-xs-6 col-sm-4 mb-3" for="radio_s1">
+                                                              <input name="form_payment_method" type="radio" id="radio_s1" value="UPI" class="with-gap radio-col-orange" >
+                                                              <label class="label-small" for="radio_s1">UPI</label>
+                                                         </label>          
+                                                         <label class="form-group-payment col-lg-5 col-md-6 col-xs-6 col-sm-4 mb-3" for="radio_s3">
+                                                              <input name="form_payment_method" type="radio" id="radio_s3"value="BANK" class="with-gap radio-col-orange" >
+                                                              <label class="label-small" for="radio_s3">Bank Account</label>
+                                                         </label>                                                </div>
+                                                   <h3 class="price"><span>1 USDT is Roughly</span> <strong id="usdt-price-sell">{{83.92-((@$commision_sell->fees / 100) * 83.92)}}</strong> <i>INR</i></h3>
+                                                   <div class="inputParent">
+           
+                                                       <div class="inputBox">
+                                                           <div class="input_label">
+                                                               <p class="xs-text mb-0" for="input1">You Pay</p>
+                                                               <input class="error" onblur="multiply_sell()" name="form_crypto_amount" value="100" type="text" id="form_crypto_amount_sell">
+                                                           </div>
+                                                           <div class="iconBox">
+                                                               <img src="images/noriapay_extracted_logos/usdt.svg" alt="">
+                                                               <p>USDT</p>
+                                                           </div>
+                                                       </div>
+                                                       <p class="xs-text py-1 sellError" style="display:none;"></p>
+                                                       <div class="joinedArrow">
+                                                           <img src="images/noriapay_extracted_logos/converter.svg" alt="">
+                                                       </div>
+                                                       <input name="form_transaction_type" value="SELL" type="hidden" >
+                                                       <div class="inputBox">
+                                                           <div class="input_label">
+                                                               <p class="xs-text mb-0" for="input2">You will receive Roughly</p>
+                                                               <input class="error" onblur="divide_sell()" name="form_inr_amount" type="text" value="7843" id="form_inr_amount_sell">
+                                                           </div>
+                                                           <div class="iconBox">
+                                                               <img src="images/noriapay_extracted_logos/rupee.svg" alt="">
+                                                               <p>INR</p>
+                                                           </div>
+                                                       </div>
+                                                   </div>
+                                                   <div class="exChange mb-3">
+                                                       <button type="button" onclick="pageredirect(2)">Exchange</button>
+                                                       <!--<a href="checkout">Exchange</a>-->
+                                                   </div>
+                                           </form>
+                                       </div>
                               </a>
                            </li>
                         </ul>
                         <!-- Tab panes -->
-                        <div class="tab-content">
+                        {{-- <div class="tab-content">
                            <div class="tab-pane active" id="home2" role="tabpanel">
                               <div class="p-3">
                                  <form class="pl-3 pr-3" id="buySubmit">
@@ -640,7 +640,7 @@
                                     <div class="exChange mb-3">
                                        <!-- <button type="submit"  id="BuyExchange">Exchange</button> -->
                                        <button type="button" onclick="pageredirect()">Exchange</button>
-                                       {{-- <button type="submit" onblur="divide()" id="BuyExchange">Exchange</button> --}}
+                                      <!--<button type="submit" onblur="divide()" id="BuyExchange">Exchange</button> -->
                                        <!--<a href="checkout">Exchange</a>-->
                                     </div>
                                  </form>
@@ -685,7 +685,7 @@
                                  </form>
                               </div>
                            </div>
-                        </div>
+                        </div> --}}
                      </div>
                   </div>
                </div>

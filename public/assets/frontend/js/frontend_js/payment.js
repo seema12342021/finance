@@ -9,9 +9,9 @@ function divide(){
 	$('#form_crypto_amount_buy').val(total.toFixed(2));
 	t_reeceive = $("#tether_receive").val();
 	if (t_reeceive!= undefined) {
-	 $("#final_crypto").html(total.toFixed(2));
+	 $("#final_crypto").html($("#form_crypto_amount_buy").val());
 	 $("#tether_receive").html(total.toFixed(2));
-	 $("#total_payble").html((Number(total.toFixed(2))+Number(network_fees)+Number(id_fees)).toFixed(2));
+	 $("#total_payble").html((Number($("#form_inr_amount_buy").val())+Number(network_fees)+Number(id_fees)).toFixed(2));
 	}
 
 	// $('#form_crypto_amount_buy').val(total);
@@ -21,13 +21,13 @@ function multiply(){
 	var usdt = $("#usdt-price").text();
 	var receive = $("#form_crypto_amount_buy").val();
 	var total =0;
-	total=Number(usdt)*Number(receive);
+	total = Number(usdt)*Number(receive);
 	$('#form_inr_amount_buy').val(total);
 	t_reeceive = $("#tether_receive").val();
 	if (t_reeceive!= undefined) {
-	 $("#final_crypto").html(total.toFixed(2));
+	 $("#final_crypto").html($("#form_crypto_amount_buy").val());
 	 $("#tether_receive").html(total.toFixed(2));
-	 $("#total_payble").html((Number(total.toFixed(2))-(Number(network_fees)+Number(id_fees)).toFixed(2)));
+	 $("#total_payble").html((Number($("#form_inr_amount_buy").val())-(Number(network_fees)+Number(id_fees)).toFixed(2)));
 	}
 
 }
@@ -40,9 +40,9 @@ function multiply_sell(){
 	$('#form_inr_amount_sell').val(total);
 	t_reeceive = $("#tether_receive").val();
 	if (t_reeceive!= undefined) {
-	 $("#final_crypto").html(total.toFixed(2));
-	 $("#tether_receive").html(total.toFixed(2));
-	 $("#total_payble").html((Number(total.toFixed(2))-(Number(network_fees)+Number(id_fees)).toFixed(2)));
+	 $("#final_crypto").html($("#form_crypto_amount_sell").val());
+	 $("#tether_receive").html($("#form_crypto_amount_sell").val());
+	 $("#total_payble").html((Number($("#form_inr_amount_sell").val())-(Number(network_fees)+Number(id_fees)).toFixed(2)));
 	}
 
 }
@@ -58,9 +58,9 @@ function divide_sell(){
 	$('#form_crypto_amount_sell').val(total.toFixed(2));
 	t_reeceive = $("#tether_receive").val();
 	if (t_reeceive!= undefined) {
-	 $("#final_crypto").html(total.toFixed(2));
-	 $("#tether_receive").html(total.toFixed(2));
-	 $("#total_payble").html((Number(total.toFixed(2))+Number(network_fees)+Number(id_fees)).toFixed(2));
+	 $("#final_crypto").html($("#form_crypto_amount_sell").val());
+	 $("#tether_receive").html($("#form_crypto_amount_sell").val());
+	 $("#total_payble").html((Number($("#form_inr_amount_sell").val())-Number(network_fees)+Number(id_fees)).toFixed(2));
 	}
 
 	// $('#form_crypto_amount_buy').val(total);
@@ -82,9 +82,9 @@ function pageredirect(type){
 
 function save_transactions(types){
 	if (types == 1) {
-		datas = {'id_fee':id_fees,'inr':$("#form_inr_amount_buy").val(),'crypto':$("#form_crypto_amount_buy").val(),'w_address':$("#form_wallet_address").val(),'tc':$("#tc").val(),'wallet':$('input:radio[name="wallet"]').val(),'payment_mode':$('input:radio[name="form_payment_method"]').val(),'payment_type':$('.payment_type').val()};						
+		datas = {'id_fee':id_fees,'inr':$("#form_inr_amount_buy").val(),'crypto':$("#form_crypto_amount_buy").val(),'w_address':$("#form_wallet_address").val(),'tc':$("#tc").val(),'wallet':$('input:radio[name="wallet"]').val(),'payment_mode':$('input:radio[name="form_payment_method"]').val(),'payment_type':types};						
 	}else{
-		datas = {'id_fee':id_fees,'inr':$("#form_inr_amount_sell").val(),'crypto':$("#form_crypto_amount_sell").val(),'w_address':$("#form_upi_address").val(),'tc':$("#tc_sell").val(),'wallet':$('input:radio[name="wallet"]').val(),'payment_mode':$('input:radio[name="form_payment_method"]').val(),'payment_type':$('.payment_type').val()};
+		datas = {'id_fee':id_fees,'inr':$("#form_inr_amount_sell").val(),'crypto':$("#form_crypto_amount_sell").val(),'w_address':$("#form_upi_address").val(),'tc':$("#tc_sell").val(),'wallet':$('input:radio[name="wallet"]').val(),'payment_mode':$('input:radio[name="form_payment_method"]').val(),'payment_type':types};
 	}
 	$.ajaxSetup({
                   headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }

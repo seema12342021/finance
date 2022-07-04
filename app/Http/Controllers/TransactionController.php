@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\TransactionBuy; 
-use App\Models\TransactionSell; 
+use App\Models\Transaction; 
 use DB;   
 use Validator; 
 use DataTables; 
@@ -28,32 +27,18 @@ class TransactionController extends Controller
 
  public function show_transactionBuy(Request $request){
         if ($request->ajax()) {
-           //$data = Project::select('*');
-            $data=TransactionBuy::where('is_deleted',1)->orderBy('id','DESC')->get();
+            $data = Transaction::join('wallets','wallets.id','=','transactions.wallet_id')->join('users','users.id','=','transactions.user_id')->join('cryptos','cryptos.id','=','transactions.crypto')->join('statuses','statuses.id','=','transactions.payment_status')->where(['transactions.is_deleted'=>1,'transactions.payment_type'=>1])->orderBy('transactions.id','DESC')->get(['transactions.id','transactions.transaction_id','transactions.total_inr_price','transactions.created_at','transactions.total_crypto','transactions.crypto_price','transactions.payment_mode','transactions.wallet_address','transactions.payment_type','wallets.name as wallet','cryptos.name as crypto','statuses.name as status','users.first_name','users.last_name','users.email']);
             return Datatables::of($data)
                     ->addIndexColumn()
-                    ->addColumn('status', function($row){
-                    if($row->is_active == 1){
-                        return '<div class="userDatatable-content " onclick="status_network('.$row->id.','.$row->is_active.')"> <span style=" cursor: pointer; " class="badge bg-success" id="status'.$row->id.'">Active</span> </div>';
-                    }else{
-                        return '<div class="userDatatable-content d-inline-block" onclick="status_network('.$row->id.','.$row->is_active.')"> <span style=" cursor: pointer; "class="badge bg-danger" id="status'.$row->id.'">Deactive</span></div>';
-                    }
-                })
-                    ->addColumn('action', function($row){
-                           $btn = '<a herf="javascript:;" class="btn btn-primary btn-xs" onclick="edit_network('.$row->id.')"><span class="fa fa-edit"></span></a>
-                           <a class="btn btn-danger btn-xs" onclick="delete_network('.$row->id.')"><span class="fa fa-trash"></span></a>';
+                    ->addColumn('user', function($row){
+                           $btn = '<b>Name : </b> '.ucwords($row->first_name.' '.$row->last_name).'<b><br>Email : </b> '.$row->email;
                             return $btn;
                     })
-                    // ->addColumn('type', function($row){
-                    //     if ($row->type == 1) {
-                    //         $btn = '<div class="userDatatable-content"> <span class="badge bg-primary" >Buy</span> </div>';
-                    //     }else{
-                    //         $btn = '<div class="userDatatable-content"> <span class="badge bg-primary" >Sell</span> </div>';
-                    //     }
-                           
-                    //         return $btn;
-                    // })
-                    ->rawColumns(['status','action'])
+                    ->addColumn('action', function($row){
+                           $btn = '<a herf="javascript:;" class="btn btn-primary btn-xs" onclick="show('.$row->id.')"><span class="fa fa-eye"></span></a>';
+                            return $btn;
+                    })
+                    ->rawColumns(['user','action'])
                     ->make(true);
         }
         return view('admin.template',$data);
@@ -61,7 +46,7 @@ class TransactionController extends Controller
 
     public function transactionSell()  
     { 
-      $data['title']="Buy Transaction";
+      $data['title']="Sell Transaction";
    
        $data['css_files'] = array('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css',
                                 'assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css');
@@ -69,42 +54,43 @@ class TransactionController extends Controller
                                     'assets\plugins/datatables-bs4/js/dataTables.bootstrap4.min.js',
                                     'assets\plugins/datatables-responsive/js/dataTables.responsive.min.js',
                                     'assets\plugins/datatables-responsive/js/responsive.bootstrap4.min.js',
-                                    'assets\custom_js\transactionBuy.js');
+                                    'assets\custom_js\transactionSell.js');
         $data['content'] = view('admin.transactionSell')->render();
         return view('admin.template',$data);
     }
 
  public function show_transactionSell(Request $request){
         if ($request->ajax()) {
-           //$data = Project::select('*');
-            $data=TransactionSell::where('is_deleted',1)->orderBy('id','DESC')->get();
-            return Datatables::of($data)
+            $data = Transaction::join('wallets','wallets.id','=','transactions.wallet_id')
+            ->join('users','users.id','=','transactions.user_id')
+            ->join('cryptos','cryptos.id','=','transactions.crypto')
+            ->join('statuses','statuses.id','=','transactions.payment_status')
+            ->where(['transactions.is_deleted'=>1,'transactions.payment_type'=>2])
+            ->orderBy('transactions.id','DESC')
+            ->get(['transactions.id','transactions.transaction_id','transactions.total_inr_price','transactions.created_at','transactions.total_crypto','transactions.crypto_price','transactions.payment_mode','transactions.wallet_address','transactions.payment_type','wallets.name as wallet','cryptos.name as crypto','statuses.name as status','users.first_name','users.last_name','users.email']);
+                return Datatables::of($data)
                     ->addIndexColumn()
-                    ->addColumn('status', function($row){
-                    if($row->is_active == 1){
-                        return '<div class="userDatatable-content " onclick="status_network('.$row->id.','.$row->is_active.')"> <span style=" cursor: pointer; " class="badge bg-success" id="status'.$row->id.'">Active</span> </div>';
-                    }else{
-                        return '<div class="userDatatable-content d-inline-block" onclick="status_network('.$row->id.','.$row->is_active.')"> <span style=" cursor: pointer; "class="badge bg-danger" id="status'.$row->id.'">Deactive</span></div>';
-                    }
-                })
-                    ->addColumn('action', function($row){
-                           $btn = '<a herf="javascript:;" class="btn btn-primary btn-xs" onclick="edit_network('.$row->id.')"><span class="fa fa-edit"></span></a>
-                           <a class="btn btn-danger btn-xs" onclick="delete_network('.$row->id.')"><span class="fa fa-trash"></span></a>';
+                    ->addColumn('user', function($row){
+                           $btn = '<b>Name : </b> '.ucwords($row->first_name.' '.$row->last_name).'<b><br>Email : </b> '.$row->email;
                             return $btn;
                     })
-                    // ->addColumn('type', function($row){
-                    //     if ($row->type == 1) {
-                    //         $btn = '<div class="userDatatable-content"> <span class="badge bg-primary" >Buy</span> </div>';
-                    //     }else{
-                    //         $btn = '<div class="userDatatable-content"> <span class="badge bg-primary" >Sell</span> </div>';
-                    //     }
-                           
-                    //         return $btn;
-                    // })
-                    ->rawColumns(['status','action'])
+                    ->addColumn('action', function($row){
+                           $btn = '<a herf="javascript:;" class="btn btn-primary btn-xs" onclick="show('.$row->id.')"><span class="fa fa-eye"></span></a>';
+                            return $btn;
+                    })
+                    ->rawColumns(['user','action'])
                     ->make(true);
         }
         return view('admin.template',$data);
     }//end of method
 
-}
+    public function getTransactionDetails($id){
+        $data = Transaction::query();
+        $data = $data->join('wallets','wallets.id','=','transactions.wallet_id')->join('users','users.id','=','transactions.user_id')->join('cryptos','cryptos.id','=','transactions.crypto')->join('statuses','statuses.id','=','transactions.payment_status')->where(['transactions.is_deleted'=>1,'transactions.is_active'=>1,'transactions.id'=>$id])->orderBy('transactions.id','DESC')->first(
+            ['transactions.id','transactions.total_inr_price','transactions.created_at','transactions.total_crypto','transactions.crypto_price','transactions.payment_mode','transactions.wallet_address','transactions.payment_type','wallets.name as wallet','cryptos.name as crypto','statuses.name as status','users.first_name','users.last_name','users.email','users.mobile_number'
+        ]);
+        return $data;
+    }
+
+
+}//end of class

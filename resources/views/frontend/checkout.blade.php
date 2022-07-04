@@ -592,7 +592,7 @@
                 <div class="pt-2"><img src="{{!empty(@$data->type)?'images/icons/oval_sell.png':'images/icons/oval_buy.png'}}"></div>
                 <div class="checkout-item">
                   <div class="checkout-item-1 "><span class="card-icon-buy"> {{!empty(@$data->type)?'Sell':'Buy'}} </span></div>
-                  <div class="checkout-item-2"><span class="card-tether" id="final_crypto">{{@$data->crypto}} USDT</span> 1 Tether = INR {{((@$commision_buy->fees / 100) * 83.92)+83.92}}</div>
+                  <div class="checkout-item-2"><span class="card-tether" id="final_crypto">{{@$data->crypto}} </span><span class="card-tether">USDT</span> 1 Tether = INR {{((@$commision_buy->fees / 100) * 83.92)+83.92}}</div>
                 </div>
               </div>
               <div class="col-lg-4 col-md-4 mt-3 text-right">
@@ -611,17 +611,17 @@
                    <div class="checkout-price-2 text-right col-lg-6 col-md-6 col-6"> {{!empty(@$data->type)?@$network_sell->fees:@$network_buy->fees}} INR</div>
                 </div>
                  <div class="hr-dotted">  </div>
-                <div class="checkout-price row mb-4">
+                {{-- <div class="checkout-price row mb-4">
                    <div class="checkout-price-1 text-left col-lg-6 col-md-6 col-6"> Identification Amount </div>
                    <div class="checkout-price-2 text-right col-lg-6 col-md-6 col-6"> 1.73 INR </div>
-                </div>
-                <div class="checkout-price row mb-4">
+                </div> --}}
+                {{-- <div class="checkout-price row mb-4">
                    <div class="checkout-price-2 col-lg-12 col-md-12 col-12">  <p class="small-text">Note : Identification Amount is added to identify the transaction on our end.</p></div>
-                </div>
+                </div> --}}
                 <div class="checkout-total col-md-12 col-12">
                   <div class="row">
                     <div class="checkout-price-1 text-left col-lg-6 col-md-6 col-6"> Total Payable </div>
-                    <div class="checkout-price-2 text-right col-lg-6 col-md-6 col-6" id="total_payble"> {{!empty(@$data->type)?@$data->inr-(@$network_sell->fees+1.73):@$data->inr+@$network_buy->fees+1.73}} INR</div>
+                    <div class="checkout-price-2 text-right col-lg-6 col-md-6 col-6" id="total_payble"> {{!empty(@$data->type)?@$data->inr-(@$network_sell->fees):@$data->inr+@$network_buy->fees}} INR</div>
                   </div>
                 </div>
                 <div class="row">                      <div class="form-group col-lg-12 text-center mt-3">
@@ -673,7 +673,7 @@
           $('[data-toggle="tooltip"]').tooltip()
         })
         network_fees = "{{!empty(@$data->type)?@$network_sell->fees:@$network_buy->fees}}";
-        id_fees = "1.73";
+        id_fees = "0";
 
         </script>
         <script src='js/require.js'></script>
