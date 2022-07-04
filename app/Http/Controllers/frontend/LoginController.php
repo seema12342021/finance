@@ -46,6 +46,7 @@ class LoginController extends Controller
             $input['last_name'] = explode(' ', $data->name)[1];
             $input['password'] = bcrypt(explode('@', $data->email)[0]);
             $input['email'] = $data->email;
+            $input['user_type'] = 2;
             $id = User::insertGetId($input);
         }
         if(Auth::attempt(['email'=>$data->email,'password'=>explode('@', $data->email)[0]])){
