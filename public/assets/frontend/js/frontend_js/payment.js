@@ -82,9 +82,9 @@ function pageredirect(type){
 
 function save_transactions(types){
 	if (types == 1) {
-		datas = {'id_fee':id_fees,'inr':$("#form_inr_amount_buy").val(),'crypto':$("#form_crypto_amount_buy").val(),'w_address':$("#form_wallet_address").val(),'tc':$("#tc").val(),'wallet':$('input:radio[name="wallet"]').val(),'payment_mode':$('input:radio[name="form_payment_method"]').val(),'payment_type':types};						
+		datas = {'id_fee':id_fees,'inr':$("#form_inr_amount_buy").val(),'crypto':$("#form_crypto_amount_buy").val(),'w_address':$("#form_wallet_address").val(),'form_is_wallet_acknowledged':$("#tc").val(),'wallet':$('input:radio[name="wallet"]').val(),'payment_mode':$('input:radio[name="form_payment_method"]').val(),'payment_type':types};						
 	}else{
-		datas = {'id_fee':id_fees,'inr':$("#form_inr_amount_sell").val(),'crypto':$("#form_crypto_amount_sell").val(),'w_address':$("#form_upi_address").val(),'tc':$("#tc_sell").val(),'wallet':$('input:radio[name="wallet"]').val(),'payment_mode':$('input:radio[name="form_payment_method"]').val(),'payment_type':types};
+		datas = {'id_fee':id_fees,'inr':$("#form_inr_amount_sell").val(),'crypto':$("#form_crypto_amount_sell").val(),'w_address':$("#form_upi_address").val(),'form_is_wallet_acknowledged':$("#tc_sell").val(),'wallet':$('input:radio[name="wallet"]').val(),'payment_mode':$('input:radio[name="form_payment_method"]').val(),'payment_type':types};
 	}
 	$.ajaxSetup({
                   headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
@@ -199,11 +199,10 @@ function button_on(){
 
 	tv_value = $('#tc').val();
 	if (tv_value == 1) {
-		$('#btn_btn').removeAttr("disabled");
+		$('#btn_btn').attr("disabled",true);
 		$('#tc').val(0);
 	}else{
-		$('#btn_btn').attr("disabled",true);
+		$('#btn_btn').removeAttr("disabled");
 		$('#tc').val(1);
-
 	}
 }

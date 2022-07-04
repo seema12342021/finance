@@ -33,6 +33,7 @@ class CheckoutController extends Controller
         
             $valid = [
             'w_address'=>'required',
+            'form_is_wallet_acknowledged'=>'required',
             ];  
         
         $validated = Validator::make($request->all(),$valid);
