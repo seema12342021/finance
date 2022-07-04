@@ -447,15 +447,7 @@
       <script src="lib/toastr/toastr.min.js"></script>
        <script src="lib/widget/js/widget-data.js"> </script>
       <script type="text/javascript">
-        var require = {
-          baseUrl: '/',        urlArgs: 'a40e5a35',          deps: [    "js/component/UserProfile",
-    "js/component/PageMsg",
-    "js/component/UserProfile",
-],
-          config: {
-              'js/component/Application':{"Level":{"Level":"Live"},"User":{"u_name":"mailtoashusingh1@gmail.com","f_name":"Ashu","u_id":1127},"StaticDomain":"http:\/\/static.noriapay.com","Page_MsgErrors":[],"Page_MsgInfo":[],"Page_MsgWarning":[],"Page_MsgSuccess":[]},    'js/component/UserProfile':{"user_firstname":"Ashu","user_lastname":"Singh","user_email":"mailtoashusingh1@gmail.com","user_mobile_number":"","signup_via":"social","user_mobile_verified":false},
-          }
-        };          
+             var errornsg = "{{Session::get('error')}}" 
         </script>
         <script src='js/require.js'></script>
          <script src="{{url('assets/frontend/js/frontend_js/profile.js')}}"></script>

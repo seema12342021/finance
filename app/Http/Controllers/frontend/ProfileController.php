@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\{User,KycData};
+use Illuminate\Support\Facades\Session;
 use Validator;
 
 class ProfileController extends Controller
@@ -26,7 +27,7 @@ class ProfileController extends Controller
     }
      public function setting_index()
     {
-         $users['fname'] = Auth::user()->first_name;
+        $users['fname'] = Auth::user()->first_name;
         $users['lname'] = Auth::user()->last_name;
         $users['setting'] = User::where(['id'=>Auth::user()->id])->first(['first_name','last_name','email','mobile_number']);
         return view('frontend.setting', $users);

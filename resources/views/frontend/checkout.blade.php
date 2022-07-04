@@ -484,7 +484,7 @@
 
                             
                             <label class="custom-control custom-checkbox">
-                            <input type="checkbox" id="tc" name="form_is_wallet_acknowledged" class="custom-control-input" >
+                            <input type="checkbox" onclick="button_on()" value="1" id="tc" name="form_is_wallet_acknowledged" class="custom-control-input" >
                             <span class="custom-control-label small-text">I verify that this wallet address belongs to me. And understand that sending it to someone else's wallet may result in a loss of funds.</span>
                         </label>
                         <br>
@@ -625,7 +625,7 @@
                   </div>
                 </div>
                 <div class="row">                      <div class="form-group col-lg-12 text-center mt-3">
-                        <button class="btn btn-success float-right" onclick="save_transactions({{!empty(@$data->type)?'2':'1'}})">Confirm </button>
+                        <button class="btn btn-success float-right" id="btn_btn" disabled onclick="save_transactions({{!empty(@$data->type)?'2':'1'}})">Confirm </button>
                       </div>                </div>
               </div>
             </div>         </div>

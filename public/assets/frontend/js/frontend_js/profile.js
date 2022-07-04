@@ -1,3 +1,9 @@
+$(document).ready(function(){
+ if (errornsg != '') {
+ 		toastr.error(errornsg);
+ }
+});
+
 $("#profile_update_form").on("submit",function(e){
   e.preventDefault(); 
 	$.ajax({ 

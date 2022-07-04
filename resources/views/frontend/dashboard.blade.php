@@ -373,7 +373,7 @@
                                         <h4 class="card-paragraph">There are no transactions at the moment. Make your first exchange!</h4>
                                      </div>
                                      <div class="col-md-3 col-6 pt-xs-3 text-right">
-                                         <a class="card-button" id="FirstExchange">Exchange</a>
+                                         <a onclick="pageredirect(1)" class="card-button" id="FirstExchange">Exchange</a>
                                      </div>
                                   </div>
                               </div>

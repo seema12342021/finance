@@ -22,7 +22,7 @@ function multiply(){
 	var receive = $("#form_crypto_amount_buy").val();
 	var total =0;
 	total = Number(usdt)*Number(receive);
-	$('#form_inr_amount_buy').val(total);
+	$('#form_inr_amount_buy').val(total.toFixed(2));
 	t_reeceive = $("#tether_receive").val();
 	if (t_reeceive!= undefined) {
 	 $("#final_crypto").html($("#form_crypto_amount_buy").val());
@@ -37,7 +37,7 @@ function multiply_sell(){
 	var receive = $("#form_crypto_amount_sell").val();
 	var total =0;
 	total=Number(usdt)*Number(receive);
-	$('#form_inr_amount_sell').val(total);
+	$('#form_inr_amount_sell').val(total.toFixed(2));
 	t_reeceive = $("#tether_receive").val();
 	if (t_reeceive!= undefined) {
 	 $("#final_crypto").html($("#form_crypto_amount_sell").val());
@@ -195,4 +195,15 @@ $('#form_transfer').on('submit',function(e){
    });
 
 
+function button_on(){
 
+	tv_value = $('#tc').val();
+	if (tv_value == 1) {
+		$('#btn_btn').removeAttr("disabled");
+		$('#tc').val(0);
+	}else{
+		$('#btn_btn').attr("disabled",true);
+		$('#tc').val(1);
+
+	}
+}
