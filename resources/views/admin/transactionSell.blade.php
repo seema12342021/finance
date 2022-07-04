@@ -16,6 +16,7 @@
                                         <th>Crypto</th>
                                         <th>INR</th>
                                         <th>Status</th>
+                                        {{-- <th>Amount Paid</th> --}}
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -102,12 +103,46 @@
                             </div>
                         </div>
                     </div>
+
+                    
+                    <input type="hidden" id="m_id">
                     <div class="col-md-4 col-sm-6 col-12">
                         <div class="info-box">
                             <div class="info-box-content">
-                                <span class="info-box-number">Status</span>
-                                <span class="" id="status"></span>
+                                <div class="form-group">
+                                    <label for="exampletitle">User Status</label>
+                                        <select class="form-control"  name="type" id="status">
+                                          <option value="">Choose Option</option>
+                                          <option value="2">Pending</option>
+                                          <option value="1">Payment Done</option>
+                                            
+                                        </select>
+                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-12">
+                        <div class="info-box">
+                            <div class="info-box-content">
+                                <div class="form-group">
+                                    <label for="exampletitle">Status</label>
+                                        <select class="form-control"  name="type" id="status2">
+                                          <option value="">Choose Option</option>
+                                          <option value="2">Pending</option>
+                                          <option value="1">Payment Done</option>
+                                            
+                                        </select>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6 col-12">
+                        <div class="info-box">
+                            <div class="info-box-content">
+                                <span class="info-box-number">Image</span>
+                                <a id="image_url" href="" target="_blank"><img  id="image" src="" style=" height: 100px; width: 100px; "></a>  
+                          </div>
                         </div>
                     </div>
                 </div>
@@ -115,6 +150,12 @@
                     <a href="javascript:;" class="btn btn-primary" id="print_bill">Print Details</a>
                 </div> --}}
             </div>
+
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary float-right mr-2" onclick="change_status()" id="submit">Save</button>
+            </div>
+
         </div>
     </div>
 </div>

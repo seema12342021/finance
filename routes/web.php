@@ -68,6 +68,7 @@ Route::middleware("AdminLogin")->group(function(){
 
     Route::get('/transactionSell',[TransactionController::class ,'transactionSell']);
     Route::get('/show_transactionSell',[TransactionController::class ,'show_transactionSell']);
+    Route::post('/update_status_sell',[TransactionController::class ,'update_status_sell']);
     Route::get('/transactionBuy',[TransactionController::class ,'transactionBuy']);
     Route::get('/show_transactionBuy',[TransactionController::class ,'show_transactionBuy']);
     Route::get('/get_transaction_details/{id}',[TransactionController::class ,'getTransactionDetails']);
