@@ -488,7 +488,7 @@
                 <form class="pl-3 pr-3 form-horizontal form-material" action="" id="signupForm">
                     @CSRF
                     <div class="form-group social-btn clearfix  text-center">
-                        <a href="https://accounts.google.com/o/oauth2/auth?response_type=code&access_type=offline&client_id=282146788841-847uk9pfr6gl8m2oikp4h946n5sut4l9.apps.googleusercontent.com&redirect_uri=https%3A%2F%2Fnoriapay.com%2Fsignin&state&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&approval_prompt=force" class="btn btn-secondary google-btn"><i class="fab fa-google"></i> Sign Up with Gmail</a>
+                        <a href="{{url('auth/google')}}" class="btn btn-secondary google-btn"><i class="fab fa-google"></i> Sign Up with Gmail</a>
                     </div>
 
                     <div class="or-seperator"><b>or</b></div>
