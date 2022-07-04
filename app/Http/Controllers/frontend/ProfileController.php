@@ -12,12 +12,14 @@ class ProfileController extends Controller
 {
     public function index() 
     {
+
         $users['fname'] = Auth::user()->first_name;
         $users['lname'] = Auth::user()->last_name;
         return view('frontend.user_profile',$users);
     }
      public function kyc_index()
     {
+         $users['title']="Kyc";
         $users['fname'] = Auth::user()->first_name;
         $users['lname'] = Auth::user()->last_name;
         $kyc_data = KycData::where('user_id',Auth::user()->id)->orderBY('id','DESC')->first();
@@ -26,6 +28,7 @@ class ProfileController extends Controller
     }
      public function setting_index()
     {
+         $users['title']="Profile setting";
          $users['fname'] = Auth::user()->first_name;
         $users['lname'] = Auth::user()->last_name;
         $users['setting'] = User::where(['id'=>Auth::user()->id])->first(['first_name','last_name','email','mobile_number']);
@@ -60,6 +63,7 @@ class ProfileController extends Controller
     //change password
      public function ChangePasswordForm()
     {
+         $users['title']="Change Password";
         $users['fname'] = Auth::user()->first_name;
         $users['lname'] = Auth::user()->last_name;
         return view('frontend.change_password',$users);

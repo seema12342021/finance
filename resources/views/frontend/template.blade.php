@@ -6,7 +6,7 @@
             <meta http-equiv="x-ua-compatible" content="ie=edge">
              <meta name="_token" content="{{ csrf_token() }}">
         <meta name="description" content="Buy & Sell Crypto Currencies With Your Local Currency" >
-        <title>Elite > template</title>
+        <title>Elite > {{@$title}}</title>
         
         <!-- Bootstrap-4 CSS --> 
         <link href="{{url('css/bootstrap4/bootstrap.min.css')}}" rel="stylesheet">
