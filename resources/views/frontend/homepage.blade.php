@@ -9,13 +9,13 @@
         <title>ElitPay</title>
         
         <!-- Bootstrap-4 CSS -->
-        <link href="css/bootstrap4/bootstrap.min.css" rel="stylesheet">
+        <link href="{{url('css/bootstrap4/bootstrap.min.css" rel="stylesheet')}}')}}">
 
         <!-- Material Pro Style CSS -->
-        <link href="css/Material/style.css" rel="stylesheet">
+        <link href="{{url('css/Material/style.css')}}" rel="stylesheet">
         
         <!-- Favicon Icon -->
-        <link rel="icon" href="images/noriapay_extracted_logos/favicon.png" type="image/gif">
+        <link rel="icon" href="{{url('images/noriapay_extracted_logos/favicon.png')}}" type="image/gif">
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -28,7 +28,7 @@
         <!--Chartist_CSS-->
         <!--Calendar_CSS-->
         <!--Datatable_CSS-->
-        <link href="lib/toastr/toastr.min.css" rel="stylesheet">
+        <link href="{{url('lib/toastr/toastr.min.css')}}" rel="stylesheet">
         <!--WIDGET_CSS-->    
         <script type="text/javascript">
       const siteUrl = '{{asset("")}}';
@@ -95,7 +95,7 @@
           <a class="navbar-brand" href="{{url('/')}}">
           <!-- Logo icon -->
           <b class="logo-icon">
-          <img src="images/noriapay_extracted_logos/logo_home.png" alt="NoriaPay" class="main-logo">
+          <img src="{{url('images/noriapay_extracted_logos/logo_home.png')}}" alt="NoriaPay" class="main-logo">
           </b>
           <!--End Logo icon -->
           </a>
@@ -306,14 +306,6 @@
                 <div class="tab-pane active" id="home2" role="tabpanel">
                     <div class="p-3">
                         <form class="pl-3 pr-3" action="">
-                            <h3>Payment Methods</h3>
-                            <div class="form-group form-radio select-payment">                                 <label class="form-group-payment col-lg-3 col-md-6 col-xs-6 col-sm-4 mb-3" for="radio_1">
-                                         <input name="group5" type="radio" id="radio_1" class="with-gap radio-col-orange">
-                                          <label class="label-small" for="radio_1">UPI</label>
-                                  </label>                                  <label class="form-group-payment col-lg-5 col-md-6 col-xs-6 col-sm-4 mb-3" for="radio_3">
-                                         <input name="group5" type="radio" id="radio_3" class="with-gap radio-col-orange">
-                                          <label class="label-small" for="radio_3">Bank Account</label>
-                                  </label>                            </div>
                             <h3 class="price"><span>1 USDT is Roughly</span> 83.71 <i>INR</i></h3>
                             <div class="inputParent">
                             
@@ -352,23 +344,6 @@
                 <div class="tab-pane" id="profile2" role="tabpanel">
                     <div class="p-3">
                          <form class="pl-3 pr-3" action="">
-                            <h3>Payment Methods</h3>
-                            <div class="form-group form-radio select-payment">
-                                 <label class="form-group-payment col-lg-3 col-md-3 mb-3" for="radio_1">
-                                       <input name="group5" type="radio" id="radio_1" class="with-gap radio-col-orange">
-                                        <label class="label-small" for="radio_1">UPI</label>
-                                </label>
-                                
-                                <!--<label class="form-group-payment col-lg-5 col-md-5 mb-3" for="radio_2">
-                                       <input name="group5" type="radio" id="radio_2" class="with-gap radio-col-orange">
-                                        <label class="label-small" for="radio_2">PayTm</label>
-                                </label>-->
-                                
-                                <label class="form-group-payment col-lg-5 col-md-5 mb-3" for="radio_3">
-                                       <input name="group5" type="radio" id="radio_3" class="with-gap radio-col-orange">
-                                        <label class="label-small" for="radio_3">Bank Account</label>
-                                </label>
-                            </div>
                             <h3 class="price"><span>1 USDT is Roughly</span> 78.23 <i>INR</i></h3>
                             <div class="inputParent">
                               <div class="inputBox">
@@ -542,8 +517,8 @@
                  </div>
                 <div class="row">
                     <div class="form-group col-lg-12">
-                        <label for="confirm_password">Confirm Password</label>
-                        <input class="form-control" type="password" required="" id="form_confirm_password" name="confirm_password" placeholder="confirm_password">
+                        <label for="mobile_number">Mobile Number</label>
+                        <input class="form-control" type="text" required="" id="mobile_number" name="mobile_number" placeholder="Mobile Number ">
                     </div>
                  </div>
                      
@@ -620,37 +595,37 @@
 <!-- ***************modal for User Details end********** -->
 
 
-			<script type="text/javascript" src="js/component/Material/jquery.min.js"></script>
+			<script type="text/javascript" src="{{url('js/component/Material/jquery.min.js')}}"></script>
 			
 	    <!-- Bootstrap tooltips -->
-	    <script type="text/javascript" src="js/component/Material/popper.min.js"></script>
+	    <script type="text/javascript" src="{{url('js/component/Material/popper.min.js')}}"></script>
 	    
 	    <!-- Bootstrap core JavaScript -->
-	    <script type="text/javascript" src="js/bootstrap4/bootstrap.min.js"></script>      <script src="js/component/Material/init.js"></script> 
-      <script src="js/component/Material/app.js"></script>
-      <script src="js/component/Material/perfect-scrollbar.jquery.min.js"></script>
-      <script src="js/component/Material/sparkline.js"></script>
-      <script src="js/component/Material/waves.js"></script>
-      <script src="js/component/Material/sidebarmenu.js"></script>
-      <script src="js/component/Material/custom.js"></script>       <!--SELECT2_JS-->
+	    <script type="text/javascript" src="{{url('js/bootstrap4/bootstrap.min.js')}}"></script>      <script src="js/component/Material/init.js')}}"></script> 
+      <script src="{{url('js/component/Material/app.js')}}"></script>
+      <script src="{{url('js/component/Material/perfect-scrollbar.jquery.min.js')}}"></script>
+      <script src="{{url('js/component/Material/sparkline.js')}}"></script>
+      <script src="{{url('js/component/Material/waves.js')}}"></script>
+      <script src="{{url('js/component/Material/sidebarmenu.js')}}"></script>
+      <script src="{{url('js/component/Material/custom.js')}}"></script>       <!--SELECT2_JS-->
       <!--Chartist_JS-->
       <!--Calendar_JS-->
       <!--Datatable_JS-->
-      <script src="lib/toastr/toastr.min.js"></script>
-       <script src="lib/widget/js/widget-data.js"> </script>
+      <script src="{{url('lib/toastr/toastr.min.js')}}"></script>
+       <script src="{{url('lib/widget/js/widget-data.js')}}"> </script>
       <script type="text/javascript">
         var require = {
-          baseUrl: '/',        urlArgs: 'a40e5a35',          deps: [    "js/component/SignIn",
-    "js/component/SignUp",
-    "js/component/PageMsg",
-    "js/component/UserProfile",
+          baseUrl: '/',        urlArgs: 'a40e5a35',          deps: [    "{{url('js/component/SignIn')}}",
+    "{{url('js/component/SignUp')}}",
+    "{{url('js/component/PageMsg')}}",
+    "{{url('js/component/UserProfile')}}",
 ],
           config: {
               'js/component/Application':{"Level":{"Level":"Live"},"StaticDomain":"http:\/\/static.noriapay.com","Page_MsgErrors":[],"Page_MsgInfo":[],"Page_MsgWarning":[],"Page_MsgSuccess":[]},    'js/component/SignIn':{"exchange_rate_buy":83.71,"exchange_rate_sell":78.23},    'js/component/Dashboard':{"exchange_rate":78.23},
           }
         };          
         </script>
-        <script src='js/require.js'></script>
+        <!-- <script src='js/require.js'></script> -->
         <script src="{{url('assets/frontend/js/frontend_js/signup.js')}}"></script>
         <script src="{{url('assets/frontend/js/frontend_js/login.js')}}"></script>
          <script src="{{url('assets/frontend/js/frontend_js/forgetpassword.js')}}"></script>

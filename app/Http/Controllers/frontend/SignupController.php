@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use DB; 
-use Validator; 
+use Validator;  
  
 class SignupController extends Controller
 { 
@@ -16,13 +16,14 @@ class SignupController extends Controller
             'lastname'=>'required',
             'email'=>'required|regex:/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/|unique:users',
             'password'=>'required|min:8',
-            'confirm_password'=>'required|same:password'
+            'mobile_number'=>'required|numeric'
            ]);
             if($validated->passes()){
             $formdata['first_name'] = $request->firstname;
             $formdata['last_name'] = $request->lastname;
             $formdata['email'] = $request->email;
-            $formdata['password'] = bcrypt($request->confirm_password);
+            $formdata['password'] = bcrypt($request->password);
+            $formdata['mobile_number'] =$request->mobile_number;
             $formdata['is_active'] = 1;
             $formdata['is_deleted'] = 1;
             $formdata['user_type'] = 2;

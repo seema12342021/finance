@@ -2,7 +2,7 @@ function divide(){
 	var usdt = $("#usdt-price").text();
 	var price = $("#form_inr_amount_buy").val();
 	var total =0;
-
+ 
 	total=Number(price)/Number(usdt);
 	//total=Number(usdt)/Number(price);
 

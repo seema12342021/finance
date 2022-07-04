@@ -35,7 +35,7 @@ class ProfileController extends Controller
         $validated = Validator::make($request->all(),[
             'form_first_name'=>'required',
             'form_last_name'=>'required',
-            'form_mobile_number'=>'required|digits:10|regex:/[0-9]/'
+            'form_mobile_number'=>'required|numeric'
 
         ]);
          if($validated->passes()){
