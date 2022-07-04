@@ -192,5 +192,6 @@
          <script src="{{url('assets/frontend/js/frontend_js/profile.js')}}"></script>
           <script src="{{url('assets/frontend/js/frontend_js/payment.js')}}"></script>
           <script src="{{url('assets/frontend/js/frontend_js/forgetpassword.js')}}"></script>
+          <script src="{{url('assets/frontend/js/frontend_js/transaction.js')}}"></script>
     </body>
   </html>
