@@ -13,7 +13,8 @@ function transactionBuy(){
             {data: 'user'},
             {data: 'total_crypto'},
             {data: 'total_inr_price'},
-            {data: "status"},
+            {data: "u_stat"},
+            {data: "ad_stat"},
             {data: 'action', orderable: false, searchable: false},
         ]
     });

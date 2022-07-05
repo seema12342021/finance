@@ -15,8 +15,8 @@
                                         <th>User Information</th>
                                         <th>Crypto</th>
                                         <th>INR</th>
-                                        <th>Status</th>
-                                        {{-- <th>Amount Paid</th> --}}
+                                        <th>User Status</th>
+                                        <th>Admin Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -151,9 +151,9 @@
                         <div class="info-box">
                             <div class="info-box-content">
                                 <div class="form-group">
-                                    <label for="exampletitle">Status</label>
+                                    <label for="exampletitle">Admin Status</label>
                                         <select class="form-control"  name="type" id="status2">
-                                          <option value="">Choose Option</option>
+                                          {{-- <option value="">Choose Option</option> --}}
                                           <option value="2">Pending</option>
                                           <option value="1">Payment Done</option>
                                             

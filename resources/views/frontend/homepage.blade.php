@@ -306,13 +306,13 @@
                 <div class="tab-pane active" id="home2" role="tabpanel">
                     <div class="p-3">
                         <form class="pl-3 pr-3" action="">
-                            <h3 class="price"><span>1 USDT is Roughly</span> 83.71 <i>INR</i></h3>
+                            <h3 class="price"><span>1 USDT is Roughly</span><b id="usdt-price">{{((@$commision_buy->fees / 100) * 83.92)+83.92}}</b> <i>INR</i></h3>
                             <div class="inputParent">
                             
                               <div class="inputBox">
                                 <div class="input_label">
                                     <label for="input1">You Pay</label>
-                                    <input class="error" name="form_inr_amount" value="8371" type="text" id="form_inr_amount_buy">
+                                    <input onblur="divide()" class="error" name="form_inr_amount" value="8392" type="text" id="form_inr_amount_buy">
                                 </div>
                                 <div class="iconBox">
                                     <img src="images/noriapay_extracted_logos/rupee.svg" alt="">
@@ -326,7 +326,7 @@
                               <div class="inputBox">
                                   <div class="input_label">
                                       <label for="input2">You will receive Roughly</label>
-                                      <input class="error" name="form_crypto_amount" value="100" type="text" id="form_crypto_amount_buy">
+                                      <input onblur="multiply()" class="error" name="form_crypto_amount" value="100" type="text" id="form_crypto_amount_buy">
                                   </div>
                                   <div class="iconBox">
                                       <img src="images/noriapay_extracted_logos/usdt.svg" alt="">
@@ -344,13 +344,12 @@
                 <div class="tab-pane" id="profile2" role="tabpanel">
                     <div class="p-3">
                          <form class="pl-3 pr-3" action="">
-                            <h3 class="price"><span>1 USDT is Roughly</span> 78.23 <i>INR</i></h3>
+                            <h3 class="price"><span>1 USDT is Roughly</span> <strong id="usdt-price-sell">{{83.92-((@$commision_sell->fees / 100) * 83.92)}}</strong> <i>INR</i></h3>
                             <div class="inputParent">
                               <div class="inputBox">
                                 <div class="input_label">
                                     <label for="input1">You Pay</label>
-                                    <input class="error" name="form_crypto_amount" value="100" type="text" id="form_crypto_amount_sell">
-                                </div>
+                                    <input class="error" onblur="multiply_sell()" name="form_crypto_amount" value="100" type="text" id="form_crypto_amount_sell">                                </div>
                                 <div class="iconBox">
                                     <img src="images/noriapay_extracted_logos/usdt.svg" alt="">
                                     <p>USDT</p>
@@ -365,7 +364,7 @@
                               <div class="inputBox">
                                   <div class="input_label">
                                       <label for="input2">You will receive Roughly</label>
-                                      <input class="error" name="form_inr_amount" type="text" value="7823" id="form_inr_amount_sell">
+                                      <input class="error" onblur="divide_sell()" name="form_inr_amount" type="text" value="7843" id="form_inr_amount_sell">
                                   </div>
                                   <div class="iconBox">
                                       <img src="images/noriapay_extracted_logos/rupee.svg" alt="">
@@ -629,5 +628,6 @@
         <script src="{{url('assets/frontend/js/frontend_js/signup.js')}}"></script>
         <script src="{{url('assets/frontend/js/frontend_js/login.js')}}"></script>
          <script src="{{url('assets/frontend/js/frontend_js/forgetpassword.js')}}"></script>
+         <script src="{{url('assets/frontend/js/frontend_js/payment.js')}}"></script>
     </body>
 </html>
