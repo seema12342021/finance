@@ -9,6 +9,7 @@ use App\Models\User;
 use Auth;
 use DB; 
 use Validator;
+use Mail;
 
 class ResetPasswordController extends Controller
 {
@@ -22,7 +23,14 @@ class ResetPasswordController extends Controller
             $formdata['token'] = $otp;
             $res = PasswordReset::insert($formdata);
              if($res){
-                return response()->json(['status'=>'sucess','status_code'=>200,'message'=>'Sent OTP']);
+                $user['to'] = $request->email;
+                $user['subject'] = 'Password reset-OTP';
+                $html = "$otp is OTP for your Account Password Reset. Do not share this OTP with anyone.";
+                Mail::raw($html,function($message) use ($user) {
+                    $message->to($user['to']);
+                    $message->subject($user['subject']);
+                });
+                return response()->json(['status'=>'sucess','status_code'=>200,'message'=>'OTP Sent !']);
              }else{
                 return response()->json(['status'=>'error','status_code'=>201,'message'=>" OTP Not Send"]);
             }
@@ -56,24 +64,33 @@ class ResetPasswordController extends Controller
     }
     public function PasswordIndex($hash)
     {
-        return view('frontend.update_password',array('hash' => $hash));
+        $email = $this->decrypt($hash,env("APP_NAME"));
+        $user = User::where(['email'=>$email,'remember_token'=>$hash])->first();
+        if($user){
+            return view('frontend.update_password',array('hash' => $hash));
+        }else{
+            return redirect('/');
+        }
     }
     public function UpdatePassword(Request $request){
-          $validated = Validator::make($request->all(),[
+        $validated = Validator::make($request->all(),[
                 'form_newPassword'=>'required',
                 'form_confirmPassword'=>'required|same:form_newPassword'
                ]);  
-           if($validated->passes()){
+        if($validated->passes()){
             $where['remember_token'] = $request->remember_token;
             $email = $this->decrypt($request->remember_token,env("APP_NAME"));
             $formdata['password'] = bcrypt($request->form_confirmPassword);
             $res = User::where($where)->update($formdata);
             if($res){
                 PasswordReset::where(['email'=>$email])->delete();
+                User::where(['email'=>$email])->update(['remember_token'=>NULL]);
                 return response()->json(['status'=>'sucess','status_code'=>200, 'message'=>"Password reset successfully !" ]);
            }else{
                 return response()->json(['status'=>'error','status_code'=>201,'message'=>"something went wrong !"]);
            }
+        }else{
+            return response()->json(['status'=>'error','status_code'=>301,'message' => $validated->errors()->all() ]);
         }
 
     }

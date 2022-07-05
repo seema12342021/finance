@@ -49,7 +49,7 @@ class UserListController extends Controller
                         }else{
                             $status = 'Pending approval';
                         }
-                        $btn = '<a herf="javascript:;" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-default" onclick="view_modal('.$row->id.')"><span class="badge bg-success">'.$status.'</span></a>';
+                        $btn = '<a herf="javascript:;" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-default" onclick="view_modal('.$row->id.')"><span>'.$status.'</span></a>';
                         
                             return $btn;
                     }else{
@@ -65,7 +65,7 @@ class UserListController extends Controller
                             }else if($row->proof_type == 3){
                                  $ptype = 'Aadhar Card';
                             }
-                             $btn = '<a herf="javascript:;" class="btn btn-primary btn-xs"><span class="badge bg-success">'.$ptype.'</span></a>
+                             $btn = '<a herf="javascript:;" class="btn btn-primary btn-xs"><span>'.$ptype.'</span></a>
                             <a class="btn btn-success btn-xs" href="'.url('uploads/kyc',[$row->front_img]).'" download><span class="fa fa-download"></span></a>
                             <a class="btn btn-success btn-xs" href="'.url('uploads/kyc',[$row->back_img]).'" download><span class="fa fa-download"></span></a>';
                             return $btn;

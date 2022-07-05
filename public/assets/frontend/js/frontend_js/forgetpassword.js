@@ -12,7 +12,7 @@ $("#forget_password").on("submit",function(e){
 		    var bind = '<div><input type="text" id="form_otp" class="form-control" placeholder="Enter otp"></div>';
 				$("#otp_field").html(bind);
 				toastr.success(res.message); 
-				$(".exChange").html('<button type="button" id="verify_otp" class="btn btn-success">Validate OTP</button>');
+				$(".loginexChange").html('<button type="button" id="verify_otp" class="btn btn-success">Validate OTP</button>');
 			}else if(res.status_code == 301){
 				$.each(res.message,function(key , value){
 					toastr.error(value);

@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use GuzzleHttp\Client;
 
 class Controller extends BaseController
 {
@@ -55,7 +56,22 @@ class Controller extends BaseController
                 $count+=2; 
             } 
             return $binString; 
+        }//end of method
+
+
+        public function getCryptoValue(){
+            $client = new Client();
+            $res = $client->request('GET', 'https://api.bofin.tech/exchange/currencies/ticker?key=c25737715c4ee510ae12ecc965a275fc98e2d169&ids=USDT&convert=INR');
+             if($res->getStatusCode() == 200){
+                $data = $res->getBody();
+                $data = json_decode($data,true);
+                if(count($data)>0){
+                    return number_format($data[0]['price'] , 2);
+                }else{
+                    return false;
+                }
+            }
         }
 
     
-}
+}//end of class

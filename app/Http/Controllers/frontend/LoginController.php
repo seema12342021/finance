@@ -39,7 +39,6 @@ class LoginController extends Controller
 
 
     protected function _LoginUser($data){
-
        $user = User::where('email','=',$data->email)->first();
         if(empty($user)){
             $input['first_name'] = explode(' ', $data->name)[0];
@@ -50,7 +49,7 @@ class LoginController extends Controller
             $id = User::insertGetId($input);
         }
         if(Auth::attempt(['email'=>$data->email,'password'=>explode('@', $data->email)[0]])){
-               return redirect('/user-dashboard');
+                return redirect('/user-dashboard');
             }else{
                 return response()->json(['status_code'=>201 , 'message' => 'Wrong Username or Password']);
             }

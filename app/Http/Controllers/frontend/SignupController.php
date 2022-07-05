@@ -18,7 +18,7 @@ class SignupController extends Controller
             'password'=>'required|min:8',
             'mobile_number'=>'required|numeric'
            ]);
-            if($validated->passes()){
+        if($validated->passes()){
             $formdata['first_name'] = $request->firstname;
             $formdata['last_name'] = $request->lastname;
             $formdata['email'] = $request->email;

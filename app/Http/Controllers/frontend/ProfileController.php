@@ -116,10 +116,11 @@ class ProfileController extends Controller
                 'back_image'=>'required_if:kyc_type,1,2,3|mimes:jpeg,png,pdf'
             ],
             [
-                'kyc_type.required' => 'Please Choose on of them !',
+                'kyc_type.required' => 'Please Choose any one of them !',
                 'front_image.required_if' => 'The front image field is required !',
                 'back_image.required_if' => 'The back image field is required !'
         ]);
+        
         if($validated->passes()){
             $front_image = $request->file('front_image'); 
             $front_image_name = uniqid(time()).'.'.$front_image->getClientOriginalExtension();;

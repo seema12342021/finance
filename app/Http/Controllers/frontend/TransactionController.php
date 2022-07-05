@@ -85,7 +85,6 @@ class TransactionController extends Controller
             return redirect('/user_setting')->with('error', 'Please Update Your Mobile'); 
         }
         if($users){
-            //dd($users);
             $custname = $users->first_name;
             $custemail = 'nandanakestech@gmail.com';
             $custmobile = $users->mobile_number;
@@ -123,10 +122,12 @@ class TransactionController extends Controller
                     if ($CustomerAPIStatus == 'success') {
                         $customerIdvalue = $response["CUST_KP_ID"];
                     } else {
-                        return $response;
+                        //return $response;
+                        return redirect('/user_setting')->with('error', 'Please Update Your Profile'); 
                     }
                 }else{
-                    return ['status' =>'error' , 'status_code' => 201 , 'message' => 'Something Went Wrong !'];
+                     return redirect('/user_setting')->with('error', 'Please Update Your Profile'); 
+                    //return ['status' =>'error' , 'status_code' => 201 , 'message' => 'Something Went Wrong !'];
                 }
             if($customerIdvalue){
                 $order_body = array(
@@ -149,10 +150,12 @@ class TransactionController extends Controller
                             $OrderDetails['customerIdvalue'] = $customerIdvalue;
                             return view('frontend.txn',$OrderDetails);
                         } else {
-                            return $response;
+                            return redirect('/user_setting')->with('error', 'Please Update Your Profile'); 
+                            //return $response;
                         }
                     }else{
-                        return ['status' =>'error' , 'status_code' => 201 , 'message' => 'Something Went Wrong !'];
+                        return redirect('/user_setting')->with('error', 'Please Update Your Profile'); 
+                        //return ['status' =>'error' , 'status_code' => 201 , 'message' => 'Something Went Wrong !'];
                     }
             }
         }else{

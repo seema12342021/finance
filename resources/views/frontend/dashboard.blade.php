@@ -157,14 +157,17 @@
 
                                         <form class="pl-3 pr-3" id="buySubmit">
 
-                                             
+                                                @php
+                                                $price_buy = number_format(((@$commision_buy->fees / 100) * $crypto_price)+$crypto_price,2);
+                                                $price_sell = number_format($crypto_price-((@$commision_sell->fees / 100) * $crypto_price),2);
+                                                @endphp
 
-                                                <h3 class="price"><span>1 USDT is Roughly</span><b id="usdt-price">{{((@$commision_buy->fees / 100) * 83.92)+83.92}}</b> <i>INR</i></h3>
+                                                <h3 class="price"><span>1 USDT is Roughly</span><b id="usdt-price">{{$price_buy}}</b> <i>INR</i></h3>
                                                 <div class="inputParent">
                                                     <div class="inputBox">
                                                         <div class="input_label">
                                                             <p class="xs-text mb-0" for="input1">You Pay</p>
-                                                            <input onblur="divide()" class="error" name="form_inr_amount" value="8392" type="text" id="form_inr_amount_buy">
+                                                            <input onblur="divide()" class="error" name="form_inr_amount" value="{{ $price_buy*100 }}" type="text" id="form_inr_amount_buy">
                                                         </div>
                                                         <div class="iconBox">
                                                             <img src="images/noriapay_extracted_logos/rupee.svg" alt="">
@@ -212,7 +215,7 @@
                                                               <input name="form_payment_method" type="radio" id="radio_s3"value="BANK" class="with-gap radio-col-orange" >
                                                               <label class="label-small" for="radio_s3">Bank Account</label>
                                                          </label>                                                </div>
-                                                   <h3 class="price"><span>1 USDT is Roughly</span> <strong id="usdt-price-sell">{{83.92-((@$commision_sell->fees / 100) * 83.92)}}</strong> <i>INR</i></h3>
+                                                   <h3 class="price"><span>1 USDT is Roughly</span> <strong id="usdt-price-sell">{{$price_sell}}</strong> <i>INR</i></h3>
                                                    <div class="inputParent">
            
                                                        <div class="inputBox">
@@ -233,7 +236,7 @@
                                                        <div class="inputBox">
                                                            <div class="input_label">
                                                                <p class="xs-text mb-0" for="input2">You will receive Roughly</p>
-                                                               <input class="error" onblur="divide_sell()" name="form_inr_amount" type="text" value="7843" id="form_inr_amount_sell">
+                                                               <input class="error" onblur="divide_sell()" name="form_inr_amount" type="text" value="{{ $price_sell*100 }}" id="form_inr_amount_sell">
                                                            </div>
                                                            <div class="iconBox">
                                                                <img src="images/noriapay_extracted_logos/rupee.svg" alt="">
@@ -265,7 +268,7 @@
                                        <label class="label-small" for="radio_s3">Bank Account</label>
                                        </label>                                                
                                     </div>
-                                    <h3 class="price"><span>1 USDT is Roughly</span><b id="usdt-price">{{((@$commision_buy->fees / 100) * 83.92)+83.92}}</b> <i>INR</i></h3>
+                                    <h3 class="price"><span>1 USDT is Roughly</span><b id="usdt-price">{{((@$commision_buy->fees / 100) * $crypto_price)+$crypto_price}}</b> <i>INR</i></h3>
                                     <div class="inputParent">
                                        <div class="inputBox">
                                           <div class="input_label">

@@ -126,7 +126,7 @@
                         <li class="nav-item ">
                             <a class="nav-link dropdown dropdown-toggle waves-effect waves-dark oval" href="" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                                <span class="oval-inner ">{{substr(Auth::user()->first_name,0,1).substr(Auth::user()->last_name,0,1)}}</span>&nbsp <i class="fa fa-caret-down"></i>
+                                <span class="oval-inner ">{{substr(@Auth::user()->first_name,0,1).substr(@Auth::user()->last_name,0,1)}}</span>&nbsp <i class="fa fa-caret-down"></i>
                             </a>
                             <div class="dropdown-menu mailbox dropdown-menu-right scale-up">
                                 <ul class="dropdown-user list-style-none">                                    <li class="user-list"><a class="px-3 py-2" href="{{url('user_setting')}}"><i class="ti-user"></i> User Profile</a></li>

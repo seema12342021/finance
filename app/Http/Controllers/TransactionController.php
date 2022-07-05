@@ -27,7 +27,7 @@ class TransactionController extends Controller
 
  public function show_transactionBuy(Request $request){
         if ($request->ajax()) {
-            $data = Transaction::join('wallets','wallets.id','=','transactions.wallet_id')->join('users','users.id','=','transactions.user_id')->join('cryptos','cryptos.id','=','transactions.crypto')->join('statuses','statuses.id','=','transactions.payment_status')->where(['transactions.is_deleted'=>1,'transactions.payment_type'=>1])->orderBy('transactions.id','DESC')->get(['transactions.id','transactions.transaction_id','transactions.total_inr_price','transactions.created_at','transactions.total_crypto','transactions.crypto_price','transactions.payment_mode','transactions.wallet_address','transactions.payment_type','wallets.name as wallet','cryptos.name as crypto','statuses.name as status','users.first_name','users.last_name','users.email']);
+            $data = Transaction::join('wallets','wallets.id','=','transactions.wallet_id')->join('users','users.id','=','transactions.user_id')->join('cryptos','cryptos.id','=','transactions.crypto')->join('statuses','statuses.id','=','transactions.payment_status')->join('statuses as a_stat','a_stat.id','=','transactions.admin_status')->where(['transactions.is_deleted'=>1,'transactions.payment_type'=>1])->orderBy('transactions.id','DESC')->get(['transactions.id','transactions.transaction_id','transactions.total_inr_price','transactions.created_at','transactions.total_crypto','transactions.crypto_price','transactions.payment_mode','transactions.wallet_address','transactions.payment_type','wallets.name as wallet','cryptos.name as crypto','statuses.name as status','a_stat.name as adminstatus','users.first_name','users.last_name','users.email']);
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('user', function($row){
@@ -59,15 +59,16 @@ class TransactionController extends Controller
         return view('admin.template',$data);
     }
 
- public function show_transactionSell(Request $request){
+    public function show_transactionSell(Request $request){
         if ($request->ajax()) {
             $data = Transaction::join('wallets','wallets.id','=','transactions.wallet_id')
             ->join('users','users.id','=','transactions.user_id')
             ->join('cryptos','cryptos.id','=','transactions.crypto')
             ->join('statuses','statuses.id','=','transactions.payment_status')
+            ->join('statuses as a_stat','a_stat.id','=','transactions.admin_status')
             ->where(['transactions.is_deleted'=>1,'transactions.payment_type'=>2])
             ->orderBy('transactions.id','DESC')
-            ->get(['transactions.id','transactions.transaction_id','transactions.total_inr_price','transactions.created_at','transactions.total_crypto','transactions.crypto_price','transactions.payment_mode','transactions.wallet_address','transactions.payment_type','wallets.name as wallet','cryptos.name as crypto','statuses.name as status','users.first_name','users.last_name','users.email']);
+            ->get(['transactions.id','transactions.transaction_id','transactions.total_inr_price','transactions.created_at','transactions.total_crypto','transactions.crypto_price','transactions.payment_mode','transactions.wallet_address','transactions.payment_type','wallets.name as wallet','cryptos.name as crypto','statuses.name as status','a_stat.name as adminstatus','users.first_name','users.last_name','users.email']);
                 return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('user', function($row){

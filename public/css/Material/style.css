@@ -19960,7 +19960,7 @@ background: linear-gradient(230deg, rgb(6 198 216), #0e5d6d);
 
   .welcome-section-dashboard {
     padding: 148px 40px 25px 40px;
-    background-image: linear-gradient(to right, #f2711d, #f3ac1b);
+   /* background-image: linear-gradient(to right, #f2711d, #f3ac1b);*/
   }
 
   .btn-border{
@@ -20157,17 +20157,17 @@ background: linear-gradient(230deg, rgb(6 198 216), #0e5d6d);
 		width: 100%;
 	    margin: 0 0 24px;
 	    padding: 0px !important;
-	    background-image: linear-gradient(to right, #f2711d, #f3ac1b);
+	    /*background-image: linear-gradient(to right, #f2711d, #f3ac1b);*/
 	}
 	
 	#main-wrapper[data-layout="vertical"][data-sidebar-position="fixed"] .topbar .top-navbar .navbar-collapse, #main-wrapper[data-layout="vertical"][data-header-position="fixed"][data-sidebar-position="fixed"] .topbar .top-navbar .navbar-collapse {
 	    position: relative;
 	    top: 70px;
-	    background: linear-gradient(to right, #f2711d, #f3ac1b);
+	    background: linear-gradient(230deg, rgb(6 198 216), #0e5d6d);
 	}
 	
 	#main-wrapper[data-layout="vertical"] .topbar .navbar-collapse[data-navbarbg="skin1"], #main-wrapper[data-layout="vertical"] .topbar[data-navbarbg="skin1"], #main-wrapper[data-layout="horizontal"] .topbar .navbar-collapse[data-navbarbg="skin1"], #main-wrapper[data-layout="horizontal"] .topbar[data-navbarbg="skin1"] {
-	   background-image: linear-gradient(to right, #f2711d, #f3ac1b);
+	  /* background-image: linear-gradient(to right, #f2711d, #f3ac1b);*/
 	}
 	
 	#main-wrapper .home-nav .topbar .top-navbar .navbar-collapse, #main-wrapper .home-nav .topbar .top-navbar .navbar-collapse {
@@ -20177,12 +20177,12 @@ background: linear-gradient(230deg, rgb(6 198 216), #0e5d6d);
 	
 	.welcome-section-dashboard {
 	    padding: 110px 15px 20px;
-	    background-image: linear-gradient(to right, #f2711d, #f3ac1b);
+	    /*background-image: linear-gradient(to right, #f2711d, #f3ac1b);*/
 	}
 	
 	.welcome-section {
 	    padding: 136px 15px 40px;
-	    background-image: linear-gradient(to right, #f2711d, #f3ac1b);
+	    background: linear-gradient(230deg, rgb(6 198 216), #0e5d6d);
 	}
 	
 	.profile-tab li a.nav-link, .customtab li a.nav-link {

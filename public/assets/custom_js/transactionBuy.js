@@ -14,6 +14,7 @@ function transactionBuy(){
             {data: 'total_crypto'},
             {data: 'total_inr_price'},
             {data: "status"},
+            {data: "adminstatus"},
             {data: 'action', orderable: false, searchable: false},
         ]
     });

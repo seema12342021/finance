@@ -16,6 +16,18 @@
         
         <!-- Favicon Icon -->
         <link rel="icon" href="{{url('images/noriapay_extracted_logos/favicon.png')}}" type="image/gif">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!--SELECT2_CSS-->
+        <!--Chartist_CSS-->
+        <!--Calendar_CSS-->
+        <!--Datatable_CSS-->
         <link href="{{url('lib/toastr/toastr.min.css')}}" rel="stylesheet">
         <!--WIDGET_CSS-->    
         <script type="text/javascript">
@@ -112,7 +124,7 @@
                   <div class="btn-list">
                   <!-- Custom width modal -->
                   
-                  <button type="button" class="btn homenav-btn btn-border" data-toggle="modal" data-target="#login-modal">LOGIN</button>
+                  <button type="button" class="btn homenav-btn btn-border mr-2" data-toggle="modal" data-target="#login-modal">LOGIN</button>
                       
                       <button type="button" class="btn homenav-btn btn-border" data-toggle="modal" data-target="#signup-modal">SIGN UP</button>
                           <!-- Full width modal -->
@@ -166,13 +178,13 @@
                      <div class="row color">
                         <div class="form-group col-lg-12">
                             <label for="email">Username</label>
-                            <input class="form-control pl-2" type="email" id="form_username" name="username" required="" placeholder="username">
+                            <input class="form-control ml-2" type="email" id="form_username" name="username" required="" placeholder="username">
                         </div>
                      </div>
                      <div class="row color">
                         <div class="form-group col-lg-12">
                             <label for="password">Password</label>
-                            <input class="form-control pl-2" type="password" id="form_lpassword" name="password" required="" placeholder="password">
+                            <input class="form-control ml-2" type="password" id="form_lpassword" name="password" required="" placeholder="password">
                         </div>
                      </div>
                     <div class="form-group">
@@ -187,7 +199,7 @@
                            <div class="exChange">
                                 <button type="submit" class="btn btn-primary float-right" id="submit">Login</button>
                             </div>
-                            <p class="text-center">Don't have an account? <a style="color:#f2711d;font-weight:500;" id="open-signup" data-toggle="modal" data-target="#signup-modal">Sign Up</a></p>
+                            <p class="text-center" style="color:black;">Don't have an account? <a style="color:#12e5fb;font-weight:500;" id="open-signup" data-toggle="modal" data-target="#signup-modal">Sign Up</a></p>
                         </div>
                     </div>
                    
@@ -226,7 +238,7 @@
                                 <!-- pwd -->
                                 <div class="form-group text-center">
                                     <div class="col-xs-12">
-                                       <div class="exChange">
+                                       <div class="exChange loginexChange">
                                         <button type="submit" id="submit_otp" class="btn btn-success">Reset</button>
                                         </div>
                                     </div>
@@ -294,13 +306,17 @@
                 <div class="tab-pane active" id="home2" role="tabpanel">
                     <div class="p-3">
                         <form class="pl-3 pr-3" action="">
-                            <h3 class="price"><span>1 USDT is Roughly</span> 83.71 <i>INR</i></h3>
+                            @php
+                            $price_buy = number_format(((@$commision_buy->fees / 100) * $crypto_price)+$crypto_price,2);
+                            $price_sell = number_format($crypto_price-((@$commision_sell->fees / 100) * $crypto_price),2);
+                            @endphp
+                            <h3 class="price"><span>1 USDT is Roughly </span><b id="usdt-price">{{$price_buy}}</b> <i>INR</i></h3>
                             <div class="inputParent">
                             
                               <div class="inputBox">
                                 <div class="input_label">
                                     <label for="input1">You Pay</label>
-                                    <input onblur="divide()" class="error" name="form_inr_amount" value="8371" type="text" id="form_inr_amount_buy">
+                                    <input onblur="divide()" class="error" name="form_inr_amount" value="{{ $price_buy*100 }}" type="text" id="form_inr_amount_buy">
                                 </div>
                                 <div class="iconBox">
                                     <img src="images/noriapay_extracted_logos/rupee.svg" alt="">
@@ -313,7 +329,7 @@
                               <input name="form_transaction_type" value="BUY" type="hidden">
                               <div class="inputBox">
                                   <div class="input_label">
-                                      <label for="input2">You will receive Roughly</label>
+                                      <label for="input2">You will receive Roughly </label>
                                       <input onblur="multiply()" class="error" name="form_crypto_amount" value="100" type="text" id="form_crypto_amount_buy">
                                   </div>
                                   <div class="iconBox">
@@ -332,13 +348,12 @@
                 <div class="tab-pane" id="profile2" role="tabpanel">
                     <div class="p-3">
                          <form class="pl-3 pr-3" action="">
-                            <h3 class="price"><span>1 USDT is Roughly</span> 78.23 <i>INR</i></h3>
+                            <h3 class="price"><span>1 USDT is Roughly</span> <strong id="usdt-price-sell">{{$price_sell}}</strong> <i>INR</i></h3>
                             <div class="inputParent">
                               <div class="inputBox">
                                 <div class="input_label">
                                     <label for="input1">You Pay</label>
-                                    <input onblur="multiply_sell()" class="error" name="form_crypto_amount" value="100" type="text" id="form_crypto_amount_sell">
-                                </div>
+                                    <input class="error" onblur="multiply_sell()" name="form_crypto_amount" value="100" type="text" id="form_crypto_amount_sell">                                </div>
                                 <div class="iconBox">
                                     <img src="images/noriapay_extracted_logos/usdt.svg" alt="">
                                     <p>USDT</p>
@@ -353,7 +368,7 @@
                               <div class="inputBox">
                                   <div class="input_label">
                                       <label for="input2">You will receive Roughly</label>
-                                      <input onblur="divide_sell()" class="error" name="form_inr_amount" type="text" value="7823" id="form_inr_amount_sell">
+                                      <input class="error" onblur="divide_sell()" name="form_inr_amount" type="text" value="{{ $price_sell*100 }}" id="form_inr_amount_sell">
                                   </div>
                                   <div class="iconBox">
                                       <img src="images/noriapay_extracted_logos/rupee.svg" alt="">
@@ -458,7 +473,7 @@
 
 
  <!-- ***************modal for Sign up********** -->
-<div id="signup-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+<div id="signup-modal" class="modal fade m-0" tabindex="-1" role="dialog" aria-hidden="true">
 
     <div class="modal-dialog">
         <div class="modal-content">
@@ -482,31 +497,31 @@
                     <div class="or-seperator"><b>or</b></div>
                    <div class="row">
                     <div class="form-group col-lg-6">
-                        <label for="firstname ">First Name</label>
-                        <input class="form-control pl-2" type="text" id="form_firstname" name="firstname" required="" placeholder="firstname">
+                        <label for="firstname">First Name</label>
+                        <input class="form-control ml-2" type="text" id="form_firstname" name="firstname" required="" placeholder="firstname">
                     </div>
 
                     <div class="form-group col-lg-6">
                         <label for="lastname">Last Name</label>
-                        <input class="form-control pl-2" type="text" id="form_lastname" name="lastname" required="" placeholder="lastname">
+                        <input class="form-control ml-2" type="text" id="form_lastname" name="lastname" required="" placeholder="lastname">
                     </div>
                   </div>
                  <div class="row">
                     <div class="form-group col-lg-12">
                         <label for="emailaddress">Email</label>
-                        <input class="form-control pl-2" type="email" required="" id="form_email" name="email" placeholder="email">
+                        <input class="form-control ml-2" type="email" required="" id="form_email" name="email" placeholder="email">
                     </div>
                  </div>
                  <div class="row">
                     <div class="form-group col-lg-12">
                         <label for="password">Password <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="right" title="Password should be at least 8 characters long, including 1 digit, 1 uppercase, 1 lowercase and 1 special character."></i></label>
-                        <input class="form-control pl-2" type="password" required="" id="form_password" name="password" placeholder="password">
+                        <input class="form-control ml-2" type="password" required="" id="form_password" name="password" placeholder="password">
                     </div>
                  </div>
                 <div class="row">
                     <div class="form-group col-lg-12">
                         <label for="mobile_number">Mobile Number</label>
-                        <input class="form-control pl-2" type="text" required="" id="mobile_number" name="mobile_number" placeholder="Mobile Number ">
+                        <input class="form-control ml-2" type="text" required="" id="mobile_number" name="mobile_number" placeholder="Mobile Number ">
                     </div>
                  </div>
                      
@@ -515,7 +530,7 @@
                        <div class="exChange">
                             <button type="submit" class="btn btn-primary float-right" id="submit">Sign Up</button>
                         </div>
-                        <p class="text-center py-2">By signing up you agree with terms and conditions of the service</p>
+                        <p class="text-center" style="color:black;">By signing up you agree with terms and conditions of the service</p>
                     </div>
                 </div>
 
