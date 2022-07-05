@@ -16,6 +16,7 @@
                                         <th>Crypto</th>
                                         <th>INR</th>
                                         <th>Status</th>
+                                        {{-- <th>Amount Paid</th> --}}
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -102,11 +103,62 @@
                             </div>
                         </div>
                     </div>
+{{-- 
                     <div class="col-md-4 col-sm-6 col-12">
                         <div class="info-box">
                             <div class="info-box-content">
-                                <span class="info-box-number">Status</span>
-                                <span class="" id="status"></span>
+                                <span class="info-box-number">Paid Amount</span>
+                                <input type="number" class="form-control" id="amnt_paid" placeholder="Paid Amount">
+                            </div>
+                        </div>
+                    </div> --}}
+
+                    <div class="col-md-4 col-sm-6 col-12">
+                        <div class="info-box">
+                            <div class="info-box-content">
+                                <span class="info-box-number">Transaction ID</span>
+                                <span class="" id="t_id"></span>
+                                
+                               
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6 col-12">
+                        <div class="info-box">
+                            <div class="info-box-content">
+                               
+                                <span class="info-box-number">Order ID</span>
+                                <span class="" id="o_id"></span>
+                               
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="m_id">
+
+                     <div class="col-md-4 col-sm-6 col-12">
+                        <div class="info-box">
+                            <div class="info-box-content">
+                                <span class="info-box-number">User Status</span>
+                                <span class="" id="status"> </span>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6 col-12">
+                        <div class="info-box">
+                            <div class="info-box-content">
+                                <div class="form-group">
+                                    <label for="exampletitle">Status</label>
+                                        <select class="form-control"  name="type" id="status2">
+                                          <option value="">Choose Option</option>
+                                          <option value="2">Pending</option>
+                                          <option value="1">Payment Done</option>
+                                            
+                                        </select>
+                                 </div>
                             </div>
                         </div>
                     </div>
@@ -114,6 +166,11 @@
                {{--  <div class="card-footer text-right">
                     <a href="javascript:;" class="btn btn-primary" id="print_bill">Print Details</a>
                 </div> --}}
+            </div>
+
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary float-right mr-2" onclick="change_status()" id="submit">Save</button>
             </div>
         </div>
     </div>

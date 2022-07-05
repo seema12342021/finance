@@ -87,9 +87,39 @@ class TransactionController extends Controller
     public function getTransactionDetails($id){
         $data = Transaction::query();
         $data = $data->join('wallets','wallets.id','=','transactions.wallet_id')->join('users','users.id','=','transactions.user_id')->join('cryptos','cryptos.id','=','transactions.crypto')->join('statuses','statuses.id','=','transactions.payment_status')->where(['transactions.is_deleted'=>1,'transactions.is_active'=>1,'transactions.id'=>$id])->orderBy('transactions.id','DESC')->first(
-            ['transactions.id','transactions.total_inr_price','transactions.created_at','transactions.total_crypto','transactions.crypto_price','transactions.payment_mode','transactions.wallet_address','transactions.payment_type','wallets.name as wallet','cryptos.name as crypto','statuses.name as status','users.first_name','users.last_name','users.email','users.mobile_number'
+            ['transactions.id','transactions.total_inr_price','transactions.image','transactions.response_data','transactions.admin_status','transactions.created_at','transactions.total_crypto','transactions.payment_status','transactions.crypto_price','transactions.payment_mode','transactions.wallet_address','transactions.payment_type','wallets.name as wallet','cryptos.name as crypto','statuses.name as status','users.first_name','users.last_name','users.email','users.mobile_number'
         ]);
         return $data;
+    }
+
+    public function update_status_sell(Request $request){
+        
+            $valid = [
+            'status2'=>'required',
+            ];  
+        
+        $validated = Validator::make($request->all(),$valid);
+         if($validated->passes()){
+           
+            $formdata['admin_status'] = $request->status2;
+            if (!empty($request->status)) {
+                $formdata['payment_status'] = $request->status;
+            }
+            
+            $formdata['created_by'] = 1;
+             if (!empty($request->id)) {
+                    $res = Transaction::where('id',$request->id)->update($formdata);
+                    if($res)
+                    {
+                      return response()->json(['status'=>'sucess','status_code'=>200,'message'=>' Update Successfully !']);
+                    }else{
+                        return response()->json(['status'=>'error','status_code'=>201,'message'=>"Can't Update !"]);
+                    }
+                }
+        }else{
+             return response()->json(['status'=>'error','status_code'=>301,'message' => $validated->errors()->all() ]);
+        }
+
     }
 
 

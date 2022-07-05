@@ -29,7 +29,7 @@ class AdminLoginController extends Controller
 
      public function logout(){
         session()->flush();
-        return redirect("/");
+        return redirect("admin");
     }
 
 }
