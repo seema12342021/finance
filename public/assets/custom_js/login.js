@@ -8,7 +8,7 @@ $("#adminLogin").on("submit",function(e){
     	contentType: false,
 		success:function(res){
 			if(res.status_code == 200){
-				window.location.href = siteUrl+"dashboard";			
+				window.location.href = siteUrl+"transactionBuy";			
 			}else if(res.status_code == 202){
 				$.each(res.error,function(key , value){
 					toastr.error(value);
