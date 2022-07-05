@@ -19871,7 +19871,7 @@ background: linear-gradient(230deg, rgb(6 198 216), #0e5d6d);
   }
   .title-space{
     letter-spacing: 2px;
-    color: #ffff;
+    /*color: #ffff;*/
     font-size: 13px;
     text-transform: uppercase;
     font-weight: 600;

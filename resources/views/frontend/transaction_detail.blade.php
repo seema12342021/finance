@@ -77,7 +77,7 @@
                    <div class="row pt-4">
                       <div class="col-md-3 col-12 border-right">
                           <div class="row">
-                            <div class="col-md-4 col-3 pt-1">                                <img src="images/icons/upi.png" width="80%">                            </div>
+                            <div class="col-md-4 col-3 pt-1"> <img src="images/icons/upi.png" width="80%">                            </div>
                             <div class="col-md-7 col-9 p-0">
                                 <p class="small-text"> Payment Method</p>
                                 <p class="text-muted">{{@$transaction_detail->payment_mode}}</p>

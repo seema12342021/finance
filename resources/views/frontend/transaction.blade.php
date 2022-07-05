@@ -1,7 +1,12 @@
-  @extends('frontend.template')
-    @section('content')
-    <div class="page-wrapper">      
-     <div class="container-fluid">    <!-- Row -->
+@extends('frontend.template')
+@section('extern-css')
+    <link rel="stylesheet" href="{{ url('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{ url('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+@endsection
+
+@section('content')
+<div class="page-wrapper">      
+ <div class="container-fluid">    <!-- Row -->
 <div class="welcome-section">
      <h1>Transactions History</h1>
   </div>
@@ -103,4 +108,11 @@
 </div>		        </div> <!-- Container Fluid close -->
  </div>
 </div> <!-- Main Wrapper Close -->
+@section('extern-js')
+    <script type="text/javascript" src="{{ url('assets\plugins/datatables/jquery.dataTables.min.js')}}"></script>
+      <script type="text/javascript" src="{{ url('assets\plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+      <script type="text/javascript" src="{{ url('assets\plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+      <script type="text/javascript" src="{{ url('assets\plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+        <script src="{{url('assets/frontend/js/frontend_js/transaction.js')}}"></script>
+@endsection
 @endsection

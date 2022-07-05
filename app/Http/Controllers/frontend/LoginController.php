@@ -32,7 +32,7 @@ class LoginController extends Controller
       return Socialite::driver('google')->redirect();
     }
     public function googleCallback(){
-         $user = Socialite::driver('google')->user();
+         $user = Socialite::driver('google')->stateless()->user();
          $res = $this->_LoginUser($user);
          echo $res;
     }

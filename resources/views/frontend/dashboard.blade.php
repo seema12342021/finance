@@ -3,7 +3,7 @@
      <div class="page-wrapper">
          <div class="container-fluid">
             <div class="welcome-section-dashboard">
-               <p ><span class="day-message"></span>, {{@$name}}</p>
+               <p ><span class="day-message"></span>, {{ucwords(@$name)}}</p>
             </div>
             <div class="main-container"> 
                <div class="row">

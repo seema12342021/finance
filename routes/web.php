@@ -87,6 +87,8 @@ Route::middleware("AdminLogin")->group(function(){
  Route::post('/save_singnup',[SignupController::class , 'saveSignUp']);
  Route::post('user_login',[LoginController::class,'user_login']);
  Route::get('user_logout',[LoginController::class,'user_logout']);
+Route::get('auth/google', [LoginController::class, 'googleRedirect']);
+Route::get('auth/google/callback', [LoginController::class, 'googleCallback']);
 
 Route::middleware("UserAuth")->group(function(){
     Route::get('/user-dashboard',[DashboardController::class ,'index']);

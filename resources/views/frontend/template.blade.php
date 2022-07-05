@@ -19,6 +19,8 @@
 
     
         <link href="{{url('lib/toastr/toastr.min.css')}}" rel="stylesheet" />
+
+        @yield("extern-css")
         <!--WIDGET_CSS-->   
         <script type="text/javascript">
               const siteUrl = '{{asset("")}}';
@@ -187,11 +189,11 @@
           $('[data-toggle="tooltip"]').tooltip()
         })        
         </script>
-
+        @yield('extern-js')
         <!-- <script src="{{url('js/require.js')}}"></script> -->
          <script src="{{url('assets/frontend/js/frontend_js/profile.js')}}"></script>
           <script src="{{url('assets/frontend/js/frontend_js/payment.js')}}"></script>
           <script src="{{url('assets/frontend/js/frontend_js/forgetpassword.js')}}"></script>
-          <script src="{{url('assets/frontend/js/frontend_js/transaction.js')}}"></script>
+          
     </body>
   </html>
