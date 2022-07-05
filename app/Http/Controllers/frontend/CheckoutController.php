@@ -17,6 +17,7 @@ class CheckoutController extends Controller
     public function index(request $request)
     {
       // dd(json_decode($request->data));
+      $users['title']="checkout";
       $users['wallet'] = Wallet::get();
       $users['commision_buy'] = CommisionFees::where(['is_deleted'=>1,'is_active'=>1,'type'=>1])->first();
       $users['commision_sell'] = CommisionFees::where(['is_deleted'=>1,'is_active'=>1,'type'=>2])->first();

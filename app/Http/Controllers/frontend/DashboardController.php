@@ -12,7 +12,7 @@ use App\Models\Transaction;
 class DashboardController extends Controller
 {
     public function index() 
-    {
+    {   $users['title']="Dashboard";
         $users['fname'] = substr(Auth::user()->first_name,0,1);
         $users['lname'] = substr(Auth::user()->last_name,0,1);
         $users['name'] = Auth::user()->first_name;

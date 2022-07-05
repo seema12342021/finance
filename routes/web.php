@@ -71,7 +71,6 @@ Route::middleware("AdminLogin")->group(function(){
     Route::post('/update_status_sell',[TransactionController::class ,'update_status_sell']);
     Route::get('/transactionBuy',[TransactionController::class ,'transactionBuy']);
     Route::get('/show_transactionBuy',[TransactionController::class ,'show_transactionBuy']);
-    Route::get('/get_transaction_details/{id}',[TransactionController::class ,'getTransactionDetails']);
     // Route::post('/save_network',[TransactionController::class , 'save']);
     // Route::post('/save_network',[TransactionController::class , 'save']);
     // Route::get('/delete_network',[TransactionController::class , 'delete']);
@@ -88,8 +87,6 @@ Route::middleware("AdminLogin")->group(function(){
  Route::get('/',[HomepageController::class ,'index']);
  Route::post('/save_singnup',[SignupController::class , 'saveSignUp']);
  Route::post('user_login',[LoginController::class,'user_login']);
- Route::get('auth/google', [LoginController::class, 'googleRedirect']);
-Route::get('auth/google/callback', [LoginController::class, 'googleCallback']);
  Route::get('user_logout',[LoginController::class,'user_logout']);
 
 Route::middleware("UserAuth")->group(function(){
@@ -109,7 +106,6 @@ Route::middleware("UserAuth")->group(function(){
     Route::get('/show_detail_transaction',[TxnController::class , 'show_detail_transaction'])->name('show_detail_transaction');
     Route::get('/payment_page',[TxnController::class , 'payment_page']);
     Route::post('/payment_gateway',[TxnController::class ,'payment_gateway']);
-    Route::post('/payment_sell',[TxnController::class ,'payment_sell']);
 });
     Route::post('/reset_password',[ResetPasswordController::class ,'ResetPassword']);
     Route::post('/check_otp',[ResetPasswordController::class ,'CheckOtp']);
@@ -117,3 +113,4 @@ Route::middleware("UserAuth")->group(function(){
     Route::post('/user_reset_password',[ResetPasswordController::class ,'UpdatePassword']);
 
 //added by nandan
+
