@@ -37,6 +37,9 @@
                         </div>
                         @else
                         <div class="slimScrollDiv" >
+                            <div class="d-md-flex no-block">
+                                <h4 class="card-title Recent-Transactions">Recent Transactions</h4>
+                             </div>
                               <div class="month-table dashboard-table" >
                                  <div class="table-responsive " style="">
                                     <div class="table-responsive">
@@ -62,7 +65,7 @@
                                                 <td class="text-left">{{$value->total_inr_price}}</td>
                                                 <td class="text-left">{{$value->crypto_price}}</td>
                                                 <td class="text-left"><span class="grey status_label">{{$value->status}}</span></td>
-                                                <td class="text-right"><a data-toggle="tooltip"  class="custom-tooltip" href="{{route('show_detail_transaction',['id'=>$value->id])}}" data-placement="bottom" data-id="" data-original-title="Details"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>
+                                                <td class="text-right"><a data-toggle="tooltip"  class="custom-tooltip" href="{{route('show_detail_transaction',[encrypt($value->id,env('APP_NAME'))])}}" data-placement="bottom" data-id="" data-original-title="Details"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>
                                              </tr>
                                              @endforeach
                                              @endif        
@@ -97,12 +100,12 @@
                            </div>
                         </div>
                      </div>
-                     <div class="d-md-flex no-block">
+                     {{-- <div class="d-md-flex no-block">
                         <h4 class="card-title Recent-Transactions">Recent Transactions</h4>
                      </div>
                      <div class="card">
                         <div class="card-body">
-                           <!--<div class="col-lg-7 pt-3 pb-3 px-0">
+                           <div class="col-lg-7 pt-3 pb-3 px-0">
                               <div class="input-group footable-filtering-search mt-2"><label class="sr-only">Search</label>
                                   <div class="input-group">
                                          <input type="text" class="form-control" value="" placeholder="Search By Reference No.">
@@ -114,10 +117,10 @@
 
                                     </div>
                                 </div>
-                              </div>-->
+                              </div>
                           
                         </div>
-                     </div>
+                     </div> --}}
                   </div>
                 @endif
                   <div class="col-md-5 col-lg-5  xchange-box">
@@ -192,7 +195,6 @@
                                                     <p class="xs-text py-1 buyError" style="display:none;"></p>
                                                 </div>
                                                 <div class="exChange mb-3">
-
                                                     <!-- <button type="submit"  id="BuyExchange">Exchange</button> -->
                                                     <button type="button" onclick="pageredirect(1)">Exchange</button>
 
@@ -245,7 +247,7 @@
                                                        </div>
                                                    </div>
                                                    <div class="exChange mb-3">
-                                                       <button type="button" onclick="pageredirect(2)">Exchange</button>
+                                                       <button type="button" onclick="pageredirect(2)" id="exChange-button">Exchange</button>
                                                        <!--<a href="checkout">Exchange</a>-->
                                                    </div>
                                            </form>
@@ -351,7 +353,7 @@
             </div>
          </div>
          <!-- ***************modal for User Details********** -->
-         <div id="user-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+         {{-- <div id="user-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                <div class="modal-content">
                   <div class="modal-body">
@@ -394,8 +396,7 @@
                </div>
                <!-- /.modal-content -->
             </div>
-            <!-- /.modal-dialog -->
-         </div>
+         </div> --}}
          <!-- ***************modal for User Details end********** -->
       </div>
       <!-- Container Fluid close -->

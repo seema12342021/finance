@@ -26,7 +26,6 @@ function status_user_list(id = "", status = "") {
         dataType: "json",
         success: function (response) {
             if(response.status_code==200){
-                console.log(response.message);
                     toastr["success"](response.message);
                     $('#user_list_datatable').DataTable().destroy();
                     show_userlist();
@@ -53,6 +52,7 @@ $("#approvalform").on("submit",function(e){
 		success:function(res){
 			if(res.status_code == 200){
 				toastr.success(res.message);
+                $("#modal-default").modal("hide")
                 $('#user_list_datatable').DataTable().destroy();
                 show_userlist();
 			}else if(res.status_code == 301){

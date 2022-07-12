@@ -18,7 +18,7 @@
               <div class="row checkout-exchange payment-heading ">
                 <div class="col-md-2 col-4 pr-0"><p class="box-icon-{{@$transaction_detail->payment_type == 1?'buy':'sell'}}"><i class="fa fa-arrow-{{@$transaction_detail->payment_type == 1?'up':'down'}}"></i> {{@$transaction_detail->payment_type == 1?'Buy':'Sell'}}</p></div>
                 <div class="rounded-title col-md-10 col-12 pt-2">Transaction Reference Number :
-                    <span id="ref_num"> {{@$transaction_detail->transaction_id}}</span> &nbsp <a  class="copy" data-placement="right" onclick="copy_data(ref_num)"><img src="images/icons/copy.png"></a>
+                    <span id="ref_num"> {{@$transaction_detail->transaction_id}}</span> &nbsp <a  class="copy" data-placement="right" onclick="copy_data(ref_num)"><img src="{{ url('images/icons/copy.png')}}"></a>
                 </div>
               </div>
 
@@ -38,7 +38,7 @@
           <form  enctype="multipart/form-data" action="{{url('payment_gateway')}}" method="post">
             <div class="card-body">
               @csrf
-              <input type="hidden" value="{{Request::get('id')}}" name="id">
+              <input type="hidden" value="{{$hash}}" name="hash">
               {{-- <h4><strong class="title-space"><span class="text-orange">STEP 1 : </span>Transfer Fund to below bank account </strong></h4> --}}
               
               <article class=" pt-4">

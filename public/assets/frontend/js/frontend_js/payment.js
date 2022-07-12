@@ -67,20 +67,34 @@ function divide_sell(){
 }
 
 function pageredirect(type){ 
+	$("#exChange-button").remove();
 	if (type == 1) {
-	    var data = {
-             "crypto":$('#form_crypto_amount_buy').val(),"inr":document.getElementById('form_inr_amount_buy').value
-             };
-        }else{
-        	var data = {
-             "crypto":$('#form_crypto_amount_sell').val(),"inr":document.getElementById('form_inr_amount_sell').value,"type":$('input:radio[name="form_payment_method"]').val()
-             };
-         }
-	window.location = ('/checkout?data=' +JSON.stringify(data));
+    var data = {
+          "crypto":$('#form_crypto_amount_buy').val(),"inr":document.getElementById('form_inr_amount_buy').value
+          };
+     }else{
+     	var data = {
+          "crypto":$('#form_crypto_amount_sell').val(),"inr":document.getElementById('form_inr_amount_sell').value,"type":$('input:radio[name="form_payment_method"]').val()
+          };
+      }
+   $.ajax({ 
+		type:"get",
+		url:siteUrl+"go_checkout",  
+		data:{'data':data},
+		success:function(res){
+			if(res.status_code == 200){
+				window.location = res.location;
+			}
+		},error:function(e){
+			console.log(e);		 
+		}
+	});
+
      
-   };
+};
 
 function save_transactions(types){
+	$("#btn_btn").hide();
 	if (types == 1) {
 		datas = {'id_fee':id_fees,'inr':$("#form_inr_amount_buy").val(),'crypto':$("#form_crypto_amount_buy").val(),'w_address':$("#form_wallet_address").val(),'form_is_wallet_acknowledged':$(".tc").val(),'wallet':$('input:radio[name="wallet"]').val(),'payment_mode':$('input:radio[name="form_payment_method"]').val(),'payment_type':types};						
 	}else{
@@ -91,12 +105,12 @@ function save_transactions(types){
               });
 	$.ajax({ 
 		type:"post",
-		url:"saveTransaction",  
+		url:siteUrl+"saveTransaction",  
 		data:datas,
 		success:function(res){
 			if(res.status_code == 200){
 				toastr.success(res.message);
-				window.location.href = "payment_page?id="+res.id;
+				window.location.href = siteUrl+"payment_page/"+res.id;
 			}else if(res.status_code == 301){
 				$.each(res.message,function(key , value){
 					toastr.error(value);
@@ -117,7 +131,7 @@ function payment(){
               });
 	$.ajax({ 
 		type:"post",
-		url:"payment_gateway",  
+		url:siteUrl+"payment_gateway",  
 		data:{'id':id},
 		success:function(res){
 			if(res.status_code == 200){
@@ -142,7 +156,7 @@ function payment_sell(){
               });
 	$.ajax({ 
 		type:"post",
-		url:"payment_gateway",  
+		url:siteUrl+"payment_gateway",  
 		data:{'id':id},
 		success:function(res){
 			if(res.status_code == 200){
@@ -172,7 +186,7 @@ $('#form_transfer').on('submit',function(e){
                   headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
               });
       $.ajax({    
-         url:'/payment_sell',      
+         url:siteUrl+'/payment_sell',      
          type:'post',      
          data:new FormData(this),      
          dataType:'json', 
@@ -200,9 +214,11 @@ function button_on(){
 	tv_value = $('.tc').val();
 	if (tv_value == 1) {
 		$('#btn_btn').attr("disabled",true);
+		$('#btn_btn').css("cursor","no-drop");
 		$('.tc').val(0);
 	}else{
 		$('#btn_btn').removeAttr("disabled");
+		$('#btn_btn').css("cursor","pointer");
 		$('.tc').val(1);
 	}
 }

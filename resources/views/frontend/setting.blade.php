@@ -28,7 +28,23 @@
           <hr>
             <div class="row">
               <div class="col-md-6 col-sm-12 col-6 border-right"><small><b>Mobile Number:</b></small><br><p style="display: inline-block;"> <span class="pending status_label" id="mobileNumber">{{!empty(Auth::user()->mobile_number)?Auth::user()->mobile_number:'No mobile number'}}</span><p></div>
-              <div class="col-md-6 col-sm-12 col-6"><small><b>KYC Status: </b></small><br> <p style="display: inline-block;"><span class="pending status_label">No Document</span></p></div>
+              <div class="col-md-6 col-sm-12 col-6"><small><b>KYC Status: </b></small><br> <p style="display: inline-block;"><span class="pending status_label">
+                @if($docs)
+                  @if($docs->is_approved == 1)
+                    @if($docs->proof_type == 1)
+                      Driving License
+                    @elseif($docs->proof_type == 2)
+                      Passport
+                    @elseif($docs->proof_type == 3)
+                     Aadhaar Card
+                    @endif
+                  @else
+                    Pending
+                  @endif
+                @else
+                No Document
+                @endif
+              </span></p></div>
             </div>
         </div>
       </div>
@@ -39,11 +55,11 @@
       <div class="card">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs profile-tab" role="tablist">
-          <li class="nav-item"> <a class="nav-link "  href="{{url('user_kyc')}}?tab=1" role="tab">KYC</a>
+          <li class="nav-item"> <a class="nav-link "  href="{{url('user_kyc')}}" role="tab">KYC</a>
           </li>
-          <li class="nav-item"> <a class="nav-link active" href="{{url('user_setting')}}?tab=3" role="tab">Settings</a>
+          <li class="nav-item"> <a class="nav-link active" href="{{url('user_setting')}}" role="tab">Settings</a>
           </li> 
-          <li class="nav-item"> <a class="nav-link "  href="{{url('change_password')}}?tab=4" role="tab">Change Password</a>
+          <li class="nav-item"> <a class="nav-link "  href="{{url('change_password')}}" role="tab">Change Password</a>
           </li>      
         </ul>
         <!-- Tab panes -->

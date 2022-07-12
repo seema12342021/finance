@@ -37,7 +37,13 @@
                     <h4 class="title-space"><b>Transaction Details </b> </h4>
                     <div class="row pt-4">
                       <div class="col-md-2 col-3 border-right">
-                        <p class="pt-2 transaction-type"><img src="images/icons/oval_sell.png">&nbsp {{@$transaction_detail->type == 1?'Buy':'Sell'}}</p>
+                        <p class="pt-2 transaction-type">
+                          @if(@$transaction_detail->payment_type == 1)
+                            <img src="{{ url('images/icons/oval_buy.png')}}">&nbsp Buy
+                          @else
+                          <img src="{{ url('images/icons/oval_sell.png')}}">&nbsp Sell
+                          @endif
+                        </p>
                       </div>
                       <div class="col-md-1 col-12 border-right">
                         <p class="small-text">  Tether</p>
@@ -77,7 +83,7 @@
                    <div class="row pt-4">
                       <div class="col-md-3 col-12 border-right">
                           <div class="row">
-                            <div class="col-md-4 col-3 pt-1"> <img src="images/icons/upi.png" width="80%">                            </div>
+                            <div class="col-md-4 col-3 pt-1"> <img src="{{ url('images/icons/upi.png') }}" width="80%">                            </div>
                             <div class="col-md-7 col-9 p-0">
                                 <p class="small-text"> Payment Method</p>
                                 <p class="text-muted">{{@$transaction_detail->payment_mode}}</p>

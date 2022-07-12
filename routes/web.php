@@ -72,11 +72,6 @@ Route::middleware("AdminLogin")->group(function(){
     Route::get('/transactionBuy',[TransactionController::class ,'transactionBuy']);
     Route::get('/show_transactionBuy',[TransactionController::class ,'show_transactionBuy']);
     Route::get('/get_transaction_details/{id}',[TransactionController::class ,'getTransactionDetails']);
-    // Route::post('/save_network',[TransactionController::class , 'save']);
-    // Route::post('/save_network',[TransactionController::class , 'save']);
-    // Route::get('/delete_network',[TransactionController::class , 'delete']);
-    // Route::get('/edit_network',[TransactionController::class , 'edit']);
-    // Route::get('/status_network',[TransactionController::class , 'status']);
      Route::get('/user_list',[UserListController::class , 'index']);
      Route::get('/user_list_datatable',[UserListController::class , 'ShowUserList']);
      Route::get('/user_list_status',[UserListController::class , 'UserListStatus']);
@@ -94,7 +89,7 @@ Route::get('auth/google/callback', [LoginController::class, 'googleCallback']);
 
 Route::middleware("UserAuth")->group(function(){
     Route::get('/user-dashboard',[DashboardController::class ,'index']);
-    Route::get('/checkout',[CheckoutController::class ,'index']);
+    Route::get('/checkout/{hash}',[CheckoutController::class ,'index']);
     Route::get('/user_profile',[ProfileController::class ,'index']);
     Route::get('/user_kyc',[ProfileController::class ,'kyc_index']);
     Route::get('/user_setting',[ProfileController::class ,'setting_index']);
@@ -104,10 +99,11 @@ Route::middleware("UserAuth")->group(function(){
     Route::post('/update_profile_img',[ProfileController::class ,'UpdateProfileimg']);
     Route::post('/update_kyc_details',[ProfileController::class ,'updateKycDeytails']);//added by Nandan bind
     Route::get('/transaction',[TxnController::class ,'index']);
+    Route::get('/go_checkout',[CheckoutController::class ,'goCheckout']);
     Route::post('/saveTransaction',[CheckoutController::class ,'saveTransaction']);
     Route::get('/show_transaction',[TxnController::class ,'show_transaction']);
-    Route::get('/show_detail_transaction',[TxnController::class , 'show_detail_transaction'])->name('show_detail_transaction');
-    Route::get('/payment_page',[TxnController::class , 'payment_page']);
+    Route::get('/show_detail_transaction/{id}',[TxnController::class , 'show_detail_transaction'])->name('show_detail_transaction');
+    Route::get('/payment_page/{hash}',[TxnController::class , 'payment_page']);
     Route::post('/payment_gateway',[TxnController::class ,'payment_gateway']);
 });
     Route::post('/reset_password',[ResetPasswordController::class ,'ResetPassword']);

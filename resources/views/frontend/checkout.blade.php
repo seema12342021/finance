@@ -1,5 +1,5 @@
-   @extends('frontend.template')
-    @section('content')
+@extends('frontend.template')
+@section('content')
       
  <div class="page-wrapper">      
     <div class="container-fluid">
@@ -17,7 +17,7 @@
                 <li class="nav-item"  id="buy_tab" > <a class="nav-link  {{!empty(@$data->type)?'':'active'}} " data-toggle="tab" href="#buy" role="tab" 1>
                   <div class="tabsParent">
                     <div class="tabsIcon">
-                        <img src="images/noriapay_extracted_logos/sell_new.svg" alt="">
+                        <img src="{{ url('images/noriapay_extracted_logos/sell_new.svg')}}" alt="">
                     </div>
                     <div class="tabsContent">
                         <h3>Buy</h3>
@@ -28,7 +28,7 @@
                 <li class="nav-item" id="sell_tab" > <a class="nav-link {{!empty(@$data->type)?'active':''}}" data-toggle="tab" href="#sell" role="tab" >
                   <div class="tabsParent">
                     <div class="tabsIcon">
-                        <img src="images/noriapay_extracted_logos/buy_new.svg" alt="">
+                        <img src="{{ url('images/noriapay_extracted_logos/buy_new.svg')}}" alt="">
                     </div>
                     <div class="tabsContent">
                         <h3>Sell</h3>
@@ -44,7 +44,7 @@
                         <form class="pl-3 pr-3" method="POST" id="form_buy_transaction" action="">
                             <input type="hidden" class="payment_type" name="payment_type" value="1">
                         
-                             <h3 class="price"><span>1 USDT is Roughly</span> <strong id="usdt-price">{{((@$commision_buy->fees / 100) * 83.92)+83.92}} </strong> <i>INR</i></h3>
+                             <h3 class="price"><span>1 USDT is Roughly</span> <strong id="usdt-price">{{number_format(((@$commision_buy->fees / 100) * $crypto_price)+$crypto_price,2)}} </strong> <i>INR</i></h3>
                              <div class="inputParent">
                              
                                 <div class="inputBox">
@@ -53,13 +53,13 @@
                                         <input class="error" onblur="divide()" name="form_inr_amount" type="text" value="{{@$data->inr}}" id="form_inr_amount_buy">
                                     </div>
                                     <div class="iconBox">
-                                        <img src="images/noriapay_extracted_logos/rupee.svg" alt="">
+                                        <img src="{{ url('images/noriapay_extracted_logos/rupee.svg')}}" alt="">
                                         <p>INR</p>
                                     </div>
                                 </div>
                                 
                                 <div class="joinedArrow">
-                                    <img src="images/noriapay_extracted_logos/converter.svg" alt="">
+                                    <img src="{{ url('images/noriapay_extracted_logos/converter.svg')}}" alt="">
                                     <input name="form_transactiusdt-priceon_type" value="BUY" type="hidden" >
                                 </div>
                                 <div class="inputBox">
@@ -68,7 +68,7 @@
                                         <input class="error" type="text" onblur="multiply()" name="form_crypto_amount" value="{{@$data->crypto}}" id="form_crypto_amount_buy">
                                     </div>
                                     <div class="iconBox">
-                                        <img src="images/noriapay_extracted_logos/usdt.svg" alt="">
+                                        <img src="{{ url('images/noriapay_extracted_logos/usdt.svg')}}" alt="">
                                         <p>USDT</p>
                                     </div>
                                 </div>
@@ -129,7 +129,7 @@
                             </div>
                          </div> -->
                          
-                         <h3 class="price"><span>1 USDT is Roughly</span> <strong id="usdt-price-sell">{{83.92-((@$commision_sell->fees / 100) * 83.92)}}</strong> <i>INR</i></h3>
+                         <h3 class="price"><span>1 USDT is Roughly</span> <strong id="usdt-price-sell">{{number_format($crypto_price-((@$commision_sell->fees / 100) * $crypto_price),2)}}</strong> <i>INR</i></h3>
                          <div class="inputParent">
                          
                             <div class="inputBox">
@@ -138,13 +138,13 @@
                                     <input class="error" type="text" onblur="multiply_sell()" name="crypto" value="{{@$data->crypto}}"  id="form_crypto_amount_sell">
                                 </div>
                                 <div class="iconBox">
-                                      <img src="images/noriapay_extracted_logos/usdt.svg" alt="">
+                                      <img src="{{ url('images/noriapay_extracted_logos/usdt.svg')}}" alt="">
                                     <p>USDT</p>
                                 </div>
                             </div>
                             <p class="xs-text py-1 sellError" style="display:none;"></p>
                             <div class="joinedArrow">
-                                <img src="images/noriapay_extracted_logos/converter.svg" alt="">
+                                <img src="{{ url('images/noriapay_extracted_logos/converter.svg')}}" alt="">
                                 <input name="form_transaction_type" value="SELL" type="hidden" >
                             </div>
                             <div class="inputBox">
@@ -153,7 +153,7 @@
                                     <input class="error" name="form_inr_amount" onblur="divide_sell()" type="text" value="{{@$data->inr}}"  id="form_inr_amount_sell">
                                 </div>
                                <div class="iconBox">
-                                    <img src="images/noriapay_extracted_logos/rupee.svg" alt="">
+                                    <img src="{{ url('images/noriapay_extracted_logos/rupee.svg')}}" alt="">
                                     <p>INR</p>
                                 </div>
                              </div>
@@ -207,7 +207,7 @@
                         <!-- Tab panes -->            <div class="row" id="buy_transaction_details">
             
               <div class="col-lg-8 col-md-8 checkout-exchange">
-                <div class="pt-2"><img src="{{!empty(@$data->type)?'images/icons/oval_sell.png':'images/icons/oval_buy.png'}}"></div>
+                <div class="pt-2"><img src="{{!empty(@$data->type)?url('images/icons/oval_sell.png'):url('images/icons/oval_buy.png')}}"></div>
                 <div class="checkout-item">
                   <div class="checkout-item-1 "><span class="card-icon-buy"> {{!empty(@$data->type)?'Sell':'Buy'}} </span></div>
                   <div class="checkout-item-2"><span class="card-tether" id="final_crypto">{{@$data->crypto}} </span><span class="card-tether">USDT</span> 1 Tether = INR {{((@$commision_buy->fees / 100) * 83.92)+83.92}}</div>
@@ -243,7 +243,7 @@
                   </div>
                 </div>
                 <div class="row">                      <div class="form-group col-lg-12 text-center mt-3">
-                        <button class="btn btn-success float-right" id="btn_btn" disabled onclick="save_transactions({{!empty(@$data->type)?'2':'1'}})">Confirm </button>
+                        <button class="btn btn-success float-right" id="btn_btn" disabled onclick="save_transactions({{!empty(@$data->type)?'2':'1'}})" style="cursor: no-drop;">Confirm </button>
                       </div>                </div>
               </div>
             </div>         </div>

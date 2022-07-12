@@ -13,7 +13,8 @@ class ProfileController extends Controller
 {
     public function index() 
     {
-
+        $kyc_data = KycData::where('user_id',Auth::user()->id)->orderBY('id','DESC')->first();
+        $users['docs'] = $kyc_data;
         $users['fname'] = Auth::user()->first_name;
         $users['lname'] = Auth::user()->last_name;
         return view('frontend.user_profile',$users);
@@ -32,6 +33,8 @@ class ProfileController extends Controller
          $users['title']="Profile setting";
          $users['fname'] = Auth::user()->first_name;
         $users['lname'] = Auth::user()->last_name;
+         $kyc_data = KycData::where('user_id',Auth::user()->id)->orderBY('id','DESC')->first();
+        $users['docs'] = $kyc_data;
         $users['setting'] = User::where(['id'=>Auth::user()->id])->first(['first_name','last_name','email','mobile_number']);
         return view('frontend.setting', $users);
     }
@@ -64,9 +67,11 @@ class ProfileController extends Controller
     //change password
      public function ChangePasswordForm()
     {
-         $users['title']="Change Password";
+        $users['title']="Change Password";
         $users['fname'] = Auth::user()->first_name;
         $users['lname'] = Auth::user()->last_name;
+        $kyc_data = KycData::where('user_id',Auth::user()->id)->orderBY('id','DESC')->first();
+        $users['docs'] = $kyc_data;
         return view('frontend.change_password',$users);
     }
      public function UpdatePassword(Request $request){
