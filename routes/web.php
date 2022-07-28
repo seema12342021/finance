@@ -13,7 +13,7 @@ use App\Http\Controllers\TransactionController;
  use App\Http\Controllers\frontend\LoginController; 
  use App\Http\Controllers\frontend\SignupController; 
  use App\Http\Controllers\frontend\CheckoutController; 
- use App\Http\Controllers\frontend\ProfileController; 
+ use App\Http\Controllers\frontend\ProfileController;
  use App\Http\Controllers\frontend\ResetPasswordController; 
  use App\Http\Controllers\frontend\TransactionController as TxnController; 
 
@@ -88,7 +88,7 @@ Route::get('auth/google', [LoginController::class, 'googleRedirect']);
 Route::get('auth/google/callback', [LoginController::class, 'googleCallback']);
 
 Route::middleware("UserAuth")->group(function(){
-    Route::get('/user-dashboard',[DashboardController::class ,'index']);
+    Route::get('/user-dashboard/{hash?}',[DashboardController::class ,'index']);
     Route::get('/checkout/{hash}',[CheckoutController::class ,'index']);
     Route::get('/user_profile',[ProfileController::class ,'index']);
     Route::get('/user_kyc',[ProfileController::class ,'kyc_index']);
@@ -97,14 +97,20 @@ Route::middleware("UserAuth")->group(function(){
     Route::get('/change_password',[ProfileController::class ,'ChangePasswordForm']);
     Route::post('/update_password',[ProfileController::class ,'UpdatePassword']);
     Route::post('/update_profile_img',[ProfileController::class ,'UpdateProfileimg']);
-    Route::post('/update_kyc_details',[ProfileController::class ,'updateKycDeytails']);//added by Nandan bind
+    Route::post('/update_kyc_details',[ProfileController::class ,'updateKycDeytails']);//added by Nandan bind 
     Route::get('/transaction',[TxnController::class ,'index']);
     Route::get('/go_checkout',[CheckoutController::class ,'goCheckout']);
+    //Route::get('/go_dashboard',[DashboardController::class ,'goDashborad']);
     Route::post('/saveTransaction',[CheckoutController::class ,'saveTransaction']);
+    Route::post('/get_wallet',[CheckoutController::class ,'getWallet']);
+    Route::get('/get_crypto',[DashboardController::class ,'getCrypto']);
+    Route::get('/get_sell_crypto',[DashboardController::class ,'getSellCrypto']);
+    Route::get('/get_home_crypto',[HomepageController::class ,'getHomeCrypto']);
     Route::get('/show_transaction',[TxnController::class ,'show_transaction']);
     Route::get('/show_detail_transaction/{id}',[TxnController::class , 'show_detail_transaction'])->name('show_detail_transaction');
     Route::get('/payment_page/{hash}',[TxnController::class , 'payment_page']);
     Route::post('/payment_gateway',[TxnController::class ,'payment_gateway']);
+    Route::post('/payment_sell',[TxnController::class ,'payment_sell']);
 });
     Route::post('/reset_password',[ResetPasswordController::class ,'ResetPassword']);
     Route::post('/check_otp',[ResetPasswordController::class ,'CheckOtp']);

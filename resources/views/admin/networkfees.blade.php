@@ -1,3 +1,4 @@
+ 
  <div class="container-fluid">
         <div class="row">
    <div class="col-md-4">
@@ -9,7 +10,7 @@
               <!-- /.card-header -->
               <!-- form start -->
               <form id="networkform">
-                @CSRF
+                @CSRF 
                   <input type="hidden" name="id" id="id"> 
                 <div class="card-body">
                   <div class="form-group">
@@ -20,10 +21,18 @@
                     <label for="exampletitle">Type</label>
                     <select class="form-control" name="type" id="type">
                       <option value="">Choose Option</option>
-                      <option value="1">Buy</option>
-                      <option value="2">Sell</option>
-                        
-                    </select>
+                      <option value="1" id="buy">Buy</option>
+                       <option value="2">Sell</option>
+                      </select>
+                  </div>
+                   <div class="form-group" id="wallet">
+                    <label for="exampletitle">Wallet</label>
+                    <select class="form-control" name="wallet">
+                      <option value="">Choose Wallet</option>
+                      @foreach($Wallet as $key => $value)
+                      <option value="{{$value->id}}" id="buy_wallet">{{$value->name}}</option>
+                      @endforeach
+                      </select>
                   </div>
                   
                 </div>
@@ -52,6 +61,7 @@
                                             <th>Id</th>
                                             <th>Fees</th>
                                             <th>Type</th>
+                                            <th>Wallet</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>

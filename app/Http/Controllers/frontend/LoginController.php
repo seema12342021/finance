@@ -18,14 +18,17 @@ class LoginController extends Controller
             'password'=>'required',
         ]);
         if($validated->passes()){
+            $hash = encrypt($request->all(),env('APP_KEY'));
             if(Auth::attempt(['email'=>$request->username , 'password' => $request->password])){
-                return response()->json(['status_code'=>200 , 'message' => 'Login succesfully']);
+                return response()->json(['status_code'=>200 , 'message' => 'Login succesfully','location'=>$hash]);
             }else{
                 return response()->json(['status_code'=>201 , 'message' => 'Wrong Username or Password']);
             }
         }else{
             return response()->json(['status'=>'error','status_code'=>202,'error' => $validated->errors()->all() ]);
         }
+        // $hash = encrypt($request->data,env('APP_KEY'));
+        // return response()->json(['status'=>'sucess','status_code'=>200,'location'=>url('user-dashboard',[$hash])]);
     }//end of method
 
      public function googleRedirect(){

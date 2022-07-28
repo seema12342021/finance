@@ -60,21 +60,25 @@ class Controller extends BaseController
         }//end of method
 
 
-        public function getCryptoValue(){
+        public function getCryptoValue($crypto = 'USDT' , $flag = false){
             $client = new Client();
-            $res = $client->request('GET', 'https://api.bofin.tech/exchange/currencies/ticker?key=c25737715c4ee510ae12ecc965a275fc98e2d169&ids=USDT&convert=INR');
+            $res = $client->request('GET', 'https://api.bofin.tech/exchange/currencies/ticker?key=c25737715c4ee510ae12ecc965a275fc98e2d169&ids='.$crypto.'&convert=INR');
              if($res->getStatusCode() == 200){
                 $data = $res->getBody();
                 $data = json_decode($data,true);
                 $res = Transaction::orderBy("id","DESC")->first();
                 if($data){
                     if(count($data)>0){
-                        $this->crypto_price = number_format($data[0]['price'] , 2);
+                        $this->crypto_price = ($data[0]['price']);
                     }else{
-                        $this->crypto_price = $res?$res->actual_crypto_price:env('CRYPTO_PRICE');
+                        $this->crypto_price = @$res->actual_crypto_price?$res->actual_crypto_price:env('CRYPTO_PRICE');
                     }
                 }else{
-                    $this->crypto_price = $res?$res->actual_crypto_price:env('CRYPTO_PRICE');
+                    $this->crypto_price = @$res->actual_crypto_price?$res->actual_crypto_price:env('CRYPTO_PRICE');
+                }
+                session(["crypto_price"=>$this->crypto_price]);
+                if($flag){
+                    return $this->crypto_price;
                 }
             }
         }//end of method

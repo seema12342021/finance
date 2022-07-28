@@ -23,7 +23,7 @@ class TransactionController extends Controller
     }
 
     public function show_detail_transaction($id)
-    {
+    { 
         $id = decrypt($id,env('APP_NAME'));
         $users['fname'] = substr(Auth::user()->first_name,0,1);
         $users['lname'] = substr(Auth::user()->last_name,0,1);
@@ -33,7 +33,7 @@ class TransactionController extends Controller
     }
 
     public function payment_page($hash)
-        {
+        { 
             $id = decrypt($hash,env("APP_KEY"));
             $users['fname'] = substr(Auth::user()->first_name,0,1);
             $users['lname'] = substr(Auth::user()->last_name,0,1);

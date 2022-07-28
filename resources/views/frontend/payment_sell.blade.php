@@ -19,7 +19,7 @@
                 <div class="row checkout-exchange payment-heading ">
                 <div class="col-md-2 col-4 pr-0"><p class="box-icon-{{@$transaction_detail->payment_type == 1?'buy':'sell'}}"><i class="fa fa-arrow-{{@$transaction_detail->payment_type == 1?'up':'down'}}"></i> {{@$transaction_detail->payment_type == 1?'Buy':'Sell'}}</p></div>
                 <div class="rounded-title col-md-10 col-12 pt-2">Transaction Reference Number :
-                    <span id="ref_num"> {{@$transaction_detail->transaction_id}}</span> &nbsp <a  class="copy" data-placement="right" onclick="copy_data(ref_num)"><img src="images/icons/copy.png"></a>
+                    <span id="ref_num"> {{@$transaction_detail->transaction_id}}</span> &nbsp <a  class="copy" data-placement="right" onclick="copy_data(ref_num)"><img src="{{url('images/icons/copy.png')}}"></a>
                 </div>
               </div>
 
@@ -65,7 +65,7 @@
                                       <div class="payment-detail mt-1 col-md-10 col-9">  
                                          <p class="small-text">{{@$value->name}}</p>
                                          <p class="text-muted"><span id="crypto_wallet_address_erc20">{{@$value->address}}</span>
-                                           &nbsp &nbsp <a class="copy" data-placement="right" onclick="copy_data({{@$value->address}})"><img src="images/icons/copy.png"></a>
+                                           &nbsp &nbsp <a class="copy" data-placement="right" onclick="copy_data({{@$value->address}})"><img src="{{url('images/icons/copy.png')}}"></a>
                                          </p>
                                       </div>
                                       <div class="payment-detail col-md-2 col-3 text-right">
@@ -119,9 +119,9 @@
           </div>
           <div class="pb-5">
             <p class="checkout-price-1 pb-3"><b>IMPORTANT NOTES :</b></p>
-            <p class="p-text">1. Please transfer exact amount of USDT shown on the screen as total payable.</p>
-            <p class="p-text"> 2. Transferring USDT to other wallet address may result in loss of funds & we are not responsible.</p>
-            <p class="p-text">3. Please make sure to select the right network type either ERC20 or BEP20, sending funds to wrong wallet network will result in loss of funds</p>
+            <p class="p-text">1. Please transfer exact amount of <span>{{$transaction_detail->crypto}}</span> shown on the screen as total payable.</p>
+            <p class="p-text"> 2. Transferring <span>{{$transaction_detail->crypto}}</span> to other wallet address may result in loss of funds & we are not responsible.</p>
+            <p class="p-text">3. Please make sure to select the right network type either ERC20, TRC20 or BEP20, sending funds to wrong wallet network will result in loss of funds</p>
             <p class="p-text">4. In case of any errors , please write to support@elitpay.com</p>
           </div>          
         </div>

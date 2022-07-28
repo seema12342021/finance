@@ -20311,3 +20311,25 @@ background: linear-gradient(230deg, rgb(6 198 216), #0e5d6d);
 form label {
     color: black!important;
 }
+
+ 
+/* custom css */
+.overlay {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 999999;
+    background: rgba(255, 255, 255, 0.9) url(" ../../images/icons/loading.gif") center
+        no-repeat;
+}
+
+body.loading {
+    overflow: hidden;
+}
+
+body.loading .overlay {
+    display: block;
+}

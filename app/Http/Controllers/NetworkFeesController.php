@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\NetworkFees; 
+use App\Models\Wallet; 
 use DB;   
 use Validator; 
 use DataTables; 
@@ -21,30 +22,42 @@ class NetworkFeesController extends Controller
                                     'assets\plugins/datatables-responsive/js/dataTables.responsive.min.js',
                                     'assets\plugins/datatables-responsive/js/responsive.bootstrap4.min.js',
                                     'assets\custom_js\networkfees.js');
-        $data['content'] = view('admin.networkfees')->render();
+         $pagedata['Wallet'] = Wallet::where(['is_active'=>1,'is_deleted'=>1])->get(['id','name']);
+        $data['content'] = view('admin.networkfees',$pagedata)->render();
         return view('admin.template',$data);
     }
     public function save(Request $request){
-        
-            $valid = [
+      $valid = [
+            'wallet'=>'required_if:type,==,1',
             'fees'=>'required',
             'type'=>'required',
             ];  
-        
-        $validated = Validator::make($request->all(),$valid);
+
+            $messages = [
+              'wallet.required_if'  => 'The wallet field is required'
+          ];
+        $validated = Validator::make($request->all(),$valid,$messages);
          if($validated->passes()){
             $row = NetworkFees::query();
             if (!empty($request->id)) {
                 $row = $row->where('id','!=',$request->id);
             }
-            $row = $row->where(['type'=>$request->type,'is_deleted'=>1])->first();
+            $arr = ['type'=>$request->type,'is_deleted'=>1];
+            if($request->type == 1){
+                $arr['wallet_id'] = $request->wallet;
+            }else{
+                $arr['wallet_id'] = null;
+            }
+            $row = $row->where($arr)->first();
             if (!empty($row)) {
                 return response()->json(['status'=>'error','status_code'=>201,'message'=>"Data Already Exists!"]);
             }
-           
-            $formdata['fees'] = $request->fees;
+             $formdata['fees'] = $request->fees;
             $formdata['type'] = $request->type;
             $formdata['created_by'] = 1;
+           if($request->type == 1){
+            $formdata['Wallet_id'] = $request->wallet;
+           }
              if (!empty($request->id)) {
                     $res = NetworkFees::where('id',$request->id)->update($formdata);
                     if($res)
@@ -69,8 +82,7 @@ class NetworkFeesController extends Controller
 
  public function show(Request $request){
         if ($request->ajax()) {
-           //$data = Project::select('*');
-            $data=NetworkFees::where('is_deleted',1)->orderBy('id','DESC')->get();
+            $data = NetworkFees::Leftjoin('wallets','network_fees.Wallet_id','=','Wallets.id')->where('network_fees.is_deleted',1)->orderBy('network_fees.id','DESC')->get(['wallets.name as wallet_name','network_fees.fees','network_fees.type','network_fees.id']);
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('status', function($row){
@@ -141,5 +153,4 @@ class NetworkFeesController extends Controller
             return response()->json(['status'=>'sucess','status_code'=>200,'message'=>"Update Successfully !"]);
         }
     }//End of function
-  
-}
+}//end of class

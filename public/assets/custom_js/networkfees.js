@@ -40,6 +40,7 @@ function show_network(){
             {data: 'DT_RowIndex'},
             {data: 'fees', name: 'fees'},
             {data: 'type'},
+            {data: 'wallet_name'},
             { data: "status"},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
@@ -106,4 +107,15 @@ function status_network(id = "", status = "") {
         },
     });
 }
+
+$(function() {
+    $('#wallet').hide(); 
+    $('#type').change(function(){
+        if($('#type').val() == 1) {
+            $('#wallet').show(); 
+        } else {
+            $('#wallet').hide(); 
+        } 
+    });
+});
 

@@ -21,7 +21,7 @@
                     </div>
                     <div class="tabsContent">
                         <h3>Buy</h3>
-                        <p>usdt</p>
+                        <p>{{$selected_crypto->name}}</p>
                     </div>
                   </div></a> 
                 </li>
@@ -32,7 +32,7 @@
                     </div>
                     <div class="tabsContent">
                         <h3>Sell</h3>
-                        <p>usdt</p>
+                        <p>{{$selected_crypto->name}}</p>
                     </div>
                   </div></a>
                </li>
@@ -43,14 +43,15 @@
                     <div class="p-3">
                         <form class="pl-3 pr-3" method="POST" id="form_buy_transaction" action="">
                             <input type="hidden" class="payment_type" name="payment_type" value="1">
+                            <input type="hidden" class="currency" id="currency" name="currency" value="{{$data->currency}}">
                         
-                             <h3 class="price"><span>1 USDT is Roughly</span> <strong id="usdt-price">{{number_format(((@$commision_buy->fees / 100) * $crypto_price)+$crypto_price,2)}} </strong> <i>INR</i></h3>
+                             <h3 class="price"><span>1 {{$selected_crypto->name}} is Roughly</span> <strong id="usdt-price">{{$data->buy_currency}}</strong> <i>INR</i></h3>
                              <div class="inputParent">
                              
                                 <div class="inputBox">
                                     <div class="input_label">
                                         <p class="xs-text mb-0" for="input1">You Pay</p>
-                                        <input class="error" onblur="divide()" name="form_inr_amount" type="text" value="{{@$data->inr}}" id="form_inr_amount_buy">
+                                        <input class="error" onblur="divide()" name="form_inr_amount" type="text" value="{{sprintf("%.2f", @$data->inr)}}" id="form_inr_amount_buy">
                                     </div>
                                     <div class="iconBox">
                                         <img src="{{ url('images/noriapay_extracted_logos/rupee.svg')}}" alt="">
@@ -68,8 +69,8 @@
                                         <input class="error" type="text" onblur="multiply()" name="form_crypto_amount" value="{{@$data->crypto}}" id="form_crypto_amount_buy">
                                     </div>
                                     <div class="iconBox">
-                                        <img src="{{ url('images/noriapay_extracted_logos/usdt.svg')}}" alt="">
-                                        <p>USDT</p>
+                                        <img src="{{$data->icon}}" alt="" height="16px" width="16px">
+                                        <p id="currency_name" name="currency_name">{{$selected_crypto->name}}</p>
                                     </div>
                                 </div>
                                 <p class="xs-text py-1 buyError" style="display:none;"></p>
@@ -83,8 +84,8 @@
                                 @foreach($wallet as $key=>$value)
                                     <div class="col-md-4 mb-2">
                                       <label class="form-group-payment col-lg-12 col-xs-6  mr-1" for="radio_omni{{@$value->id}}">
-                                        <input name="wallet" type="radio" id="radio_omni{{@$value->id}}" value="{{@$value->id}}" class="with-gap radio-col-orange" >
-                                        <label class="label-small" for="radio_omni{{@$value->id}}">{{@$value->name}}</label>
+                                        <input name="wallet" type="radio" onclick="getfees({{@$value->id}})" id="radio_omni{{@$value->id}}" value="{{@$value->id}}" {{@$value->id==1?'checked':''}} class="with-gap radio-col-orange">
+                                        <label class="label-small" for="radio_omni{{@$value->id}}">{{strtoupper(@$value->name)}}</label>
                                       </label>
                                     </div>
                                 @endforeach
@@ -129,7 +130,7 @@
                             </div>
                          </div> -->
                          
-                         <h3 class="price"><span>1 USDT is Roughly</span> <strong id="usdt-price-sell">{{number_format($crypto_price-((@$commision_sell->fees / 100) * $crypto_price),2)}}</strong> <i>INR</i></h3>
+                         <h3 class="price"><span>1 {{$selected_crypto->name}} is Roughly</span> <strong id="usdt-price-sell">{{$data->buy_currency}}</strong> <i>INR</i></h3>
                          <div class="inputParent">
                          
                             <div class="inputBox">
@@ -138,8 +139,8 @@
                                     <input class="error" type="text" onblur="multiply_sell()" name="crypto" value="{{@$data->crypto}}"  id="form_crypto_amount_sell">
                                 </div>
                                 <div class="iconBox">
-                                      <img src="{{ url('images/noriapay_extracted_logos/usdt.svg')}}" alt="">
-                                    <p>USDT</p>
+                                      <img src="{{$data->icon}}" alt="" height="16px" width="16px">
+                                    <p>{{$selected_crypto->name}}</p>
                                 </div>
                             </div>
                             <p class="xs-text py-1 sellError" style="display:none;"></p>
@@ -150,7 +151,7 @@
                             <div class="inputBox">
                                 <div class="input_label">
                                     <p class="xs-text mb-0" for="input2">You will receive Roughly</p>
-                                    <input class="error" name="form_inr_amount" onblur="divide_sell()" type="text" value="{{@$data->inr}}"  id="form_inr_amount_sell">
+                                    <input class="error" name="form_inr_amount" onblur="divide_sell()" type="text" value="{{sprintf("%.2f", @$data->inr)}}"  id="form_inr_amount_sell">
                                 </div>
                                <div class="iconBox">
                                     <img src="{{ url('images/noriapay_extracted_logos/rupee.svg')}}" alt="">
@@ -209,8 +210,13 @@
               <div class="col-lg-8 col-md-8 checkout-exchange">
                 <div class="pt-2"><img src="{{!empty(@$data->type)?url('images/icons/oval_sell.png'):url('images/icons/oval_buy.png')}}"></div>
                 <div class="checkout-item">
-                  <div class="checkout-item-1 "><span class="card-icon-buy"> {{!empty(@$data->type)?'Sell':'Buy'}} </span></div>
-                  <div class="checkout-item-2"><span class="card-tether" id="final_crypto">{{@$data->crypto}} </span><span class="card-tether">USDT</span> 1 Tether = INR {{((@$commision_buy->fees / 100) * 83.92)+83.92}}</div>
+                  <div class="checkout-item-1 ">
+                    <span class="card-icon-buy"> {{!empty(@$data->type)?'Sell':'Buy'}} </span>
+                </div>
+                  <div class="checkout-item-2">
+                    <span class="card-tether" id="final_crypto">{{@$data->crypto}} 
+                    </span>
+                    <span class="card-tether " id="crypto_currency_name">{{$selected_crypto->name}}</span> 1 {{$selected_crypto->name}} = INR {{$data->buy_currency}}</div>
                 </div>
               </div>
               <div class="col-lg-4 col-md-4 mt-3 text-right">
@@ -221,12 +227,12 @@
               <div class="col-lg-12 col-md-12">
               <hr>
                 <div class="checkout-price row mb-1">
-                  <div class="checkout-price-1 text-left col-lg-6 col-md-6 col-6"> Tether to {{!empty(@$data->type)?'Sell':'Buy'}} </div>
-                  <div class="checkout-price-2 text-right col-lg-6 col-md-6 col-6" id="tether_receive"> {{@$data->crypto}} USDT</div>
+                  <div class="checkout-price-1 text-left col-lg-6 col-md-6 col-6"> {{$selected_crypto->name}} to {{!empty(@$data->type)?'Sell':'Buy'}} </div>
+                  <div class="checkout-price-2 text-right col-lg-6 col-md-6 col-6" id="tether_receive"> {{@$data->crypto}} {{$selected_crypto->name}}</div>
                 </div>
                 <div class="checkout-price row mb-4">
                    <div class="checkout-price-1 text-left col-lg-6 col-md-6 col-6">Network Fee </div>
-                   <div class="checkout-price-2 text-right col-lg-6 col-md-6 col-6"> {{!empty(@$data->type)?@$network_sell->fees:@$network_buy->fees}} INR</div>
+                   <div class="checkout-price-2 text-right col-lg-6 col-md-6 col-6"> <span id="wallet_fees">{{!empty(@$data->type)?@$network_sell->fees:@$network_buy->fees}} </span>INR</div>
                 </div>
                  <div class="hr-dotted">  </div>
                 {{-- <div class="checkout-price row mb-4">

@@ -36,7 +36,8 @@
       </style>
       
       </head>
-      <body>
+      <body> 
+        <div class="overlay"></div>
         <div class="preloader">
       <div class="lds-ripple">
       <div class="lds-pos"></div>
@@ -191,6 +192,7 @@
         </script>
         @yield('extern-js')
         <!-- <script src="{{url('js/require.js')}}"></script> -->
+         <script src="{{url('assets/frontend/js/frontend_js/custom.js')}}"></script>
          <script src="{{url('assets/frontend/js/frontend_js/profile.js')}}"></script>
           <script src="{{url('assets/frontend/js/frontend_js/payment.js')}}"></script>
           <script src="{{url('assets/frontend/js/frontend_js/forgetpassword.js')}}"></script>

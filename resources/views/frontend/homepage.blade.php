@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
     <html>
         <head>
@@ -9,7 +10,7 @@
         <title>ElitPay</title>
         
         <!-- Bootstrap-4 CSS -->
-        <link href="{{url('css/bootstrap4/bootstrap.min.css" rel="stylesheet')}}')}}">
+        <link href="{{url('css/bootstrap4/bootstrap.min.css" rel="stylesheet')}}" >
 
         <!-- Material Pro Style CSS -->
         <link href="{{url('css/Material/style.css')}}" rel="stylesheet">
@@ -80,6 +81,7 @@
       </style>
       </head>
       <body>
+        <div class="overlay"></div>
         <div class="preloader">
   <div class="lds-ripple">
       <div class="lds-pos"></div>
@@ -142,13 +144,6 @@
       </div>                    
                 </div>
 
-            
-
-        
-       
-      
-
-
 <div class="container-fluid">
 
 <!-- ***************modal for Sign In********** -->
@@ -160,7 +155,7 @@
 
             <div class="modal-body">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-         <form class="pl-3 pr-3 form-horizontal form-material" method="POST" action="/signin" id="loginform">
+         <form class="pl-3 pr-3 form-horizontal form-material" method="POST" id="loginform">
                   @CSRF
                     <div id='login_modal' class="text-center mt-2 mb-4">
                          <a class="text-success">
@@ -197,7 +192,7 @@
                    <div class="form-group text-center">
                         <div class="col-xs-12">
                            <div class="exChange">
-                                <button type="submit" class="btn btn-primary float-right" id="submit">Login</button>
+                                <button type="submit"  class="btn btn-primary float-right" id="submit">Login</button>
                             </div>
                             <p class="text-center" style="color:black;">Don't have an account? <a style="color:#12e5fb;font-weight:500;" id="open-signup" data-toggle="modal" data-target="#signup-modal">Sign Up</a></p>
                         </div>
@@ -258,7 +253,7 @@
 
       <div class="page-wrapper">      
         <div class="container-fluid">
-        <div class="home-container">
+        <div class="home-container" style="margin-bottom:15%">
     
   <div class="main-container">
     <div class="row">
@@ -286,7 +281,7 @@
                 </div>
                 <div class="tabsContent">
                     <h3>Buy</h3>
-                    <p>usdt</p>
+                    <p id="usdt_buy_currency">usdt</p>
                 </div>
                </div></a> 
             </li>
@@ -297,7 +292,7 @@
                </div>
                <div class="tabsContent">
                  <h3>Sell</h3>
-                 <p>usdt</p>
+                 <p id="usdt_sell_currency">usdt</p>
                </div></div></a>
              </li>
           </ul>
@@ -307,16 +302,16 @@
                     <div class="p-3">
                         <form class="pl-3 pr-3" action="">
                             @php
-                            $price_buy = number_format(((@$commision_buy->fees / 100) * $crypto_price)+$crypto_price,2);
-                            $price_sell = number_format($crypto_price-((@$commision_sell->fees / 100) * $crypto_price),2);
+                            $price_buy = ((@$commision_buy->fees / 100) * $crypto_price)+$crypto_price;
+                            $price_sell = $crypto_price-((@$commision_sell->fees / 100) * $crypto_price);
                             @endphp
-                            <h3 class="price"><span>1 USDT is Roughly </span><b id="usdt-price">{{$price_buy}}</b> <i>INR</i></h3>
+                            <h3 class="price"><span>1 <span id="buy_currency_name">USDT</span> is Roughly </span><b id="usdt-price">{{sprintf("%.2f", $price_buy)}}</b> <i>INR</i></h3>
                             <div class="inputParent">
                             
                               <div class="inputBox">
                                 <div class="input_label">
                                     <label for="input1">You Pay</label>
-                                    <input onblur="divide()" class="error" name="form_inr_amount" value="{{ $price_buy*100 }}" type="text" id="form_inr_amount_buy">
+                                    <input onblur="divide()" class="error" name="form_inr_amount" value="{{sprintf("%.2f", $price_buy*100)}}" type="text" id="form_inr_amount_buy">
                                 </div>
                                 <div class="iconBox">
                                     <img src="images/noriapay_extracted_logos/rupee.svg" alt="">
@@ -330,11 +325,15 @@
                               <div class="inputBox">
                                   <div class="input_label">
                                       <label for="input2">You will receive Roughly </label>
-                                      <input onblur="multiply()" class="error" name="form_crypto_amount" value="100" type="text" id="form_crypto_amount_buy">
+                                      <input onblur="multiply()" class="error" name="form_crypto_amount" value="{{sprintf("%.2f", 100)}}" type="text" id="form_crypto_amount_buy">
                                   </div>
                                   <div class="iconBox">
-                                      <img src="images/noriapay_extracted_logos/usdt.svg" alt="">
-                                      <p>USDT</p>
+                                      <img src="images/noriapay_extracted_logos/usdt.svg" alt="" id="buy_currency_icon1" height="16px" width="16px">
+                                        <select name="crypto_currency" class="crypto_list" id="crypto_list_buy" data-type="1">
+                                            @foreach($currency as $key=>$value)
+                                            <option value="{{$value->id}}" data-text="{{$value->name}}">{{$value->name}}</option>
+                                            @endforeach
+                                        </select>
                                   </div>
                               </div>
                              <p class="xs-text py-1 buyError">
@@ -348,15 +347,19 @@
                 <div class="tab-pane" id="profile2" role="tabpanel">
                     <div class="p-3">
                          <form class="pl-3 pr-3" action="">
-                            <h3 class="price"><span>1 USDT is Roughly</span> <strong id="usdt-price-sell">{{$price_sell}}</strong> <i>INR</i></h3>
+                            <h3 class="price"><span>1 <span id="sell_currency">USDT</span> is Roughly</span> <strong id="usdt-price-sell">{{sprintf("%.2f", $price_sell)}}</strong> <i>INR</i></h3>
                             <div class="inputParent">
                               <div class="inputBox">
                                 <div class="input_label">
                                     <label for="input1">You Pay</label>
-                                    <input class="error" onblur="multiply_sell()" name="form_crypto_amount" value="100" type="text" id="form_crypto_amount_sell">                                </div>
+                                    <input class="error" onblur="multiply_sell()" name="form_crypto_amount" value="{{round(100,2)}}" type="text" id="form_crypto_amount_sell">                                </div>
                                 <div class="iconBox">
-                                    <img src="images/noriapay_extracted_logos/usdt.svg" alt="">
-                                    <p>USDT</p>
+                                    <img src="images/noriapay_extracted_logos/usdt.svg" alt="" id="sell_currency_icon1" height="16px" width="16px">
+                                    <select name="crypto_currency" class="crypto_list" data-type="2" id="crypto_list_sell">
+                                            @foreach($currency as $key=>$value)
+                                            <option value="{{$value->id}}" data-text="{{$value->name}}">{{$value->name}}</option>
+                                            @endforeach
+                                        </select>
                                 </div>
                               </div>
                               <p class="xs-text py-1 sellError">
@@ -368,7 +371,7 @@
                               <div class="inputBox">
                                   <div class="input_label">
                                       <label for="input2">You will receive Roughly</label>
-                                      <input class="error" onblur="divide_sell()" name="form_inr_amount" type="text" value="{{ $price_sell*100 }}" id="form_inr_amount_sell">
+                                      <input class="error" onblur="divide_sell()" name="form_inr_amount" type="text" value="{{round($price_sell*100,2)}}" id="form_inr_amount_sell">
                                   </div>
                                   <div class="iconBox">
                                       <img src="images/noriapay_extracted_logos/rupee.svg" alt="">
@@ -604,7 +607,8 @@
 	    <script type="text/javascript" src="{{url('js/component/Material/popper.min.js')}}"></script>
 	    
 	    <!-- Bootstrap core JavaScript -->
-	    <script type="text/javascript" src="{{url('js/bootstrap4/bootstrap.min.js')}}"></script>      <script src="js/component/Material/init.js')}}"></script> 
+	    <script type="text/javascript" src="{{url('js/bootstrap4/bootstrap.min.js')}}"></script>      
+        <script src="{{url('js/component/Material/init.js')}}"></script> 
       <script src="{{url('js/component/Material/app.js')}}"></script>
       <script src="{{url('js/component/Material/perfect-scrollbar.jquery.min.js')}}"></script>
       <script src="{{url('js/component/Material/sparkline.js')}}"></script>
@@ -629,6 +633,7 @@
         };          
         </script>
         <!-- <script src='js/require.js'></script> -->
+        <script src="{{url('assets/frontend/js/frontend_js/custom.js')}}"></script>
         <script src="{{url('assets/frontend/js/frontend_js/signup.js')}}"></script>
         <script src="{{url('assets/frontend/js/frontend_js/login.js')}}"></script>
          <script src="{{url('assets/frontend/js/frontend_js/forgetpassword.js')}}"></script>

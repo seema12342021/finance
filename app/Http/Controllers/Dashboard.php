@@ -18,5 +18,5 @@ class Dashboard extends MYController
         $data['content'] = view('admin/dashboard')->render();
         return view('admin.template',$data);
     }// End of Function
-    
+
 }
