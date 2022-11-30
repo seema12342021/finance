@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Transaction;
+use App\Models\Account;
 use GuzzleHttp\Client;
 use DataTables; 
 use App\Models\Wallet;
@@ -18,7 +19,7 @@ class TransactionController extends Controller
         $users['fname'] = substr(Auth::user()->first_name,0,1);
         $users['lname'] = substr(Auth::user()->last_name,0,1);
         $users['name'] = Auth::user()->first_name;
-        $users['transaction'] = Transaction::join('wallets','wallets.id','=','transactions.wallet_id')->join('cryptos','cryptos.id','=','transactions.crypto')->join('statuses','statuses.id','=','transactions.payment_status')->where(['transactions.is_deleted'=>1,'transactions.is_active'=>1,'transactions.user_id'=>Auth::user()->id])->get(['transactions.total_inr_price','transactions.created_at','transactions.total_crypto','transactions.crypto_price','transactions.payment_mode','transactions.wallet_address','transactions.payment_type','wallets.name as wallet','cryptos.name as crypto','statuses.name as status']);
+        $users['transaction'] = Transaction::leftjoin('wallets','wallets.id','=','transactions.wallet_id')->join('cryptos','cryptos.id','=','transactions.crypto')->join('statuses','statuses.id','=','transactions.payment_status')->where(['transactions.is_deleted'=>1,'transactions.is_active'=>1,'transactions.user_id'=>Auth::user()->id])->get(['transactions.total_inr_price','transactions.created_at','transactions.total_crypto','transactions.crypto_price','transactions.payment_mode','transactions.wallet_address','transactions.payment_type','wallets.name as wallet','cryptos.name as crypto','statuses.name as status']);
         return view('frontend.transaction',$users);
     }
 
@@ -28,7 +29,7 @@ class TransactionController extends Controller
         $users['fname'] = substr(Auth::user()->first_name,0,1);
         $users['lname'] = substr(Auth::user()->last_name,0,1);
         $users['name'] = Auth::user()->first_name;
-        $users['transaction_detail'] = Transaction::join('wallets','wallets.id','=','transactions.wallet_id')->join('users','users.id','=','transactions.user_id')->join('cryptos','cryptos.id','=','transactions.crypto')->join('statuses','statuses.id','=','transactions.payment_status')->where(['transactions.id'=>$id,'transactions.is_deleted'=>1,'transactions.is_active'=>1,'transactions.user_id'=>Auth::user()->id])->orderBy('transactions.id','DESC')->first(['transactions.id','transactions.transaction_id','transactions.total_inr_price','transactions.created_at','transactions.total_crypto','transactions.crypto_price','transactions.payment_mode','transactions.wallet_address','transactions.payment_type','wallets.name as wallet','cryptos.name as crypto','statuses.name as status','users.first_name','users.email']);
+        $users['transaction_detail'] = Transaction::leftjoin('wallets','wallets.id','=','transactions.wallet_id')->join('users','users.id','=','transactions.user_id')->join('cryptos','cryptos.id','=','transactions.crypto')->join('statuses','statuses.id','=','transactions.payment_status')->where(['transactions.id'=>$id,'transactions.is_deleted'=>1,'transactions.is_active'=>1,'transactions.user_id'=>Auth::user()->id])->orderBy('transactions.id','DESC')->first(['transactions.id','transactions.transaction_id','transactions.total_inr_price','transactions.created_at','transactions.total_crypto','transactions.crypto_price','transactions.payment_mode','transactions.wallet_address','transactions.payment_type','wallets.name as wallet','cryptos.name as crypto','statuses.name as status','users.first_name','users.email']);
         return view('frontend.transaction_detail',$users);
     }
 
@@ -38,11 +39,11 @@ class TransactionController extends Controller
             $users['fname'] = substr(Auth::user()->first_name,0,1);
             $users['lname'] = substr(Auth::user()->last_name,0,1);
             $users['name'] = Auth::user()->first_name;
-            $users['wallet'] = Wallet::get();
-            $users['transaction_detail'] = Transaction::join('wallets','wallets.id','=','transactions.wallet_id')->join('users','users.id','=','transactions.user_id')->join('cryptos','cryptos.id','=','transactions.crypto')->join('statuses','statuses.id','=','transactions.payment_status')->where(['transactions.id'=>$id,'transactions.is_deleted'=>1,'transactions.is_active'=>1,'transactions.user_id'=>Auth::user()->id])->orderBy('transactions.id','DESC')->first(['transactions.id','transactions.payment_type','transactions.transaction_id','transactions.total_inr_price','transactions.created_at','transactions.total_crypto','transactions.crypto_price','transactions.payment_mode','transactions.wallet_address','transactions.payment_type','wallets.name as wallet','cryptos.name as crypto','statuses.name as status','users.first_name','users.email']);
+            $users['wallet'] = Wallet::where(['is_deleted'=>1,'is_active'=>1])->get();
+            $users['transaction_detail'] = Transaction::leftjoin('wallets','wallets.id','=','transactions.wallet_id')->join('users','users.id','=','transactions.user_id')->join('cryptos','cryptos.id','=','transactions.crypto')->join('statuses','statuses.id','=','transactions.payment_status')->where(['transactions.id'=>$id,'transactions.is_deleted'=>1,'transactions.is_active'=>1,'transactions.user_id'=>Auth::user()->id])->orderBy('transactions.id','DESC')->first(['transactions.id','transactions.payment_type','transactions.transaction_id','transactions.total_inr_price','transactions.created_at','transactions.total_crypto','transactions.crypto_price','transactions.payment_mode','transactions.wallet_address','transactions.payment_type','wallets.name as wallet','cryptos.name as crypto','statuses.name as status','users.first_name','users.email']);
             $users['hash'] = $hash;
             if ($users['transaction_detail']->payment_type == 1) {
-                // code...
+                $users['account'] = Account::first();
                 return view('frontend.payment',$users);
             }else{
                 return view('frontend.payment_sell',$users);
@@ -59,7 +60,7 @@ class TransactionController extends Controller
             }else{
                 $data = $data->where(['transactions.payment_type'=>1]);
             }
-            $data = $data->join('wallets','wallets.id','=','transactions.wallet_id')->join('users','users.id','=','transactions.user_id')->join('cryptos','cryptos.id','=','transactions.crypto')->join('statuses','statuses.id','=','transactions.payment_status')->where(['transactions.is_deleted'=>1,'transactions.is_active'=>1,'transactions.user_id'=>Auth::user()->id])->orderBy('transactions.id','DESC')->get(['transactions.id','transactions.total_inr_price','transactions.created_at','transactions.total_crypto','transactions.crypto_price','transactions.payment_mode','transactions.wallet_address','transactions.payment_type','wallets.name as wallet','cryptos.name as crypto','statuses.name as status','users.first_name','users.email']);
+            $data = $data->leftjoin('wallets','wallets.id','=','transactions.wallet_id')->join('users','users.id','=','transactions.user_id')->join('cryptos','cryptos.id','=','transactions.crypto')->join('statuses','statuses.id','=','transactions.payment_status')->where(['transactions.is_deleted'=>1,'transactions.is_active'=>1,'transactions.user_id'=>Auth::user()->id])->orderBy('transactions.id','DESC')->get(['transactions.id','transactions.total_inr_price','transactions.created_at','transactions.total_crypto','transactions.crypto_price','transactions.payment_mode','transactions.wallet_address','transactions.payment_type','wallets.name as wallet','cryptos.name as crypto','statuses.name as status','users.first_name','users.email']);
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('date', function($row){
@@ -72,7 +73,7 @@ class TransactionController extends Controller
                                                   
                             return $btn;
                     })->addColumn('redirect', function($row){
-                            $btn = '<a data-toggle="tooltip"  class="custom-tooltip" href="'.route('show_detail_transaction',['id'=>$row->id]).'" data-placement="bottom" data-id="" data-original-title="Details"><i class="fa fa-angle-right" aria-hidden="true"></i></a>';
+                            $btn = '<a data-toggle="tooltip"  class="custom-tooltip" href="'.route('show_detail_transaction',['id'=>encrypt($row->id,env("APP_KEY"))]).'" data-placement="bottom" data-id="" data-original-title="Details"><i class="fa fa-angle-right" aria-hidden="true"></i></a>';
                                                   
                             return $btn;
                     })
@@ -180,18 +181,45 @@ class TransactionController extends Controller
         }
         return redirect('user-dashboard');
     }
+    public function payment_buy(Request $request){
+        $validator = Validator::make($request->all(),[
+            'screenshot'=>'required|file',
+        ],['screenshot.required' => 'Please attach proof of transfer !']);
 
-     public function payment_sell(Request $request){
+        if($validator->passes()) {
+            $id = decrypt($request->hash,env("APP_KEY"));
+            $users = Transaction::leftjoin('wallets','wallets.id','=','transactions.wallet_id')->join('users','users.id','=','transactions.user_id')->join('cryptos','cryptos.id','=','transactions.crypto')->join('statuses','statuses.id','=','transactions.payment_status')->where(['transactions.id'=>$id,'transactions.is_deleted'=>1,'transactions.is_active'=>1,'transactions.user_id'=>Auth::user()->id])->orderBy('transactions.id','DESC')->first(['transactions.id','transactions.transaction_id','transactions.total_inr_price','transactions.created_at','transactions.total_crypto','transactions.crypto_price','transactions.payment_mode','transactions.wallet_address','transactions.payment_type','wallets.name as wallet','cryptos.name as crypto','statuses.name as status','users.first_name','users.email','users.mobile_number']);
+            if (empty($users->mobile_number)) {
+                return redirect('/user_setting')->with('error', 'Please Update Your Mobile'); 
+            }
+            $formdata['payment_status'] = 1;
+            if(!empty($request->file('screenshot'))){
+                $img = $request->file('screenshot');
+                $formdata['image'] = url('uploads').'/'.uniqid().'-'.$img->getClientOriginalName(); 
+                $request->file('screenshot')->move(public_path('uploads'), $formdata['image']);
+            } 
+            $row = Transaction::where('id',$id)->update($formdata);                                           
+            if($row){
+                 
+                    return response()->json(['status'=>1]); 
+            }else{
+                
+                    return response()->json(['status' => 3]);
+            }                 
+                                             
+        }    
+        return response()->json(['error'=>$validator->errors()->all(),'status'=>2]);
+    }
+    public function payment_sell(Request $request){
         $id = $request->post('id');
         $validator = Validator::make($request->all(),[
-        'wallet'=>'required',
-        'screenshot'=>'required',
-        'IhaveTransfer'=>'required',
+            'wallet'=>'required',
+            'screenshot'=>'required',
+            'IhaveTransfer'=>'required',
         ]);
 
         if($validator->passes()) {
             $last_id = '';
-            
             $formdata['wallet_id'] = $request->post('wallet');
             $formdata['updated_by'] = Auth::user()->id;
             if(!empty($request->file('screenshot'))){
@@ -208,11 +236,8 @@ class TransactionController extends Controller
             }else{
                 
                     return response()->json(['status' => 3]);
-            }
-                        
-                        
-                 
-            
+            }                 
+                                             
         }    
         return response()->json(['error'=>$validator->errors()->all(),'status'=>2]);
     }

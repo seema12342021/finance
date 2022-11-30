@@ -35,74 +35,107 @@
               </div>
             </div>
           </div>
-          <form  enctype="multipart/form-data" action="{{url('payment_gateway')}}" method="post">
+          <form  id="buyform">
             <div class="card-body">
               @csrf
               <input type="hidden" value="{{$hash}}" name="hash">
-              {{-- <h4><strong class="title-space"><span class="text-orange">STEP 1 : </span>Transfer Fund to below bank account </strong></h4> --}}
+              <h4><strong class="title-space"><span class="text-orange">STEP 1 : </span>Transfer Fund to below bank account </strong></h4>
               
               <article class=" pt-4">
-                {{-- <div class="row">
-                    <div class="form-group col-md-4 col-12 border-right">
+                <div class="row">
+                    <div class="form-group col-md-6 col-12 border-right">
                        <div class="row">
                          <div class="col-md-9">
                            <p class="small-text">Bank Name</p>
-                           <p class="text-muted" id="noria_bank_name">ICICI BANK</p>
+                           <p class="text-muted" id="noria_bank_name">{{ @$account->bank_name }}</p>
                          </div>
                          <div class="col-md-3 pt-3">
-                           <a class="copy" data-placement="right" onclick="copy_data(noria_bank_name)"><img src="images/icons/copy.png"></a>
+                           <a class="copy" data-placement="right" onclick="copy_data(noria_bank_name)"><img src="{{url('images/icons/copy.png')}}"></a>
                          </div>
                        </div>
                     </div> <!-- form-group.// -->
     
-                    <div class="form-group col-md-5 col-12 border-right">
+                    <div class="form-group col-md-6 col-12 border-right">
                        <div class="row">
                            <div class="col-md-10">
-                              <p class="small-text">Account Name</p>
-                              <p class="text-muted" id="noria_bank_account_name">WEBNORIA E-COMMERCE PVT LTD</p>
+                              <p class="small-text">Account Holder Name</p>
+                              <p class="text-muted" id="noria_bank_account_name">{{ @$account->holder_name }}</p>
                            </div>
                             <div class="col-md-2 pt-3">
-                                <a  class="copy" data-placement="right" onclick="copy_data(noria_bank_account_name)"><img src="images/icons/copy.png"></a>
+                                <a  class="copy" data-placement="right" onclick="copy_data(noria_bank_account_name)"><img src="{{url('images/icons/copy.png')}}"></a>
                             </div>
                        </div>
                       
                     </div> <!-- form-group.// -->
                     
-                    <div class="form-group col-md-3 col-12">
+                    <div class="form-group col-md-6 col-12">
                         <div class="row">
                            <div class="col-md-9">
                                <p class="small-text">A/C Number</p>
-                               <p class="text-muted" id="noria_bank_account_number">777705057770</p>
+                               <p class="text-muted" id="noria_bank_account_number">{{ @$account->account_number }}</p>
                            </div>
                             <div class="col-md-2 pt-3">
-                                <a  class="copy" data-placement="right" onclick="copy_data(noria_bank_account_number)"><img src="images/icons/copy.png"></a>
+                                <a  class="copy" data-placement="right" onclick="copy_data(noria_bank_account_number)"><img src="{{url('images/icons/copy.png')}}"></a>
                             </div>
                        </div>
+
                      
                     </div> <!-- form-group.// -->
                     
+                    <div class="form-group col-md-6 col-12">
+                        <div class="row">
+                           <div class="col-md-9">
+                               <p class="small-text">IFSC Code</p>
+                               <p class="text-muted" id="noria_bank_account_number">{{ @$account->ifsc_code }}</p>
+                           </div>
+                            <div class="col-md-2 pt-3">
+                                <a  class="copy" data-placement="right" onclick="copy_data(noria_bank_account_number)"><img src="{{url('images/icons/copy.png')}}"></a>
+                            </div>
+                       </div>
+                       
+                     
+                    </div> <!-- form-group.// -->
                     
+                  </div>         
+                <hr>
+                <h4 class="pt-3"><strong class="title-space"><span class="text-orange">STEP 2 : </span> Attach Proof of Transfer </strong></h4>
+                
+                <div class="row pt-3">
                     
-                    
-                  </div>          --}}
-                {{-- <hr> --}}
+                  <div class="payment-detail col-lg-12 col-md-12 col-12">   
+                      
+                      <div class="upload upload-theme-dragdropbox">
+                        <input style="z-index: 999; opacity: 0; width: 100%; height: 100px; position: absolute; right: 0px; left: 0px; top:0px; margin-right: auto; margin-left: auto;cursor:pointer;" name="screenshot" id="filer_input2" type="file" onchange="showTransferDoc(this)">
+                        <div class="upload-input-dragDrop ">
+                            <div class="upload-input-inner row">
+                              <div class="upload-input-icon col-md-3 col-2 pt-3 text-right"><i class="fa fa-paperclip font-fa" aria-hidden="true"></i></div>
+                      <div class="col-md-7 col-10 p-0">
+                                 <div class="upload-input-text"><p>Drop/Upload a proof that the money has been transferred.
+                                    We accept files in .jpg , .png , .pdf format less than 10mb</p></div>
+                       </div>
+                     </div>
 
+                            </div>
+                          </div>
+                   <label class="file-name"></label>
+                    </div>
+                  </div>
                 
                 <div class="row">
-                  {{-- <div class="payment-detail col-lg-6 text-left">
+                  <div class="payment-detail col-lg-6 text-left">
                     <label class="custom-control custom-checkbox mt-1">
-                      <input type="checkbox"  name="form_is_payment_acknowledged" class="custom-control-input" >
+                      <input type="checkbox"  name="form_is_payment_acknowledged" class="custom-control-input" id="form_is_payment_acknowledged">
                       <span class="custom-control-label">I HAVE PAID</span>
                     </label>
-                  </div> --}}
+                  </div>
                   <div class="col-lg-6 text-right">
-                    <button class="btn btn-success " type="submit">Confirm</button>
+                    <button class="btn btn-success final_payment_btn" type="submit">Confirm</button>
                 </form>
                   </div>   
                 </div> 
               </article>
             </div>          
-</div>
+          </div>
         <div class="pb-5">
             <p class="checkout-price-1 pb-3"><b>IMPORTANT NOTES :</b></p>
             <p class="p-text">1. We only accept transfers by IMPS , NEFT & RTGS. CASH DEPOSITS ARE NOT ALLOWED.
@@ -118,4 +151,4 @@
 </div>		        </div> <!-- Container Fluid close -->
  </div>
 </div> <!-- Main Wrapper Close -->
-     @endsection
+@endsection

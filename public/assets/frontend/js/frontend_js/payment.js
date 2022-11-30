@@ -96,9 +96,9 @@ function pageredirect(type){
 function save_transactions(types){
 	$("#btn_btn").hide();
 	if (types == 1) {
-		datas = {'id_fee':id_fees,'inr':$("#form_inr_amount_buy").val(),'crypto':$("#form_crypto_amount_buy").val(),'w_address':$("#form_wallet_address").val(),'form_is_wallet_acknowledged':$(".tc").val(),'wallet':$('input:radio[name="wallet"]').val(),'payment_mode':$('input:radio[name="form_payment_method"]').val(),'payment_type':types};						
+		datas = {'id_fee':id_fees,'inr':$("#form_inr_amount_buy").val(),'crypto':$("#form_crypto_amount_buy").val(),'w_address':$("#form_wallet_address").val(),'form_is_wallet_acknowledged':$(".tc").val(),'wallet':$('input:radio[name="wallet"]').val(),'payment_mode':$('.p_mode:checked').val(),'payment_type':types};						
 	}else{
-		datas = {'id_fee':id_fees,'inr':$("#form_inr_amount_sell").val(),'crypto':$("#form_crypto_amount_sell").val(),'w_address':$("#form_upi_address").val(),'form_is_wallet_acknowledged':$(".tc").val(),'wallet':$('input:radio[name="wallet"]').val(),'payment_mode':$('input:radio[name="form_payment_method"]').val(),'payment_type':types};
+		datas = {'id_fee':id_fees,'inr':$("#form_inr_amount_sell").val(),'crypto':$("#form_crypto_amount_sell").val(),'w_address':$("#form_upi_address").val(),'form_is_wallet_acknowledged':$(".tc").val(),'wallet':$('input:radio[name="wallet"]').val(),'payment_mode':$('.p_mode:checked').val(),'payment_type':types};
 	}
 	$.ajaxSetup({
                   headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
@@ -112,10 +112,12 @@ function save_transactions(types){
 				toastr.success(res.message);
 				window.location.href = siteUrl+"payment_page/"+res.id;
 			}else if(res.status_code == 301){
+				$("#btn_btn").show();
 				$.each(res.message,function(key , value){
 					toastr.error(value);
 				});
 			}else if(res.status_code == 201){
+				$("#btn_btn").show();
 				toastr.error(res.message);
 			}
 		},error:function(e){
@@ -126,6 +128,10 @@ function save_transactions(types){
 }
 
 function payment(){
+	if(!$("#form_is_payment_acknowledged").is(":checked")){
+		toastr.error("Please check I Have paid Box !");
+		return false;
+	}
 	$.ajaxSetup({
                   headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
               });
@@ -181,6 +187,7 @@ function radio_show(id){
 }
 
 $('#form_transfer').on('submit',function(e){ 
+	$("#form_transfer_btn").hide();
       e.preventDefault();  
       $.ajaxSetup({
                   headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
@@ -206,7 +213,7 @@ $('#form_transfer').on('submit',function(e){
             }             
          },
       })
-   });
+});
 
 
 function button_on(){
@@ -222,3 +229,43 @@ function button_on(){
 		$('.tc').val(1);
 	}
 }
+
+function showTransferDoc(input) {
+    var fileName = input.files[0].name;
+    $(".file-name").text(fileName + ' is the selected file.');               
+}
+
+$('#buyform').on('submit',function(e){ 
+	$(".final_payment_btn").hide();
+      e.preventDefault();  
+		if(!$("#form_is_payment_acknowledged").is(":checked")){
+			toastr.error("Please check I Have paid Box !");
+			return false;
+		}
+      $.ajaxSetup({
+                  headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+              });
+      $.ajax({    
+         url:siteUrl+'payment_buy',      
+         type:'post',      
+         data:new FormData(this),      
+         dataType:'json', 
+         contentType:false,
+         processData: false,     
+         success:function(response){ 
+            if(response.status == 1){
+               toastr["success"]("Success");
+               window.location.href = siteUrl+"user-dashboard";
+            }else if(response.status==2){
+            	$(".final_payment_btn").show();
+               var dd = response.error ;
+               for(var i=0; i<dd.length;i++){
+                  toastr["error"](dd[i]);
+               }
+            }else if(response.status == 3){
+            	$(".final_payment_btn").show();
+               toastr["error"]("Couldn't insert right now");
+            }             
+         },
+      })
+});

@@ -111,7 +111,7 @@
                       </label>
                     </div>
                   <div class="col-lg-6 col-12 text-right">
-                    <button class="btn btn-success" type="submit">Confirm</button>
+                    <button class="btn btn-success" type="submit" id="form_transfer_btn">Confirm</button>
                   </div>    
                 </div>
               </div>

@@ -67,7 +67,7 @@ class NetworkFeesController extends Controller
 
     }
 
- public function show(Request $request){
+    public function show(Request $request){
         if ($request->ajax()) {
            //$data = Project::select('*');
             $data=NetworkFees::where('is_deleted',1)->orderBy('id','DESC')->get();

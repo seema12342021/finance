@@ -35,9 +35,9 @@
         <ul class="nav nav-tabs profile-tab" role="tablist">
           <li class="nav-item"> <a class="nav-link "  href="{{url('user_kyc')}}?tab=1" role="tab">KYC</a>
           </li>
-          <li class="nav-item"> <a class="nav-link active" href="{{url('user_profile')}}?tab=2" role="tab">Profile</a>
+          <li class="nav-item"> <a class="nav-link active" href="{{url('bank_details')}}" role="tab">Bank Details</a>
           </li>
-          <li class="nav-item"> <a class="nav-link " href="{{url('user_setting')}}?tab=3" role="tab">Settings</a>
+          <li class="nav-item"> <a class="nav-link " href="{{url('user_setting')}}?tab=3" role="tab">Profile</a>
           </li> 
            <li class="nav-item"> <a class="nav-link "  href="{{url('change_password')}}?tab=4" role="tab">Change Password</a>
           </li>

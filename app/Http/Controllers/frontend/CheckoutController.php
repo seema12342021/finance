@@ -26,7 +26,7 @@ class CheckoutController extends Controller
     { 
       $data = decrypt($hash,env('APP_KEY'));  
       $users['title']="checkout";
-      $users['wallet'] = Wallet::get();
+      $users['wallet'] = Wallet::where(['is_deleted'=>1,'is_active'=>1])->get();
       $users['commision_buy'] = CommisionFees::where(['is_deleted'=>1,'is_active'=>1,'type'=>1])->first();
       $users['commision_sell'] = CommisionFees::where(['is_deleted'=>1,'is_active'=>1,'type'=>2])->first();
       $users['crypto_price'] = $this->crypto_price;
@@ -42,18 +42,32 @@ class CheckoutController extends Controller
     public function saveTransaction(Request $request){
         
         $valid = [
-            'w_address'=>'required',
-            'form_is_wallet_acknowledged'=>'required',
+            'form_is_wallet_acknowledged'=>'required'
         ];  
+        if($request->payment_type == 1){
+            $valid = $valid + ["w_address" => "required"];
+        }
         $validated = Validator::make($request->all(),$valid);
          if($validated->passes()){
-            $kyc_data = KycData::where('user_id',Auth::user()->id)->orderBY('id','DESC')->first();
-            if($kyc_data){
-                if($kyc_data->is_approved != 1){
-                    return response()->json(['status'=>'error','status_code'=>201,'message'=>"Your KYC Approval is pending !"]);
+            if($request->payment_type == 2){
+                $where['account_type'] = $request->payment_mode;
+                $where['user_id'] = Auth::user()->id;
+                $pmode = \DB::table('user_account_info')->where($where)->first();
+                if(!$pmode->json_data){
+                    return response()->json(['status'=>'error','status_code'=>201,'message'=>"Please Update Your Account Information !"]);
                 }
-            }else{
-                return response()->json(['status'=>'error','status_code'=>201,'message'=>"Please complete your KYC first !"]);
+            }
+            $buy_crypto = Transaction::where(["user_id"=>Auth::user()->id,"admin_status" => 1,'payment_type' => 1])->first([\DB::raw('SUM(total_crypto) AS total')]);
+            $sell_crypto = Transaction::where(["user_id"=>Auth::user()->id,"admin_status" => 1,'payment_type' => 2])->first([\DB::raw('SUM(total_crypto) AS total')]);
+            if(@$buy_crypto->total >= 5000 or @$sell_crypto->total >= 5000){
+                $kyc_data = KycData::where('user_id',Auth::user()->id)->orderBY('id','DESC')->first();
+                if($kyc_data){
+                    if($kyc_data->is_approved != 1){
+                        return response()->json(['status'=>'error','status_code'=>201,'message'=>"Your KYC Approval is pending !"]);
+                    }
+                }else{
+                    return response()->json(['status'=>'error','status_code'=>201,'message'=>"Please complete your KYC first !"]);
+                }
             }
             if ($request->payment_type == 1) {
                 $row = NetworkFees::where(['is_deleted'=>1,'is_active'=>1,'type'=>1])->first();
@@ -67,11 +81,8 @@ class CheckoutController extends Controller
             }
            
             $formdata['user_id'] = Auth::user()->id;
-            $formdata['transaction_id'] = 'ET'.md5(Auth::user()->email.time());
-            $formdata['crypto'] = 1;
             $row = NetworkFees::where(['is_deleted'=>1,'is_active'=>1,'type'=>1])->first(); 
             $network_fees = @$row->fees?$row->fees:1;         
-            $formdata['user_id'] = Auth::user()->id;
             $formdata['transaction_id'] = 'ET'.md5(Auth::user()->email.time());
             $formdata['crypto'] = 1;
             $formdata['total_inr_price'] = $request->inr+$network_fees+$request->fee;

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\{User,KycData};
 use Illuminate\Support\Facades\Session;
 use Validator;
+use DB;
 
 class ProfileController extends Controller
 {
@@ -28,7 +29,7 @@ class ProfileController extends Controller
         $users['docs'] = $kyc_data;
         return view('frontend.kyc',$users);
     }
-     public function setting_index()
+    public function setting_index()
     {
          $users['title']="Profile setting";
          $users['fname'] = Auth::user()->first_name;
@@ -38,7 +39,99 @@ class ProfileController extends Controller
         $users['setting'] = User::where(['id'=>Auth::user()->id])->first(['first_name','last_name','email','mobile_number']);
         return view('frontend.setting', $users);
     }
-     public function UpdateProfile(Request $request){
+    public function bankDetails(){
+        $users['title']="Bank Details";
+        $users['fname'] = Auth::user()->first_name;
+        $users['lname'] = Auth::user()->last_name;
+        $kyc_data = KycData::where('user_id',Auth::user()->id)->orderBY('id','DESC')->first();
+        $users['docs'] = $kyc_data;
+        $users['setting'] = User::where(['id'=>Auth::user()->id])->first(['first_name','last_name','email','mobile_number']);
+        $acc_detail_where['account_type'] = 2;
+        $acc_detail_where['user_id'] = Auth::user()->id;
+        $users['acc_detail'] = DB::table('user_account_info')->where($acc_detail_where)->first();
+        $upi_detail_where['account_type'] = 1;
+        $upi_detail_where['user_id'] = Auth::user()->id;
+        $users['upi_detail'] = DB::table('user_account_info')->where($upi_detail_where)->first();
+        return view('frontend.bank_details', $users);
+    }
+    public function UpdateAccount(Request $request){
+        $validated = Validator::make($request->all(),[
+            'bank_name'=>'required',
+            'account_holder_name'=>'required',
+            'bank_account_number'=>'required|numeric',
+            'ifsc_code'=>'required'
+        ]);
+        if($validated->passes()){
+            $where['account_type'] = 2;
+            $where['user_id'] = Auth::user()->id;
+            $json['bank_name'] = $request->bank_name;
+            $json['account_holder_name'] = $request->account_holder_name;
+            $json['bank_account_number'] = $request->bank_account_number;
+            $json['ifsc_code'] = $request->ifsc_code;
+            $formdata['json_data'] = json_encode($json);
+            $formdata['is_active'] = 1;
+            $formdata['is_deleted'] = 1;
+            $formdata['created_by'] = Auth::user()->id;
+            $res = DB::table('user_account_info')->where($where)->update($formdata);
+            if($res)
+            {
+              return response()->json(['status'=>'sucess','status_code'=>200,'message'=>' Update Successfully !']);
+            }else{
+                return response()->json(['status'=>'error','status_code'=>201,'message'=>"Can't Update !"]);
+            }
+        }else{
+             return response()->json(['status'=>'error','status_code'=>301,'message' => $validated->errors()->all() ]);
+        }
+
+    }
+    public function deleteAccounts(Request $request){
+        $validated = Validator::make($request->all(),[
+            'type'=>'required'
+        ]);
+        if($validated->passes()){
+            $where['account_type'] = $request->type;
+            $where['user_id'] = Auth::user()->id;
+            $formdata['json_data'] = NULL;
+            $formdata['is_active'] = 1;
+            $formdata['is_deleted'] = 1;
+            $formdata['updated_by'] = Auth::user()->id;
+            $res = DB::table('user_account_info')->where($where)->update($formdata);
+            if($res)
+            {
+              return response()->json(['status'=>'sucess','status_code'=>200,'message'=>' Deleted Successfully !']);
+            }else{
+                return response()->json(['status'=>'error','status_code'=>201,'message'=>"Can't Deleted !"]);
+            }
+        }else{
+             return response()->json(['status'=>'error','status_code'=>301,'message' => $validated->errors()->all() ]);
+        }
+
+    }
+    public function UpdateUPI(Request $request){
+        $validated = Validator::make($request->all(),[
+            'upi_wallet_address'=>'required'
+        ]);
+        if($validated->passes()){
+            $where['account_type'] = 1;
+            $where['user_id'] = Auth::user()->id;
+            $json['upi_address'] = $request->upi_wallet_address;
+            $formdata['json_data'] = json_encode($json);
+            $formdata['is_active'] = 1;
+            $formdata['is_deleted'] = 1;
+            $formdata['created_by'] = Auth::user()->id;
+            $res = DB::table('user_account_info')->where($where)->update($formdata);
+            if($res)
+            {
+              return response()->json(['status'=>'sucess','status_code'=>200,'message'=>' Update Successfully !']);
+            }else{
+                return response()->json(['status'=>'error','status_code'=>201,'message'=>"Can't Update !"]);
+            }
+        }else{
+             return response()->json(['status'=>'error','status_code'=>301,'message' => $validated->errors()->all() ]);
+        }
+
+    }
+    public function UpdateProfile(Request $request){
         $validated = Validator::make($request->all(),[
             'form_first_name'=>'required',
             'form_last_name'=>'required',
@@ -64,6 +157,7 @@ class ProfileController extends Controller
         }
 
     }
+    
     //change password
      public function ChangePasswordForm()
     {

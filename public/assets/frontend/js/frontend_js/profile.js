@@ -56,6 +56,7 @@ $("#password_update_form").on("submit",function(e){
 });
 //update kyc details
 $("#form_profile").on("submit",function(e){
+	$("#form_profile_btn").hide();
   e.preventDefault(); 
 	$.ajax({ 
 		type:"post",
@@ -208,4 +209,76 @@ function showBack(input) {
     $(".file-name-back").text(fileName + ' is the selected file.');               
 }
  
-	
+$("#bank-modal-form").on("submit",function(e){
+  e.preventDefault(); 
+	$.ajax({ 
+		type:"post",
+		url:siteUrl + "update_account",  
+		data:new FormData(this),
+		processData: false, 
+    contentType: false, 
+		success:function(res){ 
+			if(res.status_code == 200){
+				toastr.success(res.message);
+				location.reload();
+			}else if(res.status_code == 201){
+				toastr.error(res.message);
+			}else if(res.status_code == 301){
+				$.each(res.message,function(key , value){
+					toastr.error(value);
+				});
+			}
+		},error:function(e){
+			console.log(e);		 
+		}
+	});
+});
+$("#upi-modal-form").on("submit",function(e){
+  e.preventDefault(); 
+	$.ajax({ 
+		type:"post",
+		url:siteUrl + "update_upi",  
+		data:new FormData(this),
+		processData: false, 
+    contentType: false, 
+		success:function(res){ 
+			if(res.status_code == 200){
+				toastr.success(res.message);
+				location.reload();
+			}else if(res.status_code == 201){
+				toastr.error(res.message);
+			}else if(res.status_code == 301){
+				$.each(res.message,function(key , value){
+					toastr.error(value);
+				});
+			}
+		},error:function(e){
+			console.log(e);		 
+		}
+	});
+});
+
+function deleteAccount(type){
+	$.ajaxSetup({
+        headers: { 'X-CSRF-Token': $('meta[name=_token]').attr('content') }
+    });
+	$.ajax({ 
+		type:"delete",
+		url:siteUrl + "delete_accounts",  
+		data:{type:type},
+		success:function(res){ 
+			if(res.status_code == 200){
+				toastr.success(res.message);
+				location.reload();
+			}else if(res.status_code == 201){
+				toastr.error(res.message);
+			}else if(res.status_code == 301){
+				$.each(res.message,function(key , value){
+					toastr.error(value);
+				});
+			}
+		},error:function(e){
+			console.log(e);		 
+		}
+	});
+}

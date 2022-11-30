@@ -57,7 +57,9 @@
         <ul class="nav nav-tabs profile-tab" role="tablist">
           <li class="nav-item"> <a class="nav-link "  href="{{url('user_kyc')}}" role="tab">KYC</a>
           </li>
-          <li class="nav-item"> <a class="nav-link active" href="{{url('user_setting')}}" role="tab">Settings</a>
+          <li class="nav-item"> <a class="nav-link" href="{{url('bank_details')}}" role="tab">Bank Info</a>
+          </li>
+          <li class="nav-item"> <a class="nav-link active" href="{{url('user_setting')}}" role="tab">Profile</a>
           </li> 
           <li class="nav-item"> <a class="nav-link "  href="{{url('change_password')}}" role="tab">Change Password</a>
           </li>      
@@ -69,6 +71,7 @@
                 <div class="tab-pane active" id="settings" role="tabpanel">
                     <div class="card-body">
                         <form class="form-horizontal form-material" id="profile_update_form" method="" action="">
+                        <div class="row">
                             @CSRF
                            <div class="form-group">
                                 <p class="col-md-12 small-text">First name</p>
@@ -108,6 +111,7 @@
                             <div class="form-group col-md-12 pt-3">
                                  <button type="submit" class="btn btn-success">Save Details</button>
                             </div>
+                        </div>
                         </form>
                     </div>
                 </div>

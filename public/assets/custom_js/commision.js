@@ -10,7 +10,7 @@ $("#commisionform").on("submit",function(e){
 		url:siteUrl + "save_commision",  
 		data:new FormData(this),
 		processData: false, 
-    contentType: false, 
+        contentType: false, 
 		success:function(res){
 			if(res.status_code == 200){
 				toastr.success(res.message);

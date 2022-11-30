@@ -163,6 +163,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-4 col-sm-6 col-12">
+                    <div class="info-box">
+                        <div class="info-box-content">
+                            <span class="info-box-number">Image</span>
+                            <a id="image_url" href="" target="_blank"><img  id="image" src="" style=" height: 100px; width: 100px; "></a>  
+                      </div>
+                    </div>
+                </div>
                {{--  <div class="card-footer text-right">
                     <a href="javascript:;" class="btn btn-primary" id="print_bill">Print Details</a>
                 </div> --}}

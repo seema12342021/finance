@@ -9,6 +9,7 @@ use App\Http\Controllers\NetworkFeesController;
 use App\Http\Controllers\TransactionController;
  use App\Http\Controllers\UserListController; 
  use App\Http\Controllers\HomepageController; 
+ use App\Http\Controllers\WalletController; 
  use App\Http\Controllers\frontend\DashboardController; 
  use App\Http\Controllers\frontend\LoginController; 
  use App\Http\Controllers\frontend\SignupController; 
@@ -37,6 +38,8 @@ Route::post('admin_login',[AdminLoginController::class,'Adminlogin']);
 Route::get('logout',[AdminLoginController::class,'logout']);
 Route::middleware("AdminLogin")->group(function(){
     Route::get('dashboard',[Dashboard::class,'index']);
+    Route::get('account',[Dashboard::class,'account']);
+    Route::post('save_account',[Dashboard::class,'saveAccount']);
     //testimonial
     Route::get('/project',[Projectcontroller::class ,'index']);
     Route::post('/save_project',[Projectcontroller::class , 'saveProject']);
@@ -54,6 +57,15 @@ Route::middleware("AdminLogin")->group(function(){
     Route::get('/delete_commision',[CommisionFeesController::class , 'delete']);
     Route::get('/edit_commision',[CommisionFeesController::class , 'edit']);
     Route::get('/status_commision',[CommisionFeesController::class , 'status']);
+
+    // **************************wallet**************************************
+
+    Route::get('/wallets',[WalletController::class ,'index']);
+    Route::post('/save_wallet',[WalletController::class , 'save']);
+    Route::get('/show_wallet',[WalletController::class ,'show']);
+    Route::get('/delete_wallet',[WalletController::class , 'delete']);
+    Route::get('/edit_wallet',[WalletController::class , 'edit']);
+    Route::get('/status_wallet',[WalletController::class , 'status']);
 
     // **************************NetworkFeesnetwork**************************************
 
@@ -93,6 +105,12 @@ Route::middleware("UserAuth")->group(function(){
     Route::get('/user_profile',[ProfileController::class ,'index']);
     Route::get('/user_kyc',[ProfileController::class ,'kyc_index']);
     Route::get('/user_setting',[ProfileController::class ,'setting_index']);
+
+    Route::get('/bank_details',[ProfileController::class ,'bankDetails']);
+    Route::post('/update_account',[ProfileController::class ,'UpdateAccount']);
+    Route::post('/update_upi',[ProfileController::class ,'UpdateUPI']);
+    Route::delete('/delete_accounts',[ProfileController::class ,'deleteAccounts']);
+
     Route::post('/update_profile',[ProfileController::class ,'UpdateProfile']);
     Route::get('/change_password',[ProfileController::class ,'ChangePasswordForm']);
     Route::post('/update_password',[ProfileController::class ,'UpdatePassword']);
@@ -105,6 +123,8 @@ Route::middleware("UserAuth")->group(function(){
     Route::get('/show_detail_transaction/{id}',[TxnController::class , 'show_detail_transaction'])->name('show_detail_transaction');
     Route::get('/payment_page/{hash}',[TxnController::class , 'payment_page']);
     Route::post('/payment_gateway',[TxnController::class ,'payment_gateway']);
+    Route::post('/payment_buy',[TxnController::class ,'payment_buy']);
+    Route::post('/payment_sell',[TxnController::class ,'payment_sell']);
 });
     Route::post('/reset_password',[ResetPasswordController::class ,'ResetPassword']);
     Route::post('/check_otp',[ResetPasswordController::class ,'CheckOtp']);

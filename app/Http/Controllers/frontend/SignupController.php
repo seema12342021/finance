@@ -30,6 +30,8 @@ class SignupController extends Controller
             $formdata['created_by'] = 1;
             $res = User::insertGetId($formdata);
             if($res){
+                \DB::table('user_account_info')->insertGetId(['user_id'=>$res,'account_type'=>1]);
+                \DB::table('user_account_info')->insertGetId(['user_id'=>$res,'account_type'=>2]);
                 return response()->json(['status'=>'sucess','status_code'=>200,'message'=>'Sign Up successfully!']);
              }else{
                 return response()->json(['status'=>'error','status_code'=>201,'message'=>"Can't login !"]);

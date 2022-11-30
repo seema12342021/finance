@@ -188,7 +188,24 @@
                 </ul>
             </li>
 
-
+          <li class="nav-item">
+            <a href="{{url('account')}}" class="nav-link  {{ Request::is('account') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Manage Account
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{url('wallets')}}" class="nav-link  {{ Request::is('wallets') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Manage Wallet
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li>
            
           <li class="nav-item">
             <a href="{{url('logout')}}" class="nav-link">

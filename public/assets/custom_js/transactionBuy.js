@@ -41,6 +41,8 @@ function show(id){
             $("#status2").val(response.admin_status);
             $("#m_id").val(response.id);
             $("#amnt_paid").val(response.amnt_paid);
+            $("#image").attr('src',response.image);
+            $("#image_url").attr('href',response.image);
             $("#transaction_details").modal("show");
         }else{
             toastr.error("No data found !");

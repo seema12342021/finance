@@ -75,14 +75,14 @@
                                 <p class="xs-text py-1 buyError" style="display:none;"></p>
                             </div>
                       
-                               <div id="checkout_wallet_type" class="form-group">
+                            {{-- <div id="checkout_wallet_type" class="form-group">
                                 <p class="xs-text mt-2">Select Tether Wallet Type</p>
                                 <div class="form-radio">
                                   <div class="row select-payment ">
                                 @if(!empty($wallet))
                                 @foreach($wallet as $key=>$value)
                                     <div class="col-md-4 mb-2">
-                                      <label class="form-group-payment col-lg-12 col-xs-6  mr-1" for="radio_omni{{@$value->id}}">
+                                      <label class="form-group-payment mr-1" for="radio_omni{{@$value->id}}">
                                         <input name="wallet" type="radio" id="radio_omni{{@$value->id}}" value="{{@$value->id}}" class="with-gap radio-col-orange" >
                                         <label class="label-small" for="radio_omni{{@$value->id}}">{{@$value->name}}</label>
                                       </label>
@@ -91,9 +91,9 @@
                                 @endif
                                  </div> 
                                 </div>
-                            </div>
+                            </div> --}}
 
-                            <div class="form-group">
+                            <div class="form-group mt-2">
                                 <p class="xs-text">Tether Wallet Address</p>
                                 <div class="input-box">
                                     <input class="form-control" type="text" name="form_wallet_address" value="" required="" id="form_wallet_address" placeholder="">
@@ -165,22 +165,22 @@
                         </div>
                         <div class="form-group form-radio select-payment" id="radio_sell">
                              <label class="form-group-payment col-lg-3 mb-3" for="radio_s1">
-                                   <input name="form_payment_method" type="radio" id="radio_s1" value="UPI" class="with-gap radio-col-orange" checked>
+                                   <input name="form_payment_method" type="radio" id="radio_s1" value="1" class="with-gap radio-col-orange p_mode" checked>
                                     <label class="label-small" for="radio_s1">UPI</label>
                             </label>
                                                                
-                                    <label class="form-group-payment col-lg-5 mb-3 disabled custom-tooltip" for="radio_s3" data-placement="right" data-toggle="tooltip" title="To choose this option, Update your bank details in profile section">
-                                   <input name="form_payment_method" type="radio" id="radio_s3" class="with-gap radio-col-orange" disabled>
+                            <label class="form-group-payment col-lg-5 mb-3 disabled custom-tooltip" for="radio_s3" data-placement="right" data-toggle="tooltip" title="To choose this option, Update your bank details in profile section">
+                                   <input name="form_payment_method" type="radio" id="radio_s3" class="with-gap radio-col-orange p_mode" value="2">
                                     <label class="label-small" for="radio_s3">Bank Account</label>
                             </label>    
                         </div>
-                        <div class="form-group" id="payment_details">                            <div class="form-group " id="upi_payment_details">
+                        {{-- <div class="form-group" id="payment_details">                            <div class="form-group " id="upi_payment_details">
                                  <p class="title-space">Your UPI Address</p>
                                  <div class="input-box">
                                     <input name="w_address" value = "" class="form-control" type="text" required id="form_upi_address" placeholder="">
                                  </div>
                             </div>      
-                        </div>
+                        </div> --}}
                         <label class="custom-control custom-checkbox">
                            <input type="checkbox" onclick="button_on()" value="0" id="tc_sell" name="form_is_wallet_acknowledged" class="custom-control-input tc" >
                             <span class="custom-control-label xs-text">I verify that the above payment details belongs to me. And understand that sending it to someone else's payment details may result in a loss of funds.</span>
